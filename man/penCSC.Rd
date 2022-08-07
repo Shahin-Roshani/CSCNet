@@ -60,6 +60,12 @@ penCSC(time='time',status='status',vars.list=vl,
 }
 \references{
 Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. \doi{10.18637/jss.v033.i01}, \url{https://www.jstatsoft.org/v33/i01/}.
+
+Therneau T (2022). A Package for Survival Analysis in R. R package version 3.3-1, \url{https://CRAN.R-project.org/package=survival}.
+
+Wickham H, Averick M, Bryan J, Chang W, McGowan L, François R, et al. Welcome to the tidyverse. J Open Source Softw. 2019 Nov 21;4(43):1686.
+
+Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. \url{https://magrittr.tidyverse.org}, \url{https://github.com/tidyverse/magrittr}.
 }
 \author{
 Shahin Roshani

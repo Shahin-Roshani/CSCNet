@@ -97,6 +97,12 @@
 #'
 #'Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. \url{https://github.com/DavisVaughan/furrr}, \url{https://furrr.futureverse.org/}.
 #'
+#'Therneau T (2022). A Package for Survival Analysis in R. R package version 3.3-1, \url{https://CRAN.R-project.org/package=survival}.
+#'
+#'Wickham H, Averick M, Bryan J, Chang W, McGowan L, François R, et al. Welcome to the tidyverse. J Open Source Softw. 2019 Nov 21;4(43):1686.
+#'
+#'Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. \url{https://magrittr.tidyverse.org}, \url{https://github.com/tidyverse/magrittr}.
+#'
 #'@import tidyverse survival riskRegression prodlim magrittr glmnet furrr recipes
 #'
 #'@importFrom caret createDataPartition createFolds createMultiFolds createResample
@@ -104,6 +110,8 @@
 #'@importFrom future plan availableCores
 #'
 #'@importFrom stats predict
+#'
+#'@importFrom prodlim Hist
 #'
 #'@export
 

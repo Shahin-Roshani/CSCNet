@@ -45,6 +45,11 @@ predictRisk(penfit,Melanoma[1:5,],times=1825*(1:2),cause=1)
 }
 
 }
+\references{
+Wickham H, Averick M, Bryan J, Chang W, McGowan L, François R, et al. Welcome to the tidyverse. J Open Source Softw. 2019 Nov 21;4(43):1686.
+
+Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. \url{https://magrittr.tidyverse.org}, \url{https://github.com/tidyverse/magrittr}.
+}
 \seealso{
 \url{https://www.rdocumentation.org/packages/riskRegression/versions/1.3.7/topics/predictRisk}
 

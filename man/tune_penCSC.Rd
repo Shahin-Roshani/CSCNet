@@ -155,6 +155,12 @@ Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journa
 Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. \doi{10.32614/RJ-2021-048}.
 
 Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. \url{https://github.com/DavisVaughan/furrr}, \url{https://furrr.futureverse.org/}.
+
+Therneau T (2022). A Package for Survival Analysis in R. R package version 3.3-1, \url{https://CRAN.R-project.org/package=survival}.
+
+Wickham H, Averick M, Bryan J, Chang W, McGowan L, François R, et al. Welcome to the tidyverse. J Open Source Softw. 2019 Nov 21;4(43):1686.
+
+Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. \url{https://magrittr.tidyverse.org}, \url{https://github.com/tidyverse/magrittr}.
 }
 \author{
 Shahin Roshani
