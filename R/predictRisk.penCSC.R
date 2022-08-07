@@ -12,17 +12,25 @@
 #'
 #'@return A matrix with columns of absolute risk predictions of individuals for each requested time horizon.
 #'
-#'@examples data(Melanoma)
+#'@examples \dontrun{
 #'
-#'vl <- list('1'=c('age','sex','ulcer','thick'),'2'=~age+sex+epicel+thick+ici)
+#'data(Melanoma)
+#'
+#'vl <- list('1'=c('age','sex','ulcer','thick'),
+#'
+#'           '2'=~age+sex+epicel+thick+ici)
 #'
 #'al <- list('1'=0,'2'=.5)
 #'
 #'ll <- list('1'=.01,'2'=.04)
 #'
-#'penfit <- penCSC(time='time',status='status',vars.list=vl,data=Melanoma,alpha.list=al,lambda.list=ll)
+#'penfit <- penCSC(time='time',status='status',vars.list=vl,
+#'
+#'                 data=Melanoma,alpha.list=al,lambda.list=ll)
 #'
 #'predictRisk(penfit,Melanoma[1:5,],times=1825*(1:2),cause=1)
+#'
+#'}
 #'
 #'@seealso \url{https://www.rdocumentation.org/packages/riskRegression/versions/1.3.7/topics/predictRisk}
 #'
@@ -42,11 +50,11 @@ predictRisk.penCSC <- function(object,newdata,times,cause,...){
 
   as.list(times) %>%
 
-    map(~predict.penCSC(object=object,newX=newdata,event=cause,time=.,
+    purrr::map(~predict.penCSC(object=object,newX=newdata,event=cause,time=.,
 
-                        type='absRisk')$absoluteRisk %>% as.matrix) %>%
+                               type='absRisk')$absoluteRisk %>% as.matrix) %>%
 
-    reduce(cbind) -> absRisks
+    purrr::reduce(cbind) -> absRisks
 
   colnames(absRisks) <- times
 

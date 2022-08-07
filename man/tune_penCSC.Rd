@@ -96,13 +96,17 @@ The process of determining the lambda values automatically is by:
 This will be done for each cause-specific model to create exclusive sequences of lambdas for each of them.
 }
 \examples{
+\dontrun{
+
 data(Melanoma)
 
-vl <- list('1'=~age+sex+epicel+ici,'2'=c('age','ulcer','thick','invasion'))
+vl <- list('1'=~age+sex+epicel+ici,
+
+          '2'=c('age','ulcer','thick','invasion'))
 
 al <- list('1'=0,'2'=c(.5,1))
 
-#External standardization function for pre-processing with data frame as its input and output
+#External standardization function with data frame as its input and output
 
 library(recipes)
 
@@ -124,27 +128,31 @@ std.fun <- function(data){
 
 }
 
-test <- tune_penCSC(time = 'time',status = 'status',vars.list = vl,data = Melanoma,horizons = 1825,
+set.seed(233)
 
-                   event = 1,method = 'cv',k = 5,metrics = 'AUC',alpha.grid = al,standardize = FALSE,
+test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1825,
 
-                   preProc.fun = std.fun,parallel = TRUE,preProc.pkgs = 'recipes')
+                   event=1,method='cv',k=5,metrics='AUC',alpha.grid=al,standardize=FALSE,
+
+                   preProc.fun=std.fun,parallel=TRUE,preProc.pkgs='recipes')
 
 test
 
 }
+
+}
 \references{
-Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. doi: 10.18637/jss.v033.i01, \url{https://www.jstatsoft.org/v33/i01/}.
+Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. \doi{10.18637/jss.v033.i01}, \url{https://www.jstatsoft.org/v33/i01/}.
 
-Saadati, M, Beyersmann, J, Kopp-Schneider, A, Benner, A. Prediction accuracy and variable selection for penalized cause-specific hazards models. Biometrical Journal. 2018; 60: 288– 306. \url{https://doi.org/10.1002/bimj.201600242}.
+Saadati, M, Beyersmann, J, Kopp-Schneider, A, Benner, A. Prediction accuracy and variable selection for penalized cause-specific hazards models. Biometrical Journal. 2018; 60: 288– 306. \doi{10.1002/bimj.201600242}.
 
-Gerds TA, Kattan MW (2021). Medical Risk Prediction Models: With Ties to Machine Learning (1st ed.). Chapman and Hall/CRC. \url{https://doi.org/10.1201/9781138384484.}
+Gerds TA, Kattan MW (2021). Medical Risk Prediction Models: With Ties to Machine Learning (1st ed.). Chapman and Hall/CRC. \doi{10.1201/9781138384484}
 
 Pfeiffer, R. M., & Gail, M. M. (2017). Absolute risk: Methods and applications in clinical management and public health.
 
-Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1 - 26. doi:\url{http://dx.doi.org/10.18637/jss.v028.i05}.
+Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1–26. \doi{10.18637/jss.v028.i05}.
 
-Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. doi:10.32614/RJ-2021-048, \url{https://doi.org/10.32614/RJ-2021-048}.
+Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. \doi{10.32614/RJ-2021-048}.
 
 Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. \url{https://github.com/DavisVaughan/furrr}, \url{https://furrr.futureverse.org/}.
 }

@@ -39,19 +39,27 @@ A named list containing all the information related to the used data and the fit
 Function to fit penalized cause-specific-cox with elastic-net penalty.
 }
 \examples{
+\dontrun{
+
 data(Melanoma)
 
-vl <- list('1'=c('age','sex','ulcer','thick'),'2'=~age+sex+epicel+thick+ici)
+vl <- list('1'=c('age','sex','ulcer','thick'),
+
+          '2'=~age+sex+epicel+thick+ici)
 
 al <- list('1'=0,'2'=.5)
 
 ll <- list('1'=.01,'2'=.04)
 
-penCSC(time='time',status='status',vars.list=vl,data=Melanoma,alpha.list=al,lambda.list=ll)
+penCSC(time='time',status='status',vars.list=vl,
+
+      data=Melanoma,alpha.list=al,lambda.list=ll)
+
+}
 
 }
 \references{
-Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. doi: 10.18637/jss.v033.i01, \url{https://www.jstatsoft.org/v33/i01/}.
+Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. \doi{10.18637/jss.v033.i01}, \url{https://www.jstatsoft.org/v33/i01/}.
 }
 \author{
 Shahin Roshani

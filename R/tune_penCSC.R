@@ -39,13 +39,17 @@
 #'}
 #'This will be done for each cause-specific model to create exclusive sequences of lambdas for each of them.
 #'
-#'@examples data(Melanoma)
+#'@examples \dontrun{
 #'
-#'vl <- list('1'=~age+sex+epicel+ici,'2'=c('age','ulcer','thick','invasion'))
+#'data(Melanoma)
+#'
+#'vl <- list('1'=~age+sex+epicel+ici,
+#'
+#'           '2'=c('age','ulcer','thick','invasion'))
 #'
 #'al <- list('1'=0,'2'=c(.5,1))
 #'
-#'#External standardization function for pre-processing with data frame as its input and output
+#'#External standardization function with data frame as its input and output
 #'
 #'library(recipes)
 #'
@@ -67,29 +71,39 @@
 #'
 #'}
 #'
-#'test <- tune_penCSC(time = 'time',status = 'status',vars.list = vl,data = Melanoma,horizons = 1825,
+#'set.seed(233)
 #'
-#'                    event = 1,method = 'cv',k = 5,metrics = 'AUC',alpha.grid = al,standardize = FALSE,
+#'test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1825,
 #'
-#'                    preProc.fun = std.fun,parallel = TRUE,preProc.pkgs = 'recipes')
+#'                    event=1,method='cv',k=5,metrics='AUC',alpha.grid=al,standardize=FALSE,
+#'
+#'                    preProc.fun=std.fun,parallel=TRUE,preProc.pkgs='recipes')
 #'
 #'test
 #'
-#'@references Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. doi: 10.18637/jss.v033.i01, \url{https://www.jstatsoft.org/v33/i01/}.
+#'}
 #'
-#'Saadati, M, Beyersmann, J, Kopp-Schneider, A, Benner, A. Prediction accuracy and variable selection for penalized cause-specific hazards models. Biometrical Journal. 2018; 60: 288– 306. \url{https://doi.org/10.1002/bimj.201600242}.
+#'@references Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. \doi{10.18637/jss.v033.i01}, \url{https://www.jstatsoft.org/v33/i01/}.
 #'
-#'Gerds TA, Kattan MW (2021). Medical Risk Prediction Models: With Ties to Machine Learning (1st ed.). Chapman and Hall/CRC. \url{https://doi.org/10.1201/9781138384484.}
+#'Saadati, M, Beyersmann, J, Kopp-Schneider, A, Benner, A. Prediction accuracy and variable selection for penalized cause-specific hazards models. Biometrical Journal. 2018; 60: 288– 306. \doi{10.1002/bimj.201600242}.
+#'
+#'Gerds TA, Kattan MW (2021). Medical Risk Prediction Models: With Ties to Machine Learning (1st ed.). Chapman and Hall/CRC. \doi{10.1201/9781138384484}
 #'
 #'Pfeiffer, R. M., & Gail, M. M. (2017). Absolute risk: Methods and applications in clinical management and public health.
 #'
-#'Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1 - 26. doi:\url{http://dx.doi.org/10.18637/jss.v028.i05}.
+#'Kuhn, M. (2008). Building Predictive Models in R Using the caret Package. Journal of Statistical Software, 28(5), 1–26. \doi{10.18637/jss.v028.i05}.
 #'
-#'Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. doi:10.32614/RJ-2021-048, \url{https://doi.org/10.32614/RJ-2021-048}.
+#'Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. \doi{10.32614/RJ-2021-048}.
 #'
 #'Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. \url{https://github.com/DavisVaughan/furrr}, \url{https://furrr.futureverse.org/}.
 #'
-#'@import tidyverse survival riskRegression prodlim magrittr glmnet caret furrr future recipes
+#'@import tidyverse survival riskRegression prodlim magrittr glmnet furrr recipes
+#'
+#'@importFrom caret createDataPartition createFolds createMultiFolds createResample
+#'
+#'@importFrom future plan availableCores
+#'
+#'@importFrom stats predict
 #'
 #'@export
 
@@ -147,7 +161,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
       indices <- seq_len(nrow(data))
 
-      train_index_list <- as.list(indices) %>% map(~indices[-.])
+      train_index_list <- as.list(indices) %>% purrr::map(~indices[-.])
 
     }
 
@@ -160,7 +174,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
     if (method=='boot') train_index_list <- caret::createResample(y=data[[status]],times=times,list=T)
 
 
-    test_index_list <- train_index_list %>% map(~which(!(seq_len(nrow(data)) %in% .)))
+    test_index_list <- train_index_list %>% purrr::map(~which(!(seq_len(nrow(data)) %in% .)))
 
     return(list(train_index_list=train_index_list,test_index_list=test_index_list))
 
@@ -170,13 +184,13 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   cens.code <- codes[-which(codes %in% names(vars.list))]
 
-  form <- str_c('Hist(',time,',',status,',cens.code=\'',cens.code,'\'',')',
+  form <- stringr::str_c('Hist(',time,',',status,',cens.code=\'',cens.code,'\'',')',
 
-                as.character.POSIXt(rhs)) %>% as.formula
+                         as.character.POSIXt(rhs)) %>% stats::as.formula()
 
-  if (is_empty(lambda.grid)){
+  if (purrr::is_empty(lambda.grid)){
 
-    if (is_empty(nlambdas.list)){
+    if (purrr::is_empty(nlambdas.list)){
 
       nlambdas.list <- rep(list(5),length(vars.list))
 
@@ -187,40 +201,40 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
     nlambdas.list <- nlambdas.list[names(vars.list)]
 
 
-    dd <- as_tibble(data) %>% mutate_if(is.character,as.factor) %>% na.omit
+    dd <- tibble::as_tibble(data) %>% dplyr::mutate_if(is.character,as.factor) %>% stats::na.omit()
 
     ymats <- names(vars.list) %>%
 
       as.list %>% (function(x){names(x) <- x ; return(x)}) %>%
 
-      map(~Surv(dd[[time]],dd[[status]]==.) %>% as.matrix)
+      purrr::map(~survival::Surv(dd[[time]],dd[[status]]==.) %>% as.matrix())
 
-    vl <- vars.list %>% map(function(x){
+    vl <- vars.list %>% purrr::map(function(x){
 
-      if (inherits(x,'character')) x <- str_c('~',str_c(x,collapse='+')) %>% as.formula
+      if (inherits(x,'character')) x <- stringr::str_c('~',stringr::str_c(x,collapse='+')) %>% stats::as.formula()
 
       return(x)
 
     })
 
-    Xmats <- vl %>% map(~model.matrix(.,data=dd)[,-1,drop=F])
+    Xmats <- vl %>% purrr::map(~model.matrix(.,data=dd)[,-1,drop=F])
 
 
     lambda_seq <- function(X,y,nlambdas){
 
       max_lambda <- 0
 
-      range_fit <- glmnet(x=X,y=y,family='cox',alpha=1,standardize=T) %>%
+      range_fit <- glmnet::glmnet(x=X,y=y,family='cox',alpha=1,standardize=T) %>%
 
-        predict(.,s=max_lambda,type='coefficients')
+        (function(x) predict(x,s=max_lambda,type='coefficients'))
 
       while (any(range_fit[,1]!=0)){
 
         max_lambda <- max_lambda + grow.by
 
-        range_fit <- glmnet(x=X,y=y,family='cox',alpha=1,standardize=T) %>%
+        range_fit <- glmnet::glmnet(x=X,y=y,family='cox',alpha=1,standardize=T) %>%
 
-          predict(.,s=max_lambda,type='coefficients')
+          (function(x) predict(x,s=max_lambda,type='coefficients'))
 
       }
 
@@ -228,11 +242,13 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     }
 
-    lambda.grid <- pmap(.l=list(ymats,Xmats,nlambdas.list),.f=~lambda_seq(..2,..1,..3) %>% unique)
+    lambda.grid <- purrr::pmap(.l=list(ymats,Xmats,nlambdas.list),
+
+                               .f=~lambda_seq(..2,..1,..3) %>% unique)
 
   }
 
-  if (is_empty(alpha.grid)){
+  if (purrr::is_empty(alpha.grid)){
 
     alpha.grid <- rep(list(seq(0,1,.5)),length(vars.list))
 
@@ -245,47 +261,47 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   lambda.grid <- lambda.grid[names(vars.list)]
 
-  names(alpha.grid) <- str_c('alpha_',names(alpha.grid))
+  names(alpha.grid) <- stringr::str_c('alpha_',names(alpha.grid))
 
-  names(lambda.grid) <- str_c('lambda_',names(lambda.grid))
+  names(lambda.grid) <- stringr::str_c('lambda_',names(lambda.grid))
 
 
   start <- Sys.time()
 
 
-  grid <- c(alpha.grid,lambda.grid,horizon=list(horizons)) %>% expand.grid
+  grid <- c(alpha.grid,lambda.grid,horizon=list(horizons)) %>% expand.grid()
 
 
   nn <- length(lambda.grid)
 
   zl_indices <- apply(grid,1,function(x) which(x[(1:nn)+nn]==0) %>% as.vector)
 
-  for (i in 1:nrow(grid)){
+  for (i in seq_len(nrow(grid))){
 
-    if (!is_empty(zl_indices[[i]])) grid[i,zl_indices[[i]]] <- 0
+    if (!purrr::is_empty(zl_indices[[i]])) grid[i,zl_indices[[i]]] <- 0
 
   }
 
-  grid <- distinct(grid)
+  grid <- dplyr::distinct(grid)
 
 
-  calc_grid <- grid %>% mutate(combination=seq_len(nrow(.))) %>%
+  calc_grid <- grid %>% dplyr::mutate(combination=seq_len(nrow(grid))) %>%
 
-    split(~.$combination) %>%
+    (function(x) split(x,x$combination)) %>%
 
-    map(~select(.,-combination) %>% (function(x){
+    purrr::map(~select(.,-combination) %>% (function(x){
 
       y <- list()
 
-      y$alpha.list <- select(x,starts_with('alpha_')) %>%
+      y$alpha.list <- dplyr::select(x,dplyr::starts_with('alpha_')) %>%
 
-        rename_all(~str_remove(.,'alpha_')) %>% as.list
+        dplyr::rename_all(~stringr::str_remove(.,'alpha_')) %>% as.list
 
-      y$lambda.list <- select(x,starts_with('lambda_')) %>%
+      y$lambda.list <- dplyr::select(x,dplyr::starts_with('lambda_')) %>%
 
-        rename_all(~str_remove(.,'lambda_')) %>% as.list
+        dplyr::rename_all(~stringr::str_remove(.,'lambda_')) %>% as.list
 
-      y$horizon <- select(x,horizon) %>% unlist
+      y$horizon <- dplyr::select(x,horizon) %>% unlist
 
       return(y)
 
@@ -296,60 +312,60 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     resamples <- resampler(method)
 
-    training_list <- resamples$train_index_list %>% map(~data[.,] %>% preProc.fun)
+    training_list <- resamples$train_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
 
-    testing_list <- resamples$test_index_list %>% map(~data[.,] %>% preProc.fun)
+    testing_list <- resamples$test_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
 
-    pmap(.l=list(aa=training_list,bb=testing_list),
+    purrr::pmap(.l=list(aa=training_list,bb=testing_list),
 
-         .f=possibly(.f=function(aa,bb){
+                .f=purrr::possibly(.f=function(aa,bb){
 
-           penCSC(time=time,
+                  penCSC(time=time,
 
-                  status=status,
+                         status=status,
 
-                  vars.list=vars.list,
+                         vars.list=vars.list,
 
-                  data=aa,
+                         data=aa,
 
-                  alpha.list=alpha_list,
+                         alpha.list=alpha_list,
 
-                  lambda.list=lambda_list,
+                         lambda.list=lambda_list,
 
-                  standardize=standardize,
+                         standardize=standardize,
 
-                  keep=keep) -> fit
+                         keep=keep) -> fit
 
-           riskRegression::Score(list(fit),data=bb,formula=form,metrics=metrics,
+                  riskRegression::Score(list(fit),data=bb,formula=form,metrics=metrics,
 
-                                 cause=event,times=horizon,null.model=F) %>% .[metrics] %>%
+                                        cause=event,times=horizon,null.model=F) %>% (function(x) x[metrics]) %>%
 
-             map(~.$score %>% .[,3] %>% unlist %>% as.vector) %>% as_tibble
+                    purrr::map(~.$score %>% (function(x) x[,3]) %>% unlist %>% as.vector) %>% tibble::as_tibble()
 
-         },
+                },
 
-         otherwise=matrix(NA,1,length(metrics)) %>%
+                otherwise=matrix(NA,1,length(metrics)) %>%
 
-           (function(x){colnames(x) <- metrics ; return(as_tibble(x))})
+                  (function(x){colnames(x) <- metrics ; return(tibble::as_tibble(x))})
 
-         )
+                )
 
     ) %>% (function(x){
 
-      map2(.x=x,
+      purrr::map2(.x=x,
 
-           .y=as.list(names(x)),
+                  .y=as.list(names(x)),
 
-           .f=~mutate(.x,'step'=.y) %>% relocate('step',.before=1))
+                  .f=~dplyr::mutate(.x,'step'=.y) %>% dplyr::relocate('step',.before=1))
 
-    }) %>% reduce(rbind)
+    }) %>% purrr::reduce(rbind)
 
   }
 
 
   if (!parallel){
 
-    calc_grid %>% map(~modeling(.$alpha.list,.$lambda.list,.$horizon)) -> lossfun_vals
+    calc_grid %>% purrr::map(~modeling(.$alpha.list,.$lambda.list,.$horizon)) -> lossfun_vals
 
   } else{
 
@@ -357,13 +373,13 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
                   'Publish','glmnet','caret','furrr') %>%
 
-      c(.,preProc.pkgs) %>% unique
+      (function(x) c(x,preProc.pkgs)) %>% unique()
 
     globals <- c('penCSC','predict.penCSC','vars.list','preProc.fun',
 
                  'resampler','data','predictRisk.penCSC','keep','modeling') %>%
 
-      c(.,preProc.globals) %>% unique
+      (function(x) c(x,preProc.globals)) %>% unique()
 
     future::plan(future::multisession(),workers=core.nums)
 
@@ -382,27 +398,27 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   stop <- Sys.time()
 
-  cat('\nProcess was done in:',(stop-start) %>% as.character.POSIXt %>% str_c(.,'.\n\n'))
+  cat('\nProcess was done in:',(stop-start) %>% as.character.POSIXt %>% (function(x) stringr::str_c(x,'.\n\n')))
 
 
-  lossfun_vals %>% map(~select(.,-step) %>% summarize_all(mean) %>%
+  lossfun_vals %>% purrr::map(~dplyr::select(.,-step) %>% dplyr::summarize_all(mean) %>%
 
-                         rename_all(~str_c('mean.',.))) %>%
+                                dplyr::rename_all(~stringr::str_c('mean.',.))) %>%
 
-    reduce(rbind) %>% cbind(grid,.) -> validation_result
+    purrr::reduce(rbind) %>% (function(x) cbind(grid,x)) -> validation_result
 
 
-  final_params <- validation_result %>% split(~.$horizon) %>%
+  final_params <- validation_result %>% (function(x) split(x,x$horizon)) %>%
 
-    map(function(x){
+    purrr::map(function(x){
 
       if (final.metric=='Brier'){
 
-        res <- filter(x,mean.Brier==min(mean.Brier,na.rm=T))
+        res <- dplyr::filter(x,x$mean.Brier==min(x$mean.Brier,na.rm=T))
 
       } else{
 
-        res <- filter(x,mean.AUC==max(mean.AUC,na.rm=T))
+        res <- dplyr::filter(x,x$mean.AUC==max(x$mean.AUC,na.rm=T))
 
       }
 
@@ -413,15 +429,15 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   final_fits <- final_params %>%
 
-    map(function(x){
+    purrr::map(function(x){
 
-      al <- x[str_subset(names(x),'alpha_')] %>% as.list
+      al <- x[stringr::str_subset(names(x),'alpha_')] %>% as.list()
 
-      ll <- x[str_subset(names(x),'lambda_')] %>% as.list
+      ll <- x[stringr::str_subset(names(x),'lambda_')] %>% as.list()
 
-      names(al) <- str_remove(names(al),'alpha_')
+      names(al) <- stringr::str_remove(names(al),'alpha_')
 
-      names(ll) <- str_remove(names(ll),'lambda_')
+      names(ll) <- stringr::str_remove(names(ll),'lambda_')
 
       penCSC(time = time,
 
@@ -446,8 +462,6 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
                          final_fits=final_fits)
 
   class(tuning_results) <- 'tune_penCSC'
-
-  print.tune_penCSC <<- function(x) print(x$final_fits)
 
   return(tuning_results)
 

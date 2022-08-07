@@ -14,15 +14,21 @@
 #'
 #'@return A tibble containing the predictions based on the input arguments.
 #'
-#'@examples data(Melanoma)
+#'@examples \dontrun{
 #'
-#'vl <- list('1'=c('age','sex','ulcer','thick'),'2'=~age+sex+epicel+thick+ici)
+#'data(Melanoma)
+#'
+#'vl <- list('1'=c('age','sex','ulcer','thick'),
+#'
+#'           '2'=~age+sex+epicel+thick+ici)
 #'
 #'al <- list('1'=0,'2'=.5)
 #'
 #'ll <- list('1'=.01,'2'=.04)
 #'
-#'penfit <- penCSC(time='time',status='status',vars.list=vl,data=Melanoma,alpha.list=al,lambda.list=ll)
+#'penfit <- penCSC(time='time',status='status',vars.list=vl,
+#'
+#'                 data=Melanoma,alpha.list=al,lambda.list=ll)
 #'
 #'predict(penfit,Melanoma[1:5,],type='lp')
 #'
@@ -30,9 +36,11 @@
 #'
 #'predict(penfit,Melanoma[1:5,],type='absRisk',event=1:2,time=1825*(1:2))
 #'
+#'}
+#'
 #'@references Pfeiffer, R. M., & Gail, M. M. (2017). Absolute risk: Methods and applications in clinical management and public health.
 #'
-#'Aalen, O.O. (1978) Nonparametric Inference for a Family of Counting Processes. The Annals of Statistics, 6, 701-726. \url{http://dx.doi.org/10.1214/aos/1176344247}.
+#'Aalen, O.O. (1978) Nonparametric Inference for a Family of Counting Processes. The Annals of Statistics, 6, 701-726. \doi{10.1214/aos/1176344247}.
 #'
 #'@import tidyverse survival riskRegression prodlim magrittr glmnet
 #'
@@ -48,7 +56,7 @@ predict.penCSC <- function(object,newX,event=NULL,time,
 
   }
 
-  if (is.null(event)) event <- names(object$models) %>% str_remove('Event: ')
+  if (is.null(event)) event <- names(object$models) %>% stringr::str_remove('Event: ')
 
   stopifnot('reference must be either `sample` or `zero`!'=reference %in% c('sample','zero'))
 
@@ -58,11 +66,11 @@ predict.penCSC <- function(object,newX,event=NULL,time,
 
   #}
 
-  newX <- as_tibble(newX) %>% mutate_if(is.character,as.factor)
+  newX <- tibble::as_tibble(newX) %>% dplyr::mutate_if(is.character,as.factor)
 
-  fcts <- object$data$input.data %>% select(where(~!is.numeric(.))) %>% map(levels)
+  fcts <- object$data$input.data %>% dplyr::select_if(~!is.numeric(.)) %>% purrr::map(levels)
 
-  if (!is_empty(fcts)){
+  if (!purrr::is_empty(fcts)){
 
     for (i in seq_len(length(fcts))){
 
@@ -76,59 +84,61 @@ predict.penCSC <- function(object,newX,event=NULL,time,
   lp_risk_pred <- function(object,newX,event,type,reference){
 
 
-    newX <- object$predictors[event] %>% map(~model.matrix(.,data=newX)[,-1])
+    newX <- object$predictors[event] %>% purrr::map(~model.matrix(.,data=newX)[,-1])
 
 
     if (type=='lp') type <- 'link' ; if (type=='risk') type <- 'response'
 
-    if (is.null(event)) event <- names(object$models) %>% str_remove('Event: ')
+    if (is.null(event)) event <- names(object$models) %>% stringr::str_remove('Event: ')
 
-    preds <- pmap(.l=list(object$models[str_c('Event: ',event)],
+    preds <- purrr::pmap(.l=list(object$models[stringr::str_c('Event: ',event)],
 
-                          newX,
+                                 newX,
 
-                          object$parameters$lambda.list[event]),
+                                 object$parameters$lambda.list[event]),
 
-                  .f=~predict(..1,newx=..2,s=..3,type='link')) %>%
+                         .f=~predict(..1,newx=..2,s=..3,type='link')) %>%
 
-      map(~as_tibble(.) %>% rename('prediction'='1'))
+      purrr::map(~tibble::as_tibble(.) %>% dplyr::rename('prediction'='1'))
 
 
     if (reference=='sample'){
 
-      means <- object$data$X[event] %>% map(function(x){
+      means <- object$data$X[event] %>% purrr::map(function(x){
 
         x <- as.data.frame(x)
 
-        x %>% map_if(~all(unique(na.omit(.)) %in% 0:1),~0,.else=mean) %>%
+        x %>% purrr::map_if(~all(unique(na.omit(.)) %in% 0:1),~0,.else=mean) %>%
 
           as.data.frame %>% unlist
 
       })
 
-      pred_modif <- map2(.x=object$coefs[str_c('Event: ',event)] %>% map(~.[,1] %>% as.vector),
+      pred_modif <- purrr::map2(.x=object$coefs[stringr::str_c('Event: ',event)] %>%
 
-                         .y=means,
+                                  purrr::map(~.[,1] %>% as.vector),
 
-                         .f=~sum(.x*.y,na.rm=TRUE))
+                                .y=means,
+
+                                .f=~sum(.x*.y,na.rm=TRUE))
 
 
-      preds <-  map2(.x=preds,
+      preds <-  purrr::map2(.x=preds,
 
-                     .y=pred_modif,
+                            .y=pred_modif,
 
-                     .f=~mutate_all(.x,function(a) a-.y))
+                            .f=~dplyr::mutate_all(.x,function(a) a-.y))
 
     }
 
 
-    if (type=='response') preds <- preds %>% map(~mutate_all(.,exp))
+    if (type=='response') preds <- preds %>% purrr::map(~dplyr::mutate_all(.,exp))
 
-    map2(.x=preds %>% map(~mutate(.,id=seq_len(nrow(.)))),
+    purrr::map2(.x=preds %>% purrr::map(~dplyr::mutate(.,id=seq_len(nrow(.)))),
 
-         .y=names(preds),.f=~mutate(.x,event=.y %>% str_remove('Event: '))) %>%
+                .y=names(preds),.f=~dplyr::mutate(.x,event=.y %>% stringr::str_remove('Event: '))) %>%
 
-      reduce(rbind) %>% relocate('prediction',.after='event') -> preds
+      purrr::reduce(rbind) %>% dplyr::relocate('prediction',.after='event') -> preds
 
     return(preds)
 
@@ -148,73 +158,69 @@ predict.penCSC <- function(object,newX,event=NULL,time,
 
                                    dat[[object$surv.names[['event']]]]==event),] %>%
 
-          .[[object$surv.names[['time']]]]
+          (function(x) x[[object$surv.names[['time']]]])
 
 
-        b <- object$baseline_hazards[[str_c('Event: ',event)]] %>%
+        b <- object$baseline_hazards[[stringr::str_c('Event: ',event)]] %>%
 
-          filter(time %in% event_times) %>% .$haz
-
-
-        map2(.x=object$predictors,
-
-             .y=rep(list(indivs),length(object$predictors)),
-
-             .f=~model.matrix(.x,data=.y)[,-1]) -> ndX
+          dplyr::filter(time %in% event_times) %>% (function(x) x$haz)
 
 
-        cumulative_hazards <- pmap(.l=list(object$models,
+        purrr::map2(.x=object$predictors,
 
-                                           object$data$X,
+                    .y=rep(list(indivs),length(object$predictors)),
 
-                                           object$data$y,
-
-                                           ndX,
-
-                                           object$parameters$lambda.list),
-
-                                   .f=~survfit(..1,
-
-                                               x=..2,
-
-                                               y=Surv(time=..3[,1],event=..3[,2]),
-
-                                               newx=..4,
-
-                                               s=..5)) %>%
-
-          map((function(x){
-
-            tibble(time=x$time,cumhaz=x$cumhaz) %>% filter(time %in% event_times)
-
-          })) %>% map(~.$cumhaz %>% as.matrix)
+                    .f=~model.matrix(.x,data=.y)[,-1]) -> ndX
 
 
-        risks <- lp_risk_pred(object,indivs,event,'risk',reference='zero') %>%
+        cumulative_hazards <- purrr::pmap(.l=list(object$models,
 
-          .$prediction
+                                                  object$data$X,
+
+                                                  object$data$y,
+
+                                                  ndX,
+
+                                                  object$parameters$lambda.list),
+
+                                          .f=~survival::survfit(..1,
+
+                                                                x=..2,
+
+                                                                y=survival::Surv(time=..3[,1],event=..3[,2]),
+
+                                                                newx=..4,
+
+                                                                s=..5)) %>%
+
+          purrr::map((function(x){
+
+            tibble::tibble(time=x$time,cumhaz=x$cumhaz) %>% dplyr::filter(time %in% event_times)
+
+          })) %>% purrr::map(~.$cumhaz %>% as.matrix)
 
 
-        risks * (matrix(b,nrow=1) %*% (reduce(cumulative_hazards,`+`) %>%
+        risks <- lp_risk_pred(object,indivs,event,'risk',reference='zero') %>% (function(x) x$prediction)
 
-                                         apply(.,2,function(x) exp(-x)))) %>%
 
-          as.vector -> absRisks
+        risks * (matrix(b,nrow=1) %*% (purrr::reduce(cumulative_hazards,`+`) %>%
+
+                                         (function(x) apply(x,2,function(y) exp(-y))))) %>% as.vector -> absRisks
 
 
         return(
 
-          tibble(id=seq_len(nrow(indivs)),event=event,horizon=horizon,absoluteRisk=absRisks)
+          tibble::tibble(id=seq_len(nrow(indivs)),event=event,horizon=horizon,absoluteRisk=absRisks)
 
         )
 
       }
 
-      grid <- expand.grid(event=events,horizon=horizons) %>% mutate_if(is.factor,as.character)
+      grid <- expand.grid(event=events,horizon=horizons) %>% dplyr::mutate_if(is.factor,as.character)
 
-      return(grid %>% pmap(~indivs_absRisk(object,newdata,..1,..2)) %>%
+      return(grid %>% purrr::pmap(~indivs_absRisk(object,newdata,..1,..2)) %>%
 
-               reduce(rbind) %>% as_tibble)
+               purrr::reduce(rbind) %>% tibble::as_tibble())
 
     }
 

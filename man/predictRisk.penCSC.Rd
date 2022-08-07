@@ -24,17 +24,25 @@ A matrix with columns of absolute risk predictions of individuals for each reque
 predictRisk method for absolute risk prediction. This is mainly for compatibility of 'CSCNet' with functions of 'riskRegression' package.
 }
 \examples{
+\dontrun{
+
 data(Melanoma)
 
-vl <- list('1'=c('age','sex','ulcer','thick'),'2'=~age+sex+epicel+thick+ici)
+vl <- list('1'=c('age','sex','ulcer','thick'),
+
+          '2'=~age+sex+epicel+thick+ici)
 
 al <- list('1'=0,'2'=.5)
 
 ll <- list('1'=.01,'2'=.04)
 
-penfit <- penCSC(time='time',status='status',vars.list=vl,data=Melanoma,alpha.list=al,lambda.list=ll)
+penfit <- penCSC(time='time',status='status',vars.list=vl,
+
+                data=Melanoma,alpha.list=al,lambda.list=ll)
 
 predictRisk(penfit,Melanoma[1:5,],times=1825*(1:2),cause=1)
+
+}
 
 }
 \seealso{

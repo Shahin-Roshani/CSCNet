@@ -28,15 +28,21 @@ A tibble containing the predictions based on the input arguments.
 Flexible prediction method for the objects of class `penCSC` including the absolute risk prediction.
 }
 \examples{
+\dontrun{
+
 data(Melanoma)
 
-vl <- list('1'=c('age','sex','ulcer','thick'),'2'=~age+sex+epicel+thick+ici)
+vl <- list('1'=c('age','sex','ulcer','thick'),
+
+          '2'=~age+sex+epicel+thick+ici)
 
 al <- list('1'=0,'2'=.5)
 
 ll <- list('1'=.01,'2'=.04)
 
-penfit <- penCSC(time='time',status='status',vars.list=vl,data=Melanoma,alpha.list=al,lambda.list=ll)
+penfit <- penCSC(time='time',status='status',vars.list=vl,
+
+                data=Melanoma,alpha.list=al,lambda.list=ll)
 
 predict(penfit,Melanoma[1:5,],type='lp')
 
@@ -45,10 +51,12 @@ predict(penfit,Melanoma[1:5,],type='response')
 predict(penfit,Melanoma[1:5,],type='absRisk',event=1:2,time=1825*(1:2))
 
 }
+
+}
 \references{
 Pfeiffer, R. M., & Gail, M. M. (2017). Absolute risk: Methods and applications in clinical management and public health.
 
-Aalen, O.O. (1978) Nonparametric Inference for a Family of Counting Processes. The Annals of Statistics, 6, 701-726. \url{http://dx.doi.org/10.1214/aos/1176344247}.
+Aalen, O.O. (1978) Nonparametric Inference for a Family of Counting Processes. The Annals of Statistics, 6, 701-726. \doi{10.1214/aos/1176344247}.
 }
 \author{
 Shahin Roshani
