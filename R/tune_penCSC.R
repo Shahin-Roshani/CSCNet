@@ -39,7 +39,9 @@
 #'}
 #'This will be done for each cause-specific model to create exclusive sequences of lambdas for each of them.
 #'
-#'@examples \dontrun{
+#'@examples \donttest{
+#'
+#'library(riskRegression)
 #'
 #'data(Melanoma)
 #'
@@ -121,9 +123,9 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
                         final.metric=NULL,alpha.grid=NULL,lambda.grid=NULL,
 
-                        nlambdas.list=NULL,grow.by=.01,standardize=T,keep=NULL,
+                        nlambdas.list=NULL,grow.by=.01,standardize=TRUE,keep=NULL,
 
-                        preProc.fun=function(x) x,parallel=F,preProc.pkgs=NULL,
+                        preProc.fun=function(x) x,parallel=FALSE,preProc.pkgs=NULL,
 
                         preProc.globals=NULL,core.nums=future::availableCores()/2){
 
@@ -391,22 +393,18 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     future::plan(future::multisession(),workers=core.nums)
 
-    cat('\n')
-
     calc_grid %>% furrr::future_map(~modeling(.$alpha.list,.$lambda.list,.$horizon),
 
                                     .options=furrr::furrr_options(packages=pkg_envs,globals=globals,seed=T),
 
                                     .progress=T) -> lossfun_vals
 
-    cat('\n')
-
   }
 
 
   stop <- Sys.time()
 
-  cat('\nProcess was done in:',(stop-start) %>% as.character.POSIXt %>% (function(x) stringr::str_c(x,'.\n\n')))
+  message(stringr::str_c('\nProcess was done in ',(stop-start) %>% as.character.POSIXt,'.'))
 
 
   lossfun_vals %>% purrr::map(~dplyr::select(.,-step) %>% dplyr::summarize_all(mean) %>%

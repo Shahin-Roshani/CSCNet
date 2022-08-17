@@ -12,7 +12,9 @@
 #'
 #'@return A matrix with columns of absolute risk predictions of individuals for each requested time horizon.
 #'
-#'@examples \dontrun{
+#'@examples
+#'
+#'library(riskRegression)
 #'
 #'data(Melanoma)
 #'
@@ -29,8 +31,6 @@
 #'                 data=Melanoma,alpha.list=al,lambda.list=ll)
 #'
 #'predictRisk(penfit,Melanoma[1:5,],times=1825*(1:2),cause=1)
-#'
-#'}
 #'
 #'@references Wickham H, Averick M, Bryan J, Chang W, McGowan L, François R, et al. Welcome to the tidyverse. J Open Source Softw. 2019 Nov 21;4(43):1686.
 #'

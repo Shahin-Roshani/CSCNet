@@ -28,7 +28,8 @@ A tibble containing the predictions based on the input arguments.
 Flexible prediction method for the objects of class `penCSC` including the absolute risk prediction.
 }
 \examples{
-\dontrun{
+
+library(riskRegression)
 
 data(Melanoma)
 
@@ -49,8 +50,6 @@ predict(penfit,Melanoma[1:5,],type='lp')
 predict(penfit,Melanoma[1:5,],type='response')
 
 predict(penfit,Melanoma[1:5,],type='absRisk',event=1:2,time=1825*(1:2))
-
-}
 
 }
 \references{

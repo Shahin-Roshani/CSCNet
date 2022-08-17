@@ -24,7 +24,8 @@ A matrix with columns of absolute risk predictions of individuals for each reque
 predictRisk method for absolute risk prediction. This is mainly for compatibility of 'CSCNet' with functions of 'riskRegression' package.
 }
 \examples{
-\dontrun{
+
+library(riskRegression)
 
 data(Melanoma)
 
@@ -41,8 +42,6 @@ penfit <- penCSC(time='time',status='status',vars.list=vl,
                 data=Melanoma,alpha.list=al,lambda.list=ll)
 
 predictRisk(penfit,Melanoma[1:5,],times=1825*(1:2),cause=1)
-
-}
 
 }
 \references{

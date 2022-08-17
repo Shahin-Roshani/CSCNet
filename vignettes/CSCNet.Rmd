@@ -85,7 +85,7 @@ predict(penfit,Melanoma[1:5,],type='absRisk',event=1,time=365*c(3,5))
 
 The above example was for illustration purposes. In real world analysis, one must tune the hyper-parameters with respect to a proper loss function through resampling procedures. `tune_penCSC` is a comprehensive function that was built for this purpose on regularized cause-specific cox models.
 
-Like before, specification of variables and hyper-parameters are done through named lists and sequences of candidate hyper-parameters related to each involved cause are stored in list positions with the name of that position being that cause. After that, `tune_penCSC` will create all possible combinations from user's specified sequences and evaluates them using either IPCW brier score or IPCW AUC through a resampling process with respect to the event of interest (linking). Supported resampling procedures are: cross validation (`method='cv'`), repeated cross validation (`method='repcv'`), bootstrap (`method='boot'`), Monte-Carlo or leave group out cross validation (`method='lgocv'`) and leave one out cross validation (`method='loocv'`).
+Like before, specification of variables and hyper-parameters are done through named lists and sequences of candidate hyper-parameters related to each involved cause are stored in list positions with the name of that position being that cause. After that, `tune_penCSC` will create all possible combinations from user's specified sequences and evaluates them using either IPCW brier score or IPCW AUC (as loss functions) based on absolute risk predictions of the event of interest (linking) through a chosen resampling process. Supported resampling procedures are: cross validation (`method='cv'`), repeated cross validation (`method='repcv'`), bootstrap (`method='boot'`), Monte-Carlo or leave group out cross validation (`method='lgocv'`) and leave one out cross validation (`method='loocv'`).
 
 #### Automatic specification of hyper-parameters sequences
 
@@ -105,7 +105,7 @@ If the data requires pre-processing steps, it must be done within the resampling
 **Note:** `tune_penCSC` has the parallel processing option. If a user has specified a function for pre-processing steps with global objects or calls from other packages and wants to run the code in parallel, the names of those extra packages and global objects must be given through `preProc.pkgs` and `preProc.globals`.
 
 Now let's see all that was mentioned in this section in an example. Let's say we want to tune our model for 5 year absolute risk prediction of event: 1 based on time dependent (IPCW) AUC as the loss function (evaluation metric) through a 5-fold cross validation process:
-```{r message=F, warning=F}
+```{r message=T, warning=F}
 #Writing a hypothetical pre-processing function
 
 library(recipes)

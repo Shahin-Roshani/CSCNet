@@ -2,7 +2,7 @@ Package: CSCNet
 Type: Package
 Title: Fitting and Tuning Regularized Cause-Specific Cox Models with Elastic-Net Penalty
 Version: 0.1.0
-Author: Shahin Roshani
+Authors@R: c(person(given = "Shahin",family = "Roshani",role = c("aut", "cre", "cph"),email = "s.roshani@nki.nl",comment = c(ORCID = "0000-0001-7518-157X")))
 Maintainer: Shahin Roshani <s.roshani@nki.nl>
 Description: Flexible tools to fit, tune and obtain absolute risk predictions from regularized cause-specific cox models with elastic-net penalty.
 License: GPL (>= 3)

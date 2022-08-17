@@ -14,7 +14,9 @@
 #'
 #'@return A tibble containing the predictions based on the input arguments.
 #'
-#'@examples \dontrun{
+#'@examples
+#'
+#'library(riskRegression)
 #'
 #'data(Melanoma)
 #'
@@ -35,8 +37,6 @@
 #'predict(penfit,Melanoma[1:5,],type='response')
 #'
 #'predict(penfit,Melanoma[1:5,],type='absRisk',event=1:2,time=1825*(1:2))
-#'
-#'}
 #'
 #'@references Pfeiffer, R. M., & Gail, M. M. (2017). Absolute risk: Methods and applications in clinical management and public health.
 #'

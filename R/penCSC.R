@@ -15,7 +15,9 @@
 #'
 #'@return A named list containing all the information related to the used data and the fitted models for all causes. Use \code{$} to explore all the involved information.
 #'
-#'@examples \dontrun{
+#'@examples
+#'
+#'library(riskRegression)
 #'
 #'data(Melanoma)
 #'
@@ -30,8 +32,6 @@
 #'penCSC(time='time',status='status',vars.list=vl,
 #'
 #'       data=Melanoma,alpha.list=al,lambda.list=ll)
-#'
-#'}
 #'
 #'@references Friedman J, Hastie T, Tibshirani R (2010). "Regularization Paths for Generalized Linear Models via Coordinate Descent." Journal of Statistical Software, 33(1), 1-22. \doi{10.18637/jss.v033.i01}, \url{https://www.jstatsoft.org/v33/i01/}.
 #'
@@ -49,7 +49,7 @@
 
 penCSC <- function(time,status,vars.list,data,
 
-                   alpha.list,lambda.list,standardize=T,keep=NULL){
+                   alpha.list,lambda.list,standardize=TRUE,keep=NULL){
 
   name_error <- function(x,arg){
 

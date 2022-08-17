@@ -11,7 +11,7 @@ penCSC(
   data,
   alpha.list,
   lambda.list,
-  standardize = T,
+  standardize = TRUE,
   keep = NULL
 )
 }
@@ -39,7 +39,8 @@ A named list containing all the information related to the used data and the fit
 Function to fit penalized cause-specific-cox with elastic-net penalty.
 }
 \examples{
-\dontrun{
+
+library(riskRegression)
 
 data(Melanoma)
 
@@ -54,8 +55,6 @@ ll <- list('1'=.01,'2'=.04)
 penCSC(time='time',status='status',vars.list=vl,
 
       data=Melanoma,alpha.list=al,lambda.list=ll)
-
-}
 
 }
 \references{

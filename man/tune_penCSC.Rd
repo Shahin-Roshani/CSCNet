@@ -22,10 +22,10 @@ tune_penCSC(
   lambda.grid = NULL,
   nlambdas.list = NULL,
   grow.by = 0.01,
-  standardize = T,
+  standardize = TRUE,
   keep = NULL,
   preProc.fun = function(x) x,
-  parallel = F,
+  parallel = FALSE,
   preProc.pkgs = NULL,
   preProc.globals = NULL,
   core.nums = future::availableCores()/2
@@ -96,7 +96,9 @@ The process of determining the lambda values automatically is by:
 This will be done for each cause-specific model to create exclusive sequences of lambdas for each of them.
 }
 \examples{
-\dontrun{
+\donttest{
+
+library(riskRegression)
 
 data(Melanoma)
 
