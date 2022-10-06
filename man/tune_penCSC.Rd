@@ -16,6 +16,7 @@ tune_penCSC(
   k = 10,
   times = 25,
   p = 0.7,
+  strat.var = NULL,
   metrics = "Brier",
   final.metric = NULL,
   alpha.grid = NULL,
@@ -25,6 +26,7 @@ tune_penCSC(
   standardize = TRUE,
   keep = NULL,
   preProc.fun = function(x) x,
+  preProc.fun.test = NULL,
   parallel = FALSE,
   preProc.pkgs = NULL,
   preProc.globals = NULL,
@@ -54,6 +56,8 @@ tune_penCSC(
 
 \item{p}{The fraction of data to be used as the training set during resampling. Only applicable for \code{method='lgocv'}. Default is 0.7.}
 
+\item{strat.var}{A single character indicating name of the strata variable to be used to create resamples. If numerical, groups will be specified based on percentiles. Default is \code{NULL} which considers status variable as a factor and creates the resamples based on different levels of it.}
+
 \item{metrics}{Evaluation metric (loss function) to be used. Values can be \code{'Brier'} for IPCW brier score, \code{'AUC'} for IPCW AUC or a vector of both. Default is \code{'Brier'}.}
 
 \item{final.metric}{The evaluation metric to decide the best hyper-parameters set for the final fits on the whole data. When \code{NULL} which is the default value, it takes the value from \code{metrics}. If both \code{'Brier'} and \code{'AUC'} were specified in metrics and \code{final.metric} is \code{NULL}, \code{'Brier'} will be used.}
@@ -70,7 +74,9 @@ tune_penCSC(
 
 \item{keep}{A character vector of the names of variables that should not be shrunk in all model fitting procedures. Default is \code{NULL}.}
 
-\item{preProc.fun}{A function that accepts a data frame and returns a modified data that has gone through the user's desired pre-processing steps. All modifications from this function will be done during the resampling procedures to avoid data leakage. Default is \code{function(x) x}.}
+\item{preProc.fun}{A function that accepts a data and returns a modified version of it that has gone through the user's desired pre-processing steps. All modifications from this function will be done during the resampling procedures to avoid data leakage. It will modify all training and test set(s) during the validation unless other argument \code{preProc.fun.test} is specified by user and then it only affects the training set(s). Default is \code{function(x) x}. Also see the description of \code{preProc.fun.test} argument.}
+
+\item{preProc.fun.test}{A function the exact same characteristics and description as \code{preProc.fun} argument. If user specifies a separate function for \code{preProc.fun.test}, it will only affect test set(s) during validation while the function from \code{preProc.fun} will affect the training set(s). Default is \code{NULL} which means function from \code{preProc.fun} will be used on both training and test set(s) during validation. Also see the description of \code{preProc.fun} argument.}
 
 \item{parallel}{Logical indicating whether the tuning process should be performed in parallel or not. Default is \code{FALSE}.}
 

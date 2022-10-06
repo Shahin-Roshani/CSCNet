@@ -15,6 +15,7 @@
 #'@param k Number of folds. Only applicable for \code{method='cv'} and \code{method='repcv'}. Default is 10.
 #'@param times Repeat number of the resampling process. Only applicable for \code{method='repcv'}, \code{method='lgocv'} and \code{method='boot'}. Default is 25.
 #'@param p The fraction of data to be used as the training set during resampling. Only applicable for \code{method='lgocv'}. Default is 0.7.
+#'@param strat.var A single character indicating name of the strata variable to be used to create resamples. If numerical, groups will be specified based on percentiles. Default is \code{NULL} which considers status variable as a factor and creates the resamples based on different levels of it.
 #'@param metrics Evaluation metric (loss function) to be used. Values can be \code{'Brier'} for IPCW brier score, \code{'AUC'} for IPCW AUC or a vector of both. Default is \code{'Brier'}.
 #'@param final.metric The evaluation metric to decide the best hyper-parameters set for the final fits on the whole data. When \code{NULL} which is the default value, it takes the value from \code{metrics}. If both \code{'Brier'} and \code{'AUC'} were specified in metrics and \code{final.metric} is \code{NULL}, \code{'Brier'} will be used.
 #'@param alpha.grid A named list containing a sequence of alpha values to be evaluated for each cause-specific model. Names of the list must be the events and exactly the same as values in the status variable. Default is \code{NULL} which orders the function to set \code{seq(0,1,.5)} for all cause-specific models. See `Details` for more information.
@@ -23,7 +24,8 @@
 #'@param grow.by Difference between the values in the growing sequence of lambda values to find the maximum value that makes the null model. Only applicable when \code{lambda.grid=NULL}. Default is 0.01. See `Details` for more information.
 #'@param standardize Logical indicating whether the variables must be standardized or not during model fitting procedures. Default is \code{TRUE}.
 #'@param keep A character vector of the names of variables that should not be shrunk in all model fitting procedures. Default is \code{NULL}.
-#'@param preProc.fun A function that accepts a data frame and returns a modified data that has gone through the user's desired pre-processing steps. All modifications from this function will be done during the resampling procedures to avoid data leakage. Default is \code{function(x) x}.
+#'@param preProc.fun A function that accepts a data and returns a modified version of it that has gone through the user's desired pre-processing steps. All modifications from this function will be done during the resampling procedures to avoid data leakage. It will modify all training and test set(s) during the validation unless other argument \code{preProc.fun.test} is specified by user and then it only affects the training set(s). Default is \code{function(x) x}. Also see the description of \code{preProc.fun.test} argument.
+#'@param preProc.fun.test A function the exact same characteristics and description as \code{preProc.fun} argument. If user specifies a separate function for \code{preProc.fun.test}, it will only affect test set(s) during validation while the function from \code{preProc.fun} will affect the training set(s). Default is \code{NULL} which means function from \code{preProc.fun} will be used on both training and test set(s) during validation. Also see the description of \code{preProc.fun} argument.
 #'@param parallel Logical indicating whether the tuning process should be performed in parallel or not. Default is \code{FALSE}.
 #'@param preProc.pkgs A character vector containing the names of packages that was used in creating user's \code{preProc.fun} while using parallel computation. Only applicable if \code{parallel=T} and \code{preProc.fun} is a user specified function using functions from other packages. See 'Examples' for details.
 #'@param preProc.globals A character vector containing names of objects included in \code{preProc.fun} to be considered as global objects while using parallel computation. The most frequent ones are the names of the user specified pre processing function or functions within this function. Only applicable if \code{parallel=T} and \code{preProc.fun} is a user specified function. See 'Examples' for details.
@@ -119,15 +121,17 @@
 
 tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
-                        method='cv',k=10,times=25,p=.7,metrics='Brier',
+                        method='cv',k=10,times=25,p=.7,strat.var=NULL,
 
-                        final.metric=NULL,alpha.grid=NULL,lambda.grid=NULL,
+                        metrics='Brier',final.metric=NULL,alpha.grid=NULL,
 
-                        nlambdas.list=NULL,grow.by=.01,standardize=TRUE,keep=NULL,
+                        lambda.grid=NULL,nlambdas.list=NULL,grow.by=.01,standardize=TRUE,
 
-                        preProc.fun=function(x) x,parallel=FALSE,preProc.pkgs=NULL,
+                        keep=NULL,preProc.fun=function(x) x,preProc.fun.test=NULL,
 
-                        preProc.globals=NULL,core.nums=future::availableCores()/2){
+                        parallel=FALSE,preProc.pkgs=NULL,preProc.globals=NULL,
+
+                        core.nums=future::availableCores()/2){
 
   if (!(method %in% c('loocv','lgocv','cv','repcv','boot'))) stop('`method` must be `loocv`, `lgocv`, `cv`, `repcv` or `boot`!',call.=F)
 
@@ -151,17 +155,37 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   if (length(event)!=1) stop('Only the event of interest must be specified for the tuning process!',call.=F)
 
-  if (is.character(preProc.fun)){
+  if (!is.function(preProc.fun)) stop('`preProc.fun` must be a function!',call.=F)
 
-    if (length(preProc.fun)>1){
+  if (!purrr::is_empty(preProc.fun.test) & !is.function(preProc.fun.test)){
 
-      stop('Only one name of a unified pre-processing function must be given!',call.=F)
+    stop('`preProc.fun.test` must be a function!',call.=F)
 
-    } else{
+  }
 
-      preProc.globals <- c(preProc.globals,preProc.fun)
+  #if (is.character(preProc.fun)){
 
-    }
+  #  if (length(preProc.fun)>1){
+
+  #    stop('Only one name of a unified pre-processing function must be given!',call.=F)
+
+  #  } else{
+
+  #    preProc.globals <- c(preProc.globals,preProc.fun)
+
+  #  }
+
+  #}
+
+  if (purrr::is_empty(preProc.fun.test)) preProc.fun.test <- preProc.fun
+
+  if (purrr::is_empty(strat.var)){
+
+    strat.vec <- data[[status]] %>% as.factor
+
+  } else{
+
+    strat.vec <- data[[strat.var]]
 
   }
 
@@ -175,13 +199,13 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     }
 
-    if (method=='lgocv') train_index_list <- caret::createDataPartition(y=data[[status]],times=times,p=p,list=T)
+    if (method=='lgocv') train_index_list <- caret::createDataPartition(y=strat.vec,times=times,p=p,list=T)
 
-    if (method=='cv') train_index_list <- caret::createFolds(y=data[[status]],k=k,list=T,returnTrain=T)
+    if (method=='cv') train_index_list <- caret::createFolds(y=strat.vec,k=k,list=T,returnTrain=T)
 
-    if (method=='repcv') train_index_list <- caret::createMultiFolds(y=data[[status]],k=k,times=times)
+    if (method=='repcv') train_index_list <- caret::createMultiFolds(y=strat.vec,k=k,times=times)
 
-    if (method=='boot') train_index_list <- caret::createResample(y=data[[status]],times=times,list=T)
+    if (method=='boot') train_index_list <- caret::createResample(y=strat.vec,times=times,list=T)
 
 
     test_index_list <- train_index_list %>% purrr::map(~which(!(seq_len(nrow(data)) %in% .)))
@@ -196,7 +220,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   form <- stringr::str_c('Hist(',time,',',status,',cens.code=\'',cens.code,'\'',')',
 
-                         as.character.POSIXt(rhs)) %>% stats::as.formula()
+                         format(rhs)) %>% stats::as.formula()
 
   if (purrr::is_empty(lambda.grid)){
 
@@ -324,7 +348,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     training_list <- resamples$train_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
 
-    testing_list <- resamples$test_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
+    testing_list <- resamples$test_index_list %>% purrr::map(~data[.,] %>% preProc.fun.test)
 
     purrr::pmap(.l=list(aa=training_list,bb=testing_list),
 
@@ -385,9 +409,11 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
       (function(x) c(x,preProc.pkgs)) %>% unique()
 
-    globals <- c('penCSC','predict.penCSC','vars.list','preProc.fun',
+    globals <- c('penCSC','predict.penCSC','vars.list','preProc.fun','preProc.fun.test',
 
-                 'resampler','data','predictRisk.penCSC','keep','modeling') %>%
+                 'strat.var','strat.vec','resampler','data','predictRisk.penCSC','keep',
+
+                 'modeling') %>%
 
       (function(x) c(x,preProc.globals)) %>% unique()
 
@@ -404,7 +430,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   stop <- Sys.time()
 
-  message(stringr::str_c('\nProcess was done in ',(stop-start) %>% as.character.POSIXt,'.'))
+  message(stringr::str_c('\nProcess was done in ',format(stop-start),'.'))
 
 
   lossfun_vals %>% purrr::map(~dplyr::select(.,-step) %>% dplyr::summarize_all(mean) %>%

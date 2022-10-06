@@ -52,9 +52,7 @@
 #'
 #'@export
 
-predict.penCSC <- function(object,newX,event=NULL,time,
-
-                           type='lp',reference='zero',...){
+predict.penCSC <- function(object,newX,event=NULL,time,type='lp',reference='zero',...){
 
   if (!(type %in% c('lp','risk','link','response','absRisk'))){
 
@@ -66,12 +64,6 @@ predict.penCSC <- function(object,newX,event=NULL,time,
 
   stopifnot('reference must be either `sample` or `zero`!'=reference %in% c('sample','zero'))
 
-  #if (!all(names(newX) %in% names(object$data$input.data))){
-
-  #  stop('newX must have all predictors used in the model!',call.=F)
-
-  #}
-
   newX <- tibble::as_tibble(newX) %>% dplyr::mutate_if(is.character,as.factor)
 
   fcts <- object$data$input.data %>% dplyr::select_if(~!is.numeric(.)) %>% purrr::map(levels)
@@ -80,7 +72,7 @@ predict.penCSC <- function(object,newX,event=NULL,time,
 
     for (i in seq_len(length(fcts))){
 
-      levels(newX[[names(fcts)[i]]]) <- fcts[[names(fcts)[i]]]
+      newX[[names(fcts)[i]]] <- factor(newX[[names(fcts)[i]]],levels=fcts[[names(fcts)[i]]])
 
     }
 
@@ -241,4 +233,3 @@ predict.penCSC <- function(object,newX,event=NULL,time,
   return(preds_res)
 
 }
-

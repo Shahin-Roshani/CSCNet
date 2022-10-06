@@ -18,8 +18,8 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![](https://www.r-pkg.org/badges/version/CSCNet)](https://cran.r-project.org/package=CSCNet)
 [![CRAN checks](https://cranchecks.info/badges/summary/CSCNet)](https://cran.r-project.org/web/checks/check_results_CSCNet.html)
-
-[![License: GPL (>= 3)](https://img.shields.io/badge/license-GPL (>= 3)-blue.svg)](https://cran.r-project.org/web/licenses/GPL (>= 3))
+[![](http://cranlogs.r-pkg.org/badges/last-month/CSCNet)](https://cran.r-project.org/package=CSCNet)
+[![License: GPL (>= 3)](https://img.shields.io/badge/license-GPL (>= 3)-blue.svg)](https://cran.r-project.org/web/licenses/GPL-3)
 <!-- badges: end -->
 
 Flexible tools for fitting, tuning and obtaining absolute risk predictions from regularized cause-specific cox (CSC) models with elastic-net penalty.
@@ -39,3 +39,8 @@ install.packages('devtools') #If you haven't installed it yet!
 
 devtools::install_github('Shahin-Roshani/CSCNet')
 ```
+## Links
+
+[CRAN page](https://CRAN.R-project.org/package=CSCNet)
+
+[Deployed GitHub page](https://shahin-roshani.github.io/CSCNet/)
