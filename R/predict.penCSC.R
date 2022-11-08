@@ -64,9 +64,17 @@ predict.penCSC <- function(object,newX,event=NULL,time,type='lp',reference='zero
 
   stopifnot('reference must be either `sample` or `zero`!'=reference %in% c('sample','zero'))
 
-  newX <- tibble::as_tibble(newX) %>% dplyr::mutate_if(is.character,as.factor)
+  #newX <- tibble::as_tibble(newX) %>% dplyr::mutate_if(is.character,as.factor)
 
-  fcts <- object$data$input.data %>% dplyr::select_if(~!is.numeric(.)) %>% purrr::map(levels)
+  pred_vrs <- object$predictors %>%
+
+    purrr::map(~model.frame(.,data=object$data$input.data) %>% colnames) %>%
+
+    purrr::reduce(c) %>% unique()
+
+  fcts <- object$data$input.data %>% dplyr::select(dplyr::all_of(pred_vrs)) %>%
+
+    dplyr::select_if(~!is.numeric(.)) %>% purrr::map(levels)
 
   if (!purrr::is_empty(fcts)){
 

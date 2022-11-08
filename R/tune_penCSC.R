@@ -481,7 +481,11 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
              alpha.list = al,
 
-             lambda.list = ll)
+             lambda.list = ll,
+
+             keep = keep,
+
+             standardize = standardize)
 
     })
 

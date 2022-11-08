@@ -180,17 +180,23 @@ penCSC <- function(time,status,vars.list,data,
                        .f=~predict(..1,s=..2,type='coefficients'))
 
 
-  result <- list('data'=list('input.data'=data,'y'=y_mats,'X'=X_mats),
+  result <- structure(list('call'=sys.call(),
 
-                 'models'=fits,'coefs'=coefs,'predictors'=vars.list,
+                           'data'=list('input.data'=data,'y'=y_mats,'X'=X_mats),
 
-                 'surv.names'=c('time'=time,'event'=status),
+                           'models'=fits,
 
-                 'parameters'=list('alpha.list'=alpha.list,'lambda.list'=lambda.list),
+                           'coefs'=coefs,
 
-                 'baseline_hazards'=baseline_hazards)
+                           'predictors'=vars.list,
 
-  class(result) <- 'penCSC'
+                           'surv.names'=c('time'=time,'event'=status),
+
+                           'parameters'=list('alpha.list'=alpha.list,'lambda.list'=lambda.list),
+
+                           'baseline_hazards'=baseline_hazards),
+
+                      class='penCSC')
 
   return(result)
 
