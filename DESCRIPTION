@@ -15,3 +15,5 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+URL: https://shahin-roshani.github.io/CSCNet/, https://github.com/Shahin-Roshani/CSCNet
+BugReports: https://github.com/Shahin-Roshani/CSCNet/issues
