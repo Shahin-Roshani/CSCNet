@@ -2,5 +2,4 @@
 
 ### All vignettes
 
-- [CSCNet
-  vignette](https://shahin-roshani.github.io/CSCNet/articles/CSCNet.md):
+- [CSCNet vignette](CSCNet.md):

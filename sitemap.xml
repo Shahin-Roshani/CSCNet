@@ -1,17 +1,17 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
-<url><loc>https://shahin-roshani.github.io/CSCNet/404.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/LICENSE.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/articles/CSCNet.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/articles/index.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/authors.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/index.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/news/index.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/index.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/penCSC.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/predict.penCSC.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/predictRisk.penCSC.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/print.penCSC.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/print.tune_penCSC.html</loc></url>
-<url><loc>https://shahin-roshani.github.io/CSCNet/reference/tune_penCSC.html</loc></url>
+<url><loc>/404.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/articles/CSCNet.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/penCSC.html</loc></url>
+<url><loc>/reference/predict.penCSC.html</loc></url>
+<url><loc>/reference/predictRisk.penCSC.html</loc></url>
+<url><loc>/reference/print.penCSC.html</loc></url>
+<url><loc>/reference/print.tune_penCSC.html</loc></url>
+<url><loc>/reference/tune_penCSC.html</loc></url>
 </urlset>
 
