@@ -218,6 +218,8 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   cens.code <- codes[-which(codes %in% names(vars.list))]
 
+  if (purrr::is_empty(cens.code)) cens.code <- stats::rnorm(1)
+
   form <- stringr::str_c('Hist(',time,',',status,',cens.code=\'',cens.code,'\'',')',
 
                          format(rhs)) %>% stats::as.formula()

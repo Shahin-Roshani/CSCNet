@@ -1,3 +1,9 @@
+# CSCNet 0.1.3
+
+In `tune_penCSC`:
+
+* Fixed an issue where the function only worked when the survival outcome included censoring.
+
 # CSCNet 0.1.2
 
 In `penCSC`:
