@@ -3,7 +3,4 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   CSCNet: CSCNet.html
-last_built: 2025-12-21T15:27Z
-urls:
-  reference: https://shahin-roshani.github.io/CSCNet/reference
-  article: https://shahin-roshani.github.io/CSCNet/articles
+last_built: 2025-12-21T20:33Z
