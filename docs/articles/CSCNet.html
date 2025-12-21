@@ -5,61 +5,47 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="CSCNet">
 <title>CSCNet vignette • CSCNet</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="CSCNet vignette">
-<meta property="og:description" content="CSCNet">
-<meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="CSCNet vignette">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">CSCNet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item">
-  <a class="nav-link" href="../articles/CSCNet.html">Get started</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="../news/index.html">Changelog</a>
-</li>
+<li class="active nav-item"><a class="nav-link" href="../articles/CSCNet.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -71,7 +57,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>CSCNet vignette</h1>
             
       
-      
+
       <div class="d-none name"><code>CSCNet.Rmd</code></div>
     </div>
 
@@ -84,41 +70,44 @@ text-align: justify}
 <p>CSCNet is package with flexible tools for fitting and evaluating
 cause-specific cox models with elastic-net penalty. Each cause is
 modeled in a separate penalized cox model (using elastic-net penalty)
-with its exclusive <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\lambda\)</span> assuming other involved competing
-causes as censored.</p>
+with its exclusive
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+assuming other involved competing causes as censored.</p>
 <div class="section level3">
 <h3 id="regularized-cause-specific-cox-and-absolute-risk-predictions">Regularized cause-specific cox and absolute risk predictions<a class="anchor" aria-label="anchor" href="#regularized-cause-specific-cox-and-absolute-risk-predictions"></a>
 </h3>
 <p>In this package we will use <code>Melanoma</code> data from
 ‘riskRegression’ package (which will load up with ‘CSCNet’) so we start
 by loading the package and the <code>Melanoma</code> data.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CSCNet)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(riskRegression)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(Melanoma)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">as_tibble</span>(Melanoma)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 205 x 11 [39m</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    time status event       invas<span class="sc">~</span><span class="dv">1</span> ici   epicel ulcer thick sex     age logth<span class="sc">~</span><span class="dv">2</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m        [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">1</span> [39m    <span class="dv">10</span>      <span class="dv">2</span> death.othe<span class="sc">~</span> level<span class="fl">.1</span> <span class="dv">2</span>     prese<span class="sc">~</span> pres<span class="sc">~</span>  <span class="fl">6.76</span> Male     <span class="dv">76</span>   <span class="fl">1.91</span> </span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">2</span> [39m    <span class="dv">30</span>      <span class="dv">2</span> death.othe<span class="sc">~</span> level<span class="fl">.0</span> <span class="dv">0</span>     not p<span class="sc">~</span> not <span class="sc">~</span>  <span class="fl">0.65</span> Male     <span class="dv">56</span>  <span class="sc">-</span> [31m0 [39m [31m. [39m [31m431 [39m</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">3</span> [39m    <span class="dv">35</span>      <span class="dv">0</span> censored    level<span class="fl">.1</span> <span class="dv">2</span>     not p<span class="sc">~</span> not <span class="sc">~</span>  <span class="fl">1.34</span> Male     <span class="dv">41</span>   <span class="fl">0.293</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">4</span> [39m    <span class="dv">99</span>      <span class="dv">2</span> death.othe<span class="sc">~</span> level<span class="fl">.0</span> <span class="dv">2</span>     not p<span class="sc">~</span> not <span class="sc">~</span>  <span class="fl">2.9</span>  Fema<span class="sc">~</span>    <span class="dv">71</span>   <span class="fl">1.06</span> </span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">5</span> [39m   <span class="dv">185</span>      <span class="dv">1</span> death.mali<span class="sc">~</span> level<span class="fl">.2</span> <span class="dv">2</span>     prese<span class="sc">~</span> pres<span class="sc">~</span> <span class="fl">12.1</span>  Male     <span class="dv">52</span>   <span class="fl">2.49</span> </span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">6</span> [39m   <span class="dv">204</span>      <span class="dv">1</span> death.mali<span class="sc">~</span> level<span class="fl">.2</span> <span class="dv">2</span>     not p<span class="sc">~</span> pres<span class="sc">~</span>  <span class="fl">4.84</span> Male     <span class="dv">28</span>   <span class="fl">1.58</span> </span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">7</span> [39m   <span class="dv">210</span>      <span class="dv">1</span> death.mali<span class="sc">~</span> level<span class="fl">.2</span> <span class="dv">2</span>     prese<span class="sc">~</span> pres<span class="sc">~</span>  <span class="fl">5.16</span> Male     <span class="dv">77</span>   <span class="fl">1.64</span> </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">8</span> [39m   <span class="dv">232</span>      <span class="dv">1</span> death.mali<span class="sc">~</span> level<span class="fl">.2</span> <span class="dv">2</span>     not p<span class="sc">~</span> pres<span class="sc">~</span> <span class="fl">12.9</span>  Male     <span class="dv">49</span>   <span class="fl">2.56</span> </span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">9</span> [39m   <span class="dv">232</span>      <span class="dv">2</span> death.othe<span class="sc">~</span> level<span class="fl">.1</span> <span class="dv">3</span>     not p<span class="sc">~</span> pres<span class="sc">~</span>  <span class="fl">3.22</span> Fema<span class="sc">~</span>    <span class="dv">60</span>   <span class="fl">1.17</span> </span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m10 [39m   <span class="dv">279</span>      <span class="dv">1</span> death.mali<span class="sc">~</span> level<span class="fl">.0</span> <span class="dv">2</span>     not p<span class="sc">~</span> pres<span class="sc">~</span>  <span class="fl">7.41</span> Fema<span class="sc">~</span>    <span class="dv">68</span>   <span class="fl">2.00</span> </span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># ... with 195 more rows, and abbreviated variable names 1: invasion, [39m</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co">#   2: logthick [39m</span></span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(Melanoma<span class="sc">$</span>status)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  <span class="dv">0</span>   <span class="dv">1</span>   <span class="dv">2</span> </span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="dv">134</span>  <span class="dv">57</span>  <span class="dv">14</span> </span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(CSCNet)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(riskRegression)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">data</span>(Melanoma)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="fu">as_tibble</span>(Melanoma)</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 205 × 11 [39m</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    time status event     invasion ici   epicel ulcer thick sex     age logthick</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>    [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m      [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m     [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>fct<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m     [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">1</span> [<span class="dv">39</span>m    <span class="dv">10</span>      <span class="dv">2</span> death.ot… level<span class="fl">.1</span>  <span class="dv">2</span>     prese… pres…  <span class="fl">6.76</span> Male     <span class="dv">76</span>    <span class="fl">1.91</span> </span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">2</span> [<span class="dv">39</span>m    <span class="dv">30</span>      <span class="dv">2</span> death.ot… level<span class="fl">.0</span>  <span class="dv">0</span>     not p… not …  <span class="fl">0.65</span> Male     <span class="dv">56</span>   <span class="sc">-</span> [<span class="dv">31</span>m0 [<span class="dv">39</span>m [<span class="dv">31</span>m. [<span class="dv">39</span>m [<span class="dv">31</span>m431 [<span class="dv">39</span>m</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">3</span> [<span class="dv">39</span>m    <span class="dv">35</span>      <span class="dv">0</span> censored  level<span class="fl">.1</span>  <span class="dv">2</span>     not p… not …  <span class="fl">1.34</span> Male     <span class="dv">41</span>    <span class="fl">0.293</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">4</span> [<span class="dv">39</span>m    <span class="dv">99</span>      <span class="dv">2</span> death.ot… level<span class="fl">.0</span>  <span class="dv">2</span>     not p… not …  <span class="fl">2.9</span>  Fema…    <span class="dv">71</span>    <span class="fl">1.06</span> </span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">5</span> [<span class="dv">39</span>m   <span class="dv">185</span>      <span class="dv">1</span> death.ma… level<span class="fl">.2</span>  <span class="dv">2</span>     prese… pres… <span class="fl">12.1</span>  Male     <span class="dv">52</span>    <span class="fl">2.49</span> </span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">6</span> [<span class="dv">39</span>m   <span class="dv">204</span>      <span class="dv">1</span> death.ma… level<span class="fl">.2</span>  <span class="dv">2</span>     not p… pres…  <span class="fl">4.84</span> Male     <span class="dv">28</span>    <span class="fl">1.58</span> </span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">7</span> [<span class="dv">39</span>m   <span class="dv">210</span>      <span class="dv">1</span> death.ma… level<span class="fl">.2</span>  <span class="dv">2</span>     prese… pres…  <span class="fl">5.16</span> Male     <span class="dv">77</span>    <span class="fl">1.64</span> </span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">8</span> [<span class="dv">39</span>m   <span class="dv">232</span>      <span class="dv">1</span> death.ma… level<span class="fl">.2</span>  <span class="dv">2</span>     not p… pres… <span class="fl">12.9</span>  Male     <span class="dv">49</span>    <span class="fl">2.56</span> </span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">9</span> [<span class="dv">39</span>m   <span class="dv">232</span>      <span class="dv">2</span> death.ot… level<span class="fl">.1</span>  <span class="dv">3</span>     not p… pres…  <span class="fl">3.22</span> Fema…    <span class="dv">60</span>    <span class="fl">1.17</span> </span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m10 [<span class="dv">39</span>m   <span class="dv">279</span>      <span class="dv">1</span> death.ma… level<span class="fl">.0</span>  <span class="dv">2</span>     not p… pres…  <span class="fl">7.41</span> Fema…    <span class="dv">68</span>    <span class="fl">2.00</span> </span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># ℹ 195 more rows [39m</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="fu">table</span>(Melanoma<span class="sc">$</span>status)</span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a>  <span class="dv">0</span>   <span class="dv">1</span>   <span class="dv">2</span> </span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a><span class="dv">134</span>  <span class="dv">57</span>  <span class="dv">14</span> </span></code></pre></div>
 <p>There are 2 events in the Melanoma data coded as 1 &amp; 2. To
 introduce how setting up variables and hyper-parameters works in CSCNet,
 we will fit the a model with the following hyper-parameters to the
-<code>Melanoma</code> data: <span class="math display">\[(\alpha_{1},\alpha_{2},\lambda_{1},\lambda_{2})=(0,0.5,0.01,0.02)\]</span>
+<code>Melanoma</code> data:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>α</mi><mn>1</mn></msub><mo>,</mo><msub><mi>α</mi><mn>2</mn></msub><mo>,</mo><msub><mi>λ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>λ</mi><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><mn>0.5</mn><mo>,</mo><mn>0.01</mn><mo>,</mo><mn>0.02</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">(\alpha_{1},\alpha_{2},\lambda_{1},\lambda_{2})=(0,0.5,0.01,0.02)</annotation></semantics></math>
 We set variables affecting the event: 1 as
 <code>age,sex,invasion,thick</code> and variables affecting event: 2 as
 <code>age,sex,epicel,ici,thick</code>.</p>
@@ -130,42 +119,42 @@ named lists. Variables and hyper-parameters related to each involved
 cause are stored in list positions with the name of that position being
 that cause. Of course these names must be the same as values in the
 status variable in the data.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>vl <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">'age'</span>,<span class="st">'sex'</span>,<span class="st">'invasion'</span>,<span class="st">'thick'</span>),</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>     </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>     <span class="st">'2'</span><span class="ot">=</span><span class="er">~</span>age<span class="sc">+</span>sex<span class="sc">+</span>epicel<span class="sc">+</span>ici<span class="sc">+</span>thick)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>penfit <span class="ot">&lt;-</span> <span class="fu">penCSC</span>(<span class="at">time =</span> <span class="st">'time'</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                 </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">'status'</span>,</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                 </span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">vars.list =</span> vl,</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>                 </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> Melanoma,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>                 </span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">alpha.list =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="dv">0</span>,<span class="st">'2'</span><span class="ot">=</span>.<span class="dv">5</span>),</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>                 </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">lambda.list =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span>.<span class="dv">01</span>,<span class="st">'2'</span><span class="ot">=</span>.<span class="dv">02</span>))</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>penfit</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 1</span><span class="st">`</span></span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                          <span class="dv">1</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>age             <span class="fl">0.008018578</span></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>sexMale         <span class="fl">0.547580959</span></span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>invasionlevel<span class="fl">.1</span> <span class="fl">0.756922406</span></span>
-<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>invasionlevel<span class="fl">.2</span> <span class="fl">0.591044240</span></span>
-<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>thick           <span class="fl">0.118568171</span></span>
-<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 2</span><span class="st">`</span></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1</span></span>
-<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>age            <span class="fl">0.04839997</span></span>
-<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>sexMale        <span class="fl">0.11419057</span></span>
-<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>epicelpresent  <span class="fl">0.16891622</span></span>
-<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>ici1          <span class="sc">-</span><span class="fl">0.13501846</span></span>
-<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>ici2           .         </span>
-<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>ici3           .         </span>
-<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>thick          <span class="fl">0.03242932</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>vl <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">'age'</span>,<span class="st">'sex'</span>,<span class="st">'invasion'</span>,<span class="st">'thick'</span>),</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>     </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>     <span class="st">'2'</span><span class="ot">=</span><span class="er">~</span>age<span class="sc">+</span>sex<span class="sc">+</span>epicel<span class="sc">+</span>ici<span class="sc">+</span>thick)</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>penfit <span class="ot">&lt;-</span> <span class="fu">penCSC</span>(<span class="at">time =</span> <span class="st">'time'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>                 </span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>                 <span class="at">status =</span> <span class="st">'status'</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>                 </span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>                 <span class="at">vars.list =</span> vl,</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>                 </span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>                 <span class="at">data =</span> Melanoma,</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>                 </span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a>                 <span class="at">alpha.list =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="dv">0</span>,<span class="st">'2'</span><span class="ot">=</span>.<span class="dv">5</span>),</span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>                 </span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>                 <span class="at">lambda.list =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span>.<span class="dv">01</span>,<span class="st">'2'</span><span class="ot">=</span>.<span class="dv">02</span>))</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>penfit</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 1</span><span class="st">`</span></span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="dv">5</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a>                          <span class="dv">1</span></span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>age             <span class="fl">0.008018578</span></span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>sexMale         <span class="fl">0.547580959</span></span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>invasionlevel<span class="fl">.1</span> <span class="fl">0.756922406</span></span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>invasionlevel<span class="fl">.2</span> <span class="fl">0.591044240</span></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>thick           <span class="fl">0.118568171</span></span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 2</span><span class="st">`</span></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="dv">7</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>                        <span class="dv">1</span></span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>age            <span class="fl">0.04839997</span></span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a>sexMale        <span class="fl">0.11419057</span></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>epicelpresent  <span class="fl">0.16891622</span></span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>ici1          <span class="sc">-</span><span class="fl">0.13501846</span></span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>ici2           .         </span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>ici3           .         </span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>thick          <span class="fl">0.03242932</span></span></code></pre></div>
 <p><code>penfit</code> is a comprehensive list with all information
 related to the data and fitted models in detail that user can
 access.</p>
@@ -191,47 +180,47 @@ in <code>predict.penCSC</code> is <code>NULL</code>. If user leaves it
 as that, values for all involved causes will be returned.</p>
 <p>Values of linear predictors for event: 1 related to 1st five
 individuals of the data:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(penfit,Melanoma[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,],<span class="at">type=</span><span class="st">'lp'</span>,<span class="at">event=</span><span class="dv">1</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 5 x 3 [39m</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>     id event prediction</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>   [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m       [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m1 [39m     <span class="dv">1</span> <span class="dv">1</span>          <span class="fl">2.72</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m2 [39m     <span class="dv">2</span> <span class="dv">1</span>          <span class="fl">1.07</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m3 [39m     <span class="dv">3</span> <span class="dv">1</span>          <span class="fl">1.79</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m4 [39m     <span class="dv">4</span> <span class="dv">1</span>          <span class="fl">0.913</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m5 [39m     <span class="dv">5</span> <span class="dv">1</span>          <span class="fl">2.99</span> </span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">predict</span>(penfit,Melanoma[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,],<span class="at">type=</span><span class="st">'lp'</span>,<span class="at">event=</span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 5 × 3 [39m</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>     id event prediction</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>   [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m1 [<span class="dv">39</span>m     <span class="dv">1</span> <span class="dv">1</span>          <span class="fl">2.72</span> </span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m2 [<span class="dv">39</span>m     <span class="dv">2</span> <span class="dv">1</span>          <span class="fl">1.07</span> </span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m3 [<span class="dv">39</span>m     <span class="dv">3</span> <span class="dv">1</span>          <span class="fl">1.79</span> </span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m4 [<span class="dv">39</span>m     <span class="dv">4</span> <span class="dv">1</span>          <span class="fl">0.913</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m5 [<span class="dv">39</span>m     <span class="dv">5</span> <span class="dv">1</span>          <span class="fl">2.99</span> </span></code></pre></div>
 <p>Or the risk values of the same individuals for all involved
 causes:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(penfit,Melanoma[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,],<span class="at">type=</span><span class="st">'response'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 10 x 3 [39m</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>      id event prediction</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [39m [23m       [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">1</span> [39m     <span class="dv">1</span> <span class="dv">1</span>          <span class="fl">15.1</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">2</span> [39m     <span class="dv">2</span> <span class="dv">1</span>           <span class="fl">2.93</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">3</span> [39m     <span class="dv">3</span> <span class="dv">1</span>           <span class="fl">6.00</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">4</span> [39m     <span class="dv">4</span> <span class="dv">1</span>           <span class="fl">2.49</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">5</span> [39m     <span class="dv">5</span> <span class="dv">1</span>          <span class="fl">19.8</span> </span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">6</span> [39m     <span class="dv">1</span> <span class="dv">2</span>          <span class="fl">65.4</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">7</span> [39m     <span class="dv">2</span> <span class="dv">2</span>          <span class="fl">17.2</span> </span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">8</span> [39m     <span class="dv">3</span> <span class="dv">2</span>           <span class="fl">8.52</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">9</span> [39m     <span class="dv">4</span> <span class="dv">2</span>          <span class="fl">34.1</span> </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m10 [39m     <span class="dv">5</span> <span class="dv">2</span>          <span class="fl">24.3</span> </span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">predict</span>(penfit,Melanoma[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,],<span class="at">type=</span><span class="st">'response'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 10 × 3 [39m</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>      id event prediction</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>    [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>chr<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m       [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">1</span> [<span class="dv">39</span>m     <span class="dv">1</span> <span class="dv">1</span>          <span class="fl">15.1</span> </span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">2</span> [<span class="dv">39</span>m     <span class="dv">2</span> <span class="dv">1</span>           <span class="fl">2.93</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">3</span> [<span class="dv">39</span>m     <span class="dv">3</span> <span class="dv">1</span>           <span class="fl">6.00</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">4</span> [<span class="dv">39</span>m     <span class="dv">4</span> <span class="dv">1</span>           <span class="fl">2.49</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">5</span> [<span class="dv">39</span>m     <span class="dv">5</span> <span class="dv">1</span>          <span class="fl">19.8</span> </span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">6</span> [<span class="dv">39</span>m     <span class="dv">1</span> <span class="dv">2</span>          <span class="fl">65.4</span> </span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">7</span> [<span class="dv">39</span>m     <span class="dv">2</span> <span class="dv">2</span>          <span class="fl">17.2</span> </span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">8</span> [<span class="dv">39</span>m     <span class="dv">3</span> <span class="dv">2</span>           <span class="fl">8.52</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">9</span> [<span class="dv">39</span>m     <span class="dv">4</span> <span class="dv">2</span>          <span class="fl">34.1</span> </span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m10 [<span class="dv">39</span>m     <span class="dv">5</span> <span class="dv">2</span>          <span class="fl">24.3</span> </span></code></pre></div>
 <p>Now let’s say we want estimates of absolute risks related to the
 event: 1 as our event of interest at 3 and 5 year time horizons:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(penfit,Melanoma[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,],<span class="at">type=</span><span class="st">'absRisk'</span>,<span class="at">event=</span><span class="dv">1</span>,<span class="at">time=</span><span class="dv">365</span><span class="sc">*</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="co"># A tibble: 10 x 4 [39m</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      id event horizon absoluteRisk</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [39m [23m  [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m    [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m         [3m [<span class="dv">38</span>;<span class="dv">5</span>;246m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [39m [23m</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">1</span> [39m     <span class="dv">1</span>     <span class="dv">1</span>     [4m1 [24m095       <span class="fl">0.374</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">2</span> [39m     <span class="dv">2</span>     <span class="dv">1</span>     [4m1 [24m095       <span class="fl">0.095</span> [4m2 [24m</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">3</span> [39m     <span class="dv">3</span>     <span class="dv">1</span>     [4m1 [24m095       <span class="fl">0.187</span> </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">4</span> [39m     <span class="dv">4</span>     <span class="dv">1</span>     [4m1 [24m095       <span class="fl">0.079</span> [4m8 [24m</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">5</span> [39m     <span class="dv">5</span>     <span class="dv">1</span>     [4m1 [24m095       <span class="fl">0.480</span> </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">6</span> [39m     <span class="dv">1</span>     <span class="dv">1</span>     [4m1 [24m825       <span class="fl">0.525</span> </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">7</span> [39m     <span class="dv">2</span>     <span class="dv">1</span>     [4m1 [24m825       <span class="fl">0.153</span> </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">8</span> [39m     <span class="dv">3</span>     <span class="dv">1</span>     [4m1 [24m825       <span class="fl">0.292</span> </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m <span class="dv">9</span> [39m     <span class="dv">4</span>     <span class="dv">1</span>     [4m1 [24m825       <span class="fl">0.128</span> </span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;250m10 [39m     <span class="dv">5</span>     <span class="dv">1</span>     [4m1 [24m825       <span class="fl">0.654</span> </span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="fu">predict</span>(penfit,Melanoma[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>,],<span class="at">type=</span><span class="st">'absRisk'</span>,<span class="at">event=</span><span class="dv">1</span>,<span class="at">time=</span><span class="dv">365</span><span class="sc">*</span><span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">5</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="co"># A tibble: 10 × 4 [39m</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>      id event horizon absoluteRisk</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>int<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m  [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m    [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m         [<span class="dv">3</span>m [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">246</span>m<span class="sc">&lt;</span>dbl<span class="sc">&gt;</span> [<span class="dv">39</span>m [<span class="dv">23</span>m</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">1</span> [<span class="dv">39</span>m     <span class="dv">1</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m095       <span class="fl">0.374</span> </span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">2</span> [<span class="dv">39</span>m     <span class="dv">2</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m095       <span class="fl">0.095</span> [<span class="dv">4</span>m2 [<span class="dv">24</span>m</span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">3</span> [<span class="dv">39</span>m     <span class="dv">3</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m095       <span class="fl">0.187</span> </span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">4</span> [<span class="dv">39</span>m     <span class="dv">4</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m095       <span class="fl">0.079</span> [<span class="dv">4</span>m8 [<span class="dv">24</span>m</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">5</span> [<span class="dv">39</span>m     <span class="dv">5</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m095       <span class="fl">0.480</span> </span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">6</span> [<span class="dv">39</span>m     <span class="dv">1</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m825       <span class="fl">0.525</span> </span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">7</span> [<span class="dv">39</span>m     <span class="dv">2</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m825       <span class="fl">0.153</span> </span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">8</span> [<span class="dv">39</span>m     <span class="dv">3</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m825       <span class="fl">0.292</span> </span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m <span class="dv">9</span> [<span class="dv">39</span>m     <span class="dv">4</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m825       <span class="fl">0.128</span> </span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a> [<span class="dv">38</span>;<span class="dv">5</span>;<span class="dv">250</span>m10 [<span class="dv">39</span>m     <span class="dv">5</span>     <span class="dv">1</span>     [<span class="dv">4</span>m1 [<span class="dv">24</span>m825       <span class="fl">0.654</span> </span></code></pre></div>
 <p><strong>Note:</strong> There’s also <code>predictRisk.penCSC</code>
 to obtain absolute risk predictions. This method was developed for
 compatibility with tools from ‘riskRegression’ package.</p>
@@ -262,25 +251,36 @@ validation (<code>method='loocv'</code>).</p>
 <h4 id="automatic-specification-of-hyper-parameters-sequences">Automatic specification of hyper-parameters sequences<a class="anchor" aria-label="anchor" href="#automatic-specification-of-hyper-parameters-sequences"></a>
 </h4>
 <p><code>tune_penCSC</code> has the ability to automatically determine
-the candidate sequences of <span class="math inline">\(\alpha\)</span>
-&amp; <span class="math inline">\(\lambda\)</span> values. Setting any
-of <code>alpha.grid</code> &amp; <code>lambda.grid</code> to
-<code>NULL</code> will order the function to calculate them
-automatically.</p>
-<p>While the automatic sequence of <span class="math inline">\(\alpha\)</span> values for all causes is
-<code>seq(0,1,.5)</code>, the process of determining the <span class="math inline">\(\lambda\)</span> values automatically is by:</p>
+the candidate sequences of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+&amp;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+values. Setting any of <code>alpha.grid</code> &amp;
+<code>lambda.grid</code> to <code>NULL</code> will order the function to
+calculate them automatically.</p>
+<p>While the automatic sequence of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+values for all causes is <code>seq(0,1,.5)</code>, the process of
+determining the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+values automatically is by:</p>
 <ol style="list-style-type: decimal">
-<li>Starting from <span class="math inline">\(\lambda=0\)</span>, the
-algorithm fits LASSO models until finding a <span class="math inline">\(\lambda\)</span> value that creates a NULL model
-where all variables were shrunk to be exactly 0.</li>
-<li>The obtained <span class="math inline">\(\lambda\)</span> value will
-be used as the maximum value of a sequence starting from 0. The length
-of this sequence is controlled by values in
+<li>Starting from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\lambda=0</annotation></semantics></math>,
+the algorithm fits LASSO models until finding a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+value that creates a NULL model where all variables were shrunk to be
+exactly 0.</li>
+<li>The obtained
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+value will be used as the maximum value of a sequence starting from 0.
+The length of this sequence is controlled by values in
 <code>nlambdas.list</code>.</li>
 </ol>
 <p>This will be done for each cause-specific model to create exclusive
-sequences of <span class="math inline">\(\lambda\)</span>s for each of
-them.</p>
+sequences of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>s
+for each of them.</p>
 </div>
 <div class="section level4">
 <h4 id="pre-processing-within-resampling">Pre-processing within resampling<a class="anchor" aria-label="anchor" href="#pre-processing-within-resampling"></a>
@@ -301,129 +301,127 @@ objects must be given through <code>preProc.pkgs</code> and
 Let’s say we want to tune our model for 5 year absolute risk prediction
 of event: 1 based on time dependent (IPCW) AUC as the loss function
 (evaluation metric) through a 5-fold cross validation process:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Writing a hypothetical pre-processing function</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>Attaching package<span class="sc">:</span> <span class="st">'recipes'</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>The following object is masked from <span class="st">'package:stringr'</span><span class="sc">:</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    fixed</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>The following object is masked from <span class="st">'package:stats'</span><span class="sc">:</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    step</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>std.fun <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  cont_vars <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span><span class="fu">is.numeric</span>(.))) <span class="sc">%&gt;%</span> names</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  cont_vars <span class="ot">&lt;-</span> cont_vars[<span class="sc">-</span><span class="fu">which</span>(cont_vars <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'time'</span>,<span class="st">'status'</span>))]</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="co">#External functions from recipes package are being used</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="sc">~</span>.,<span class="at">data=</span>data) <span class="sc">%&gt;%</span></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_center</span>(<span class="fu">all_of</span>(cont_vars)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">step_scale</span>(<span class="fu">all_of</span>(cont_vars)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">prep</span>(<span class="at">training=</span>data) <span class="sc">%&gt;%</span> juice</span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a><span class="co">#Tuning a regularized cause-specific cox </span></span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">455</span>) <span class="co">#for reproducibility</span></span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>tune_melanoma <span class="ot">&lt;-</span> <span class="fu">tune_penCSC</span>(<span class="at">time =</span> <span class="st">'time'</span>,</span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                             <span class="at">status =</span> <span class="st">'status'</span>,</span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>                             <span class="at">vars.list =</span> vl,</span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>                             <span class="at">data =</span> Melanoma,</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>                             <span class="at">horizons =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">5</span>,</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>                             <span class="at">event =</span> <span class="dv">1</span>,</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>                             <span class="at">method =</span> <span class="st">'cv'</span>,</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>                             <span class="at">k =</span> <span class="dv">5</span>,</span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>                             <span class="at">standardize =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>                             <span class="at">metrics =</span> <span class="st">'AUC'</span>,</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>                             <span class="at">alpha.grid =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="dv">0</span>,<span class="st">'2'</span><span class="ot">=</span><span class="fu">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>)),</span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>                             <span class="at">preProc.fun =</span> std.fun,</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>                             <span class="at">parallel =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>                             </span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>                             <span class="at">preProc.pkgs =</span> <span class="st">'recipes'</span>)</span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>Process was done <span class="cf">in</span> <span class="fl">42.42788</span> secs.</span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>validation_result <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(mean.AUC)) <span class="sc">%&gt;%</span> head</span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC</span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0425</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7613930</span></span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1275</span>   <span class="fl">0.0525</span>    <span class="dv">1825</span> <span class="fl">0.7336138</span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7335694</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a><span class="dv">4</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1700</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7324348</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1700</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7304677</span></span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="dv">6</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7280321</span></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>final_params</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">1825</span><span class="st">`</span></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon mean.AUC</span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0425</span>    <span class="fl">0.035</span>    <span class="dv">1825</span> <span class="fl">0.761393</span></span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>final_fits</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">1825</span><span class="st">`</span></span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 1</span><span class="st">`</span></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a><span class="dv">5</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>                        <span class="dv">1</span></span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>age             <span class="fl">0.1495339</span></span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>sexMale         <span class="fl">0.3396344</span></span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>invasionlevel<span class="fl">.1</span> <span class="fl">0.3768998</span></span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>invasionlevel<span class="fl">.2</span> <span class="fl">0.1294018</span></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>thick           <span class="fl">0.4044303</span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 2</span><span class="st">`</span></span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a><span class="dv">7</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>                       <span class="dv">1</span></span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>age           <span class="fl">0.63657394</span></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>sexMale       .         </span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>epicelpresent .         </span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>ici1          .         </span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>ici2          .         </span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>ici3          .         </span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>thick         <span class="fl">0.02163226</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#Writing a hypothetical pre-processing function</span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>Attaching package<span class="sc">:</span> <span class="st">'recipes'</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>The following object is masked from <span class="st">'package:stringr'</span><span class="sc">:</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>    fixed</span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>The following object is masked from <span class="st">'package:stats'</span><span class="sc">:</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a>    step</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a>std.fun <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a>  cont_vars <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="fu">where</span>(<span class="sc">~</span><span class="fu">is.numeric</span>(.))) <span class="sc">%&gt;%</span> names</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a>  cont_vars <span class="ot">&lt;-</span> cont_vars[<span class="sc">-</span><span class="fu">which</span>(cont_vars <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">'time'</span>,<span class="st">'status'</span>))]</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a>  <span class="co">#External functions from recipes package are being used</span></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a>  <span class="fu">recipe</span>(<span class="sc">~</span>.,<span class="at">data=</span>data) <span class="sc">%&gt;%</span></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>    <span class="fu">step_center</span>(<span class="fu">all_of</span>(cont_vars)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a>    <span class="fu">step_scale</span>(<span class="fu">all_of</span>(cont_vars)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a></span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a>    <span class="fu">prep</span>(<span class="at">training=</span>data) <span class="sc">%&gt;%</span> juice</span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a>}</span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a></span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="co">#Tuning a regularized cause-specific cox </span></span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">455</span>) <span class="co">#for reproducibility</span></span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a>tune_melanoma <span class="ot">&lt;-</span> <span class="fu">tune_penCSC</span>(<span class="at">time =</span> <span class="st">'time'</span>,</span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>                             </span>
+<span id="cb6-37"><a href="#cb6-37" tabindex="-1"></a>                             <span class="at">status =</span> <span class="st">'status'</span>,</span>
+<span id="cb6-38"><a href="#cb6-38" tabindex="-1"></a>                             </span>
+<span id="cb6-39"><a href="#cb6-39" tabindex="-1"></a>                             <span class="at">vars.list =</span> vl,</span>
+<span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>                             </span>
+<span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a>                             <span class="at">data =</span> Melanoma,</span>
+<span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a>                             </span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a>                             <span class="at">horizons =</span> <span class="dv">365</span><span class="sc">*</span><span class="dv">5</span>,</span>
+<span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a>                             </span>
+<span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a>                             <span class="at">event =</span> <span class="dv">1</span>,</span>
+<span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a>                             </span>
+<span id="cb6-47"><a href="#cb6-47" tabindex="-1"></a>                             <span class="at">method =</span> <span class="st">'cv'</span>,</span>
+<span id="cb6-48"><a href="#cb6-48" tabindex="-1"></a>                             </span>
+<span id="cb6-49"><a href="#cb6-49" tabindex="-1"></a>                             <span class="at">k =</span> <span class="dv">5</span>,</span>
+<span id="cb6-50"><a href="#cb6-50" tabindex="-1"></a>                             </span>
+<span id="cb6-51"><a href="#cb6-51" tabindex="-1"></a>                             <span class="at">standardize =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-52"><a href="#cb6-52" tabindex="-1"></a>                             </span>
+<span id="cb6-53"><a href="#cb6-53" tabindex="-1"></a>                             <span class="at">metrics =</span> <span class="st">'AUC'</span>,</span>
+<span id="cb6-54"><a href="#cb6-54" tabindex="-1"></a>                             </span>
+<span id="cb6-55"><a href="#cb6-55" tabindex="-1"></a>                             <span class="at">alpha.grid =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="dv">0</span>,<span class="st">'2'</span><span class="ot">=</span><span class="fu">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>)),</span>
+<span id="cb6-56"><a href="#cb6-56" tabindex="-1"></a>                             </span>
+<span id="cb6-57"><a href="#cb6-57" tabindex="-1"></a>                             <span class="at">preProc.fun =</span> std.fun,</span>
+<span id="cb6-58"><a href="#cb6-58" tabindex="-1"></a>                             </span>
+<span id="cb6-59"><a href="#cb6-59" tabindex="-1"></a>                             <span class="at">parallel =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a>                             </span>
+<span id="cb6-61"><a href="#cb6-61" tabindex="-1"></a>                             <span class="at">preProc.pkgs =</span> <span class="st">'recipes'</span>)</span>
+<span id="cb6-62"><a href="#cb6-62" tabindex="-1"></a></span>
+<span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a>Process was done <span class="cf">in</span> <span class="fl">46.85433</span> secs.</span>
+<span id="cb6-64"><a href="#cb6-64" tabindex="-1"></a></span>
+<span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>validation_result <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(mean.AUC)) <span class="sc">%&gt;%</span> head</span>
+<span id="cb6-66"><a href="#cb6-66" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC</span>
+<span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0425</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7613930</span></span>
+<span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a><span class="dv">2</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1275</span>   <span class="fl">0.0525</span>    <span class="dv">1825</span> <span class="fl">0.7336138</span></span>
+<span id="cb6-69"><a href="#cb6-69" tabindex="-1"></a><span class="dv">3</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7335694</span></span>
+<span id="cb6-70"><a href="#cb6-70" tabindex="-1"></a><span class="dv">4</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1700</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7324348</span></span>
+<span id="cb6-71"><a href="#cb6-71" tabindex="-1"></a><span class="dv">5</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1700</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7304677</span></span>
+<span id="cb6-72"><a href="#cb6-72" tabindex="-1"></a><span class="dv">6</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7280321</span></span>
+<span id="cb6-73"><a href="#cb6-73" tabindex="-1"></a></span>
+<span id="cb6-74"><a href="#cb6-74" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>final_params</span>
+<span id="cb6-75"><a href="#cb6-75" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">1825</span><span class="st">`</span></span>
+<span id="cb6-76"><a href="#cb6-76" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon mean.AUC</span>
+<span id="cb6-77"><a href="#cb6-77" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0425</span>    <span class="fl">0.035</span>    <span class="dv">1825</span> <span class="fl">0.761393</span></span>
+<span id="cb6-78"><a href="#cb6-78" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>final_fits</span>
+<span id="cb6-80"><a href="#cb6-80" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">1825</span><span class="st">`</span></span>
+<span id="cb6-81"><a href="#cb6-81" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 1</span><span class="st">`</span></span>
+<span id="cb6-82"><a href="#cb6-82" tabindex="-1"></a><span class="dv">5</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
+<span id="cb6-83"><a href="#cb6-83" tabindex="-1"></a>                        <span class="dv">1</span></span>
+<span id="cb6-84"><a href="#cb6-84" tabindex="-1"></a>age             <span class="fl">0.1495339</span></span>
+<span id="cb6-85"><a href="#cb6-85" tabindex="-1"></a>sexMale         <span class="fl">0.3396344</span></span>
+<span id="cb6-86"><a href="#cb6-86" tabindex="-1"></a>invasionlevel<span class="fl">.1</span> <span class="fl">0.3768998</span></span>
+<span id="cb6-87"><a href="#cb6-87" tabindex="-1"></a>invasionlevel<span class="fl">.2</span> <span class="fl">0.1294018</span></span>
+<span id="cb6-88"><a href="#cb6-88" tabindex="-1"></a>thick           <span class="fl">0.4044303</span></span>
+<span id="cb6-89"><a href="#cb6-89" tabindex="-1"></a></span>
+<span id="cb6-90"><a href="#cb6-90" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 2</span><span class="st">`</span></span>
+<span id="cb6-91"><a href="#cb6-91" tabindex="-1"></a><span class="dv">7</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
+<span id="cb6-92"><a href="#cb6-92" tabindex="-1"></a>                       <span class="dv">1</span></span>
+<span id="cb6-93"><a href="#cb6-93" tabindex="-1"></a>age           <span class="fl">0.63657394</span></span>
+<span id="cb6-94"><a href="#cb6-94" tabindex="-1"></a>sexMale       .         </span>
+<span id="cb6-95"><a href="#cb6-95" tabindex="-1"></a>epicelpresent .         </span>
+<span id="cb6-96"><a href="#cb6-96" tabindex="-1"></a>ici1          .         </span>
+<span id="cb6-97"><a href="#cb6-97" tabindex="-1"></a>ici2          .         </span>
+<span id="cb6-98"><a href="#cb6-98" tabindex="-1"></a>ici3          .         </span>
+<span id="cb6-99"><a href="#cb6-99" tabindex="-1"></a>thick         <span class="fl">0.02163226</span></span></code></pre></div>
 </div>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p>
-<p>Developed by Shahin Roshani.</p>
+  <p>Developed by Shahin Roshani.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

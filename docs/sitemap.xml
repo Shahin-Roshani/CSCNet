@@ -1,45 +1,17 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>/404.html</loc>
-  </url>
-  <url>
-    <loc>/articles/CSCNet.html</loc>
-  </url>
-  <url>
-    <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/authors.html</loc>
-  </url>
-  <url>
-    <loc>/index.html</loc>
-  </url>
-  <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>/news/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>/reference/penCSC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predict.penCSC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/predictRisk.penCSC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.penCSC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/print.tune_penCSC.html</loc>
-  </url>
-  <url>
-    <loc>/reference/tune_penCSC.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>/404.html</loc></url>
+<url><loc>/articles/CSCNet.html</loc></url>
+<url><loc>/articles/index.html</loc></url>
+<url><loc>/authors.html</loc></url>
+<url><loc>/index.html</loc></url>
+<url><loc>/LICENSE.html</loc></url>
+<url><loc>/news/index.html</loc></url>
+<url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/penCSC.html</loc></url>
+<url><loc>/reference/predict.penCSC.html</loc></url>
+<url><loc>/reference/predictRisk.penCSC.html</loc></url>
+<url><loc>/reference/print.penCSC.html</loc></url>
+<url><loc>/reference/print.tune_penCSC.html</loc></url>
+<url><loc>/reference/tune_penCSC.html</loc></url>
 </urlset>
+
