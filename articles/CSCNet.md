@@ -14,6 +14,7 @@ package and the `Melanoma` data.
 
 ``` r
 library(CSCNet)
+library(survival)
 library(riskRegression)
 data(Melanoma)
 as_tibble(Melanoma)
@@ -296,7 +297,7 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              preProc.pkgs = 'recipes')
 
-Process was done in 40.76935 secs.
+Process was done in 47.12566 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
