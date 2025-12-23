@@ -346,13 +346,20 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
     }))
 
 
+  resamples <- resampler(method)
+
+  training_list <- resamples$train_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
+
+  testing_list <- resamples$test_index_list %>% purrr::map(~data[.,] %>% preProc.fun.test)
+
+
   modeling <- function(alpha_list,lambda_list,horizon){
 
-    resamples <- resampler(method)
+    force(alpha_list)
 
-    training_list <- resamples$train_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
+    force(lambda_list)
 
-    testing_list <- resamples$test_index_list %>% purrr::map(~data[.,] %>% preProc.fun.test)
+    force(horizon)
 
     purrr::pmap(.l=list(aa=training_list,bb=testing_list),
 
