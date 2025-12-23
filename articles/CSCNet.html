@@ -364,43 +364,43 @@ of event: 1 based on time dependent (IPCW) AUC as the loss function
 <span id="cb6-60"><a href="#cb6-60" tabindex="-1"></a>                             </span>
 <span id="cb6-61"><a href="#cb6-61" tabindex="-1"></a>                             <span class="at">preProc.pkgs =</span> <span class="st">'recipes'</span>)</span>
 <span id="cb6-62"><a href="#cb6-62" tabindex="-1"></a></span>
-<span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a>Process was done <span class="cf">in</span> <span class="fl">42.70015</span> secs.</span>
+<span id="cb6-63"><a href="#cb6-63" tabindex="-1"></a>Process was done <span class="cf">in</span> <span class="fl">27.14548</span> secs.</span>
 <span id="cb6-64"><a href="#cb6-64" tabindex="-1"></a></span>
 <span id="cb6-65"><a href="#cb6-65" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>validation_result <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(mean.AUC)) <span class="sc">%&gt;%</span> head</span>
 <span id="cb6-66"><a href="#cb6-66" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC</span>
-<span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0425</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7613930</span></span>
-<span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a><span class="dv">2</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1275</span>   <span class="fl">0.0525</span>    <span class="dv">1825</span> <span class="fl">0.7336138</span></span>
-<span id="cb6-69"><a href="#cb6-69" tabindex="-1"></a><span class="dv">3</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7335694</span></span>
-<span id="cb6-70"><a href="#cb6-70" tabindex="-1"></a><span class="dv">4</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1700</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7324348</span></span>
-<span id="cb6-71"><a href="#cb6-71" tabindex="-1"></a><span class="dv">5</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1700</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7304677</span></span>
-<span id="cb6-72"><a href="#cb6-72" tabindex="-1"></a><span class="dv">6</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7280321</span></span>
+<span id="cb6-67"><a href="#cb6-67" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1275</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7401765</span></span>
+<span id="cb6-68"><a href="#cb6-68" tabindex="-1"></a><span class="dv">2</span>       <span class="dv">0</span>     <span class="fl">1.0</span>   <span class="fl">0.1700</span>   <span class="fl">0.0350</span>    <span class="dv">1825</span> <span class="fl">0.7394419</span></span>
+<span id="cb6-69"><a href="#cb6-69" tabindex="-1"></a><span class="dv">3</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1275</span>   <span class="fl">0.0525</span>    <span class="dv">1825</span> <span class="fl">0.7393624</span></span>
+<span id="cb6-70"><a href="#cb6-70" tabindex="-1"></a><span class="dv">4</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.1275</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7389695</span></span>
+<span id="cb6-71"><a href="#cb6-71" tabindex="-1"></a><span class="dv">5</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0850</span>   <span class="fl">0.0700</span>    <span class="dv">1825</span> <span class="fl">0.7389279</span></span>
+<span id="cb6-72"><a href="#cb6-72" tabindex="-1"></a><span class="dv">6</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0850</span>   <span class="fl">0.0175</span>    <span class="dv">1825</span> <span class="fl">0.7389098</span></span>
 <span id="cb6-73"><a href="#cb6-73" tabindex="-1"></a></span>
 <span id="cb6-74"><a href="#cb6-74" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>final_params</span>
 <span id="cb6-75"><a href="#cb6-75" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">1825</span><span class="st">`</span></span>
-<span id="cb6-76"><a href="#cb6-76" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon mean.AUC</span>
-<span id="cb6-77"><a href="#cb6-77" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.5</span>   <span class="fl">0.0425</span>    <span class="fl">0.035</span>    <span class="dv">1825</span> <span class="fl">0.761393</span></span>
+<span id="cb6-76"><a href="#cb6-76" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC</span>
+<span id="cb6-77"><a href="#cb6-77" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>       <span class="dv">1</span>   <span class="fl">0.1275</span>    <span class="fl">0.035</span>    <span class="dv">1825</span> <span class="fl">0.7401765</span></span>
 <span id="cb6-78"><a href="#cb6-78" tabindex="-1"></a></span>
 <span id="cb6-79"><a href="#cb6-79" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>final_fits</span>
 <span id="cb6-80"><a href="#cb6-80" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">1825</span><span class="st">`</span></span>
 <span id="cb6-81"><a href="#cb6-81" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 1</span><span class="st">`</span></span>
 <span id="cb6-82"><a href="#cb6-82" tabindex="-1"></a><span class="dv">5</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb6-83"><a href="#cb6-83" tabindex="-1"></a>                        <span class="dv">1</span></span>
-<span id="cb6-84"><a href="#cb6-84" tabindex="-1"></a>age             <span class="fl">0.1495339</span></span>
-<span id="cb6-85"><a href="#cb6-85" tabindex="-1"></a>sexMale         <span class="fl">0.3396344</span></span>
-<span id="cb6-86"><a href="#cb6-86" tabindex="-1"></a>invasionlevel<span class="fl">.1</span> <span class="fl">0.3768998</span></span>
-<span id="cb6-87"><a href="#cb6-87" tabindex="-1"></a>invasionlevel<span class="fl">.2</span> <span class="fl">0.1294018</span></span>
-<span id="cb6-88"><a href="#cb6-88" tabindex="-1"></a>thick           <span class="fl">0.4044303</span></span>
+<span id="cb6-83"><a href="#cb6-83" tabindex="-1"></a>                         <span class="dv">1</span></span>
+<span id="cb6-84"><a href="#cb6-84" tabindex="-1"></a>age             <span class="fl">0.14162357</span></span>
+<span id="cb6-85"><a href="#cb6-85" tabindex="-1"></a>sexMale         <span class="fl">0.19613802</span></span>
+<span id="cb6-86"><a href="#cb6-86" tabindex="-1"></a>invasionlevel<span class="fl">.1</span> <span class="fl">0.20547839</span></span>
+<span id="cb6-87"><a href="#cb6-87" tabindex="-1"></a>invasionlevel<span class="fl">.2</span> <span class="fl">0.06524989</span></span>
+<span id="cb6-88"><a href="#cb6-88" tabindex="-1"></a>thick           <span class="fl">0.35520616</span></span>
 <span id="cb6-89"><a href="#cb6-89" tabindex="-1"></a></span>
 <span id="cb6-90"><a href="#cb6-90" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 2</span><span class="st">`</span></span>
 <span id="cb6-91"><a href="#cb6-91" tabindex="-1"></a><span class="dv">7</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb6-92"><a href="#cb6-92" tabindex="-1"></a>                       <span class="dv">1</span></span>
-<span id="cb6-93"><a href="#cb6-93" tabindex="-1"></a>age           <span class="fl">0.63657394</span></span>
-<span id="cb6-94"><a href="#cb6-94" tabindex="-1"></a>sexMale       .         </span>
-<span id="cb6-95"><a href="#cb6-95" tabindex="-1"></a>epicelpresent .         </span>
-<span id="cb6-96"><a href="#cb6-96" tabindex="-1"></a>ici1          .         </span>
-<span id="cb6-97"><a href="#cb6-97" tabindex="-1"></a>ici2          .         </span>
-<span id="cb6-98"><a href="#cb6-98" tabindex="-1"></a>ici3          .         </span>
-<span id="cb6-99"><a href="#cb6-99" tabindex="-1"></a>thick         <span class="fl">0.02163226</span></span></code></pre></div>
+<span id="cb6-92"><a href="#cb6-92" tabindex="-1"></a>                      <span class="dv">1</span></span>
+<span id="cb6-93"><a href="#cb6-93" tabindex="-1"></a>age           <span class="fl">0.5149253</span></span>
+<span id="cb6-94"><a href="#cb6-94" tabindex="-1"></a>sexMale       .        </span>
+<span id="cb6-95"><a href="#cb6-95" tabindex="-1"></a>epicelpresent .        </span>
+<span id="cb6-96"><a href="#cb6-96" tabindex="-1"></a>ici1          .        </span>
+<span id="cb6-97"><a href="#cb6-97" tabindex="-1"></a>ici2          .        </span>
+<span id="cb6-98"><a href="#cb6-98" tabindex="-1"></a>ici3          .        </span>
+<span id="cb6-99"><a href="#cb6-99" tabindex="-1"></a>thick         .        </span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

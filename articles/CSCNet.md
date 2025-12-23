@@ -297,41 +297,41 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              preProc.pkgs = 'recipes')
 
-Process was done in 42.70015 secs.
+Process was done in 27.14548 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
-1       0     0.5   0.0425   0.0350    1825 0.7613930
-2       0     0.5   0.1275   0.0525    1825 0.7336138
-3       0     1.0   0.1275   0.0350    1825 0.7335694
-4       0     1.0   0.1700   0.0700    1825 0.7324348
-5       0     0.5   0.1700   0.0700    1825 0.7304677
-6       0     1.0   0.1275   0.0700    1825 0.7280321
+1       0     1.0   0.1275   0.0350    1825 0.7401765
+2       0     1.0   0.1700   0.0350    1825 0.7394419
+3       0     0.5   0.1275   0.0525    1825 0.7393624
+4       0     0.5   0.1275   0.0700    1825 0.7389695
+5       0     0.5   0.0850   0.0700    1825 0.7389279
+6       0     0.5   0.0850   0.0175    1825 0.7389098
 
 tune_melanoma$final_params
 $`1825`
-  alpha_1 alpha_2 lambda_1 lambda_2 horizon mean.AUC
-1       0     0.5   0.0425    0.035    1825 0.761393
+  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
+1       0       1   0.1275    0.035    1825 0.7401765
 
 tune_melanoma$final_fits
 $`1825`
 $`Event: 1`
 5 x 1 sparse Matrix of class "dgCMatrix"
-                        1
-age             0.1495339
-sexMale         0.3396344
-invasionlevel.1 0.3768998
-invasionlevel.2 0.1294018
-thick           0.4044303
+                         1
+age             0.14162357
+sexMale         0.19613802
+invasionlevel.1 0.20547839
+invasionlevel.2 0.06524989
+thick           0.35520616
 
 $`Event: 2`
 7 x 1 sparse Matrix of class "dgCMatrix"
-                       1
-age           0.63657394
-sexMale       .         
-epicelpresent .         
-ici1          .         
-ici2          .         
-ici3          .         
-thick         0.02163226
+                      1
+age           0.5149253
+sexMale       .        
+epicelpresent .        
+ici1          .        
+ici2          .        
+ici3          .        
+thick         .        
 ```
