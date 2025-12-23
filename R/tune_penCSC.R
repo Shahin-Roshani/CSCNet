@@ -403,7 +403,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   if (!parallel){
 
-    calc_grid %>% purrr::map(~modeling(.$alpha.list,.$lambda.list,.$horizon)) -> lossfun_vals
+    calc_grid %>% purrr::map(function(x) modeling(x$alpha.list,x$lambda.list,x$horizon)) -> lossfun_vals
 
   } else{
 
@@ -423,7 +423,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     future::plan(future::multisession(),workers=core.nums)
 
-    calc_grid %>% furrr::future_map(~modeling(.$alpha.list,.$lambda.list,.$horizon),
+    calc_grid %>% furrr::future_map(function(x) modeling(x$alpha.list,x$lambda.list,x$horizon),
 
                                     .options=furrr::furrr_options(packages=pkg_envs,globals=globals,seed=T),
 
