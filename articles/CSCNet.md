@@ -297,7 +297,7 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              preProc.pkgs = 'recipes')
 
-Process was done in 41.54494 secs.
+Process was done in 42.70015 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC

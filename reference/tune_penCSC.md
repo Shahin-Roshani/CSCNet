@@ -335,7 +335,7 @@ test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horiz
 
                    preProc.fun=std.fun,parallel=TRUE,preProc.pkgs='recipes')
 #> 
-#> Process was done in 25.52064 secs.
+#> Process was done in 26.25186 secs.
 
 test
 #> $`1825`
