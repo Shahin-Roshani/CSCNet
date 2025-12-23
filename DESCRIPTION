@@ -13,6 +13,8 @@ Depends: R (>= 2.10), tidyverse (>= 1.3.1), magrittr (>= 2.0.3)
 Imports: dplyr (>= 1.0.9), purrr (>= 0.3.4), stringr (>= 1.4.0), tibble (>= 3.1.7), survival (>= 3.3-1), prodlim (>= 2019.11.13), riskRegression (>= 2022.03.22), glmnet (>= 4.1-4), caret (>= 6.0-92), recipes (>= 0.2.0), future (>= 1.26.1), furrr (>= 0.3.0)
 Suggests: 
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 URL: https://shahin-roshani.github.io/CSCNet/
+Config/testthat/edition: 3

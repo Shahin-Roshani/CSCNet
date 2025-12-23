@@ -43,6 +43,8 @@
 #'
 #'@examples \donttest{
 #'
+#'library(survival)
+#'
 #'library(riskRegression)
 #'
 #'data(Melanoma)

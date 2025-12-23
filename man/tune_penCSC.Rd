@@ -104,6 +104,8 @@ This will be done for each cause-specific model to create exclusive sequences of
 \examples{
 \donttest{
 
+library(survival)
+
 library(riskRegression)
 
 data(Melanoma)
