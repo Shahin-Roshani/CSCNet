@@ -14,7 +14,6 @@ package and the `Melanoma` data.
 
 ``` r
 library(CSCNet)
-library(survival)
 library(riskRegression)
 data(Melanoma)
 as_tibble(Melanoma)
@@ -237,31 +236,13 @@ of event: 1 based on time dependent (IPCW) AUC as the loss function
 ``` r
 #Writing a hypothetical pre-processing function
 
-library(recipes)
+library('collinear')
 
-Attaching package: 'recipes'
-The following object is masked from 'package:stringr':
+zvr.fun <- function(data){
 
-    fixed
-The following object is masked from 'package:stats':
+  zv_vars <- identify_zero_variance_variables(df = data,responses = c('time','status'))
 
-    step
-
-std.fun <- function(data){
-
-  cont_vars <- data %>% select(where(~is.numeric(.))) %>% names
-
-  cont_vars <- cont_vars[-which(cont_vars %in% c('time','status'))]
-
-  #External functions from recipes package are being used
-
-  recipe(~.,data=data) %>%
-
-    step_center(all_of(cont_vars)) %>%
-
-    step_scale(all_of(cont_vars)) %>%
-
-    prep(training=data) %>% juice
+  return(data %>% select(-all_of(zv_vars)))
 
 }
 
@@ -277,61 +258,59 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              data = Melanoma,
                              
-                             horizons = 365*5,
+                             horizons = 365*3,
                              
                              event = 1,
                              
                              method = 'cv',
                              
-                             k = 5,
-                             
-                             standardize = FALSE,
+                             k = 3,
                              
                              metrics = 'AUC',
                              
                              alpha.grid = list('1'=0,'2'=c(.5,1)),
                              
-                             preProc.fun = std.fun,
+                             preProc.fun = zvr.fun,
                              
                              parallel = TRUE,
                              
-                             preProc.pkgs = 'recipes')
+                             preProc.pkgs = 'collinear')
 
-Process was done in 27.14548 secs.
+Process was done in 16.39858 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
-1       0     1.0   0.1275   0.0350    1825 0.7401765
-2       0     1.0   0.1700   0.0350    1825 0.7394419
-3       0     0.5   0.1275   0.0525    1825 0.7393624
-4       0     0.5   0.1275   0.0700    1825 0.7389695
-5       0     0.5   0.0850   0.0700    1825 0.7389279
-6       0     0.5   0.0850   0.0175    1825 0.7389098
+1       0     1.0   0.1275   0.0525    1095 0.7588322
+2       0     0.5   0.1275   0.0700    1095 0.7587467
+3       0     1.0   0.1700   0.0350    1095 0.7585570
+4       0     0.5   0.1700   0.0700    1095 0.7585039
+5       0     1.0   0.1275   0.0350    1095 0.7583210
+6       0     1.0   0.1275   0.0700    1095 0.7581944
 
 tune_melanoma$final_params
-$`1825`
+$`1095`
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
-1       0       1   0.1275    0.035    1825 0.7401765
+1       0       1   0.1275   0.0525    1095 0.7588322
 
 tune_melanoma$final_fits
-$`1825`
+$`1095`
 $`Event: 1`
 5 x 1 sparse Matrix of class "dgCMatrix"
-                         1
-age             0.14162357
-sexMale         0.19613802
-invasionlevel.1 0.20547839
-invasionlevel.2 0.06524989
-thick           0.35520616
+                          1
+age             0.007288018
+sexMale         0.401145597
+invasionlevel.1 0.487237879
+invasionlevel.2 0.389279674
+thick           0.102998445
 
 $`Event: 2`
 7 x 1 sparse Matrix of class "dgCMatrix"
-                      1
-age           0.5149253
-sexMale       .        
-epicelpresent .        
-ici1          .        
-ici2          .        
-ici3          .        
-thick         .        
+                       1
+age           0.01197631
+sexMale       .         
+epicelpresent .         
+ici1          .         
+ici2          .         
+ici3          .         
+thick         .         
 ```

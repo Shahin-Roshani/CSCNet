@@ -213,8 +213,6 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/therneau/survival" class="external-link">survival</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tagteam/riskRegression" class="external-link">riskRegression</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Melanoma</span><span class="op">)</span></span></span>
@@ -227,64 +225,46 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#External standardization function with data frame as its input and output</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Attaching package: ‘recipes’</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:stringr’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     fixed</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> The following object is masked from ‘package:stats’:</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span>     step</span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://blasbenito.github.io/collinear/" class="external-link">'collinear'</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">std.fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">zvr.fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="va">cont_vars</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/where.html" class="external-link">where</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">names</span></span></span>
+<span class="r-in"><span> <span class="va">zv_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://blasbenito.github.io/collinear/reference/identify_zero_variance_variables.html" class="external-link">identify_zero_variance_variables</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">data</span>,responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'time'</span>,<span class="st">'status'</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="va">cont_vars</span> <span class="op">&lt;-</span> <span class="va">cont_vars</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cont_vars</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'time'</span>,<span class="st">'status'</span><span class="op">)</span><span class="op">)</span><span class="op">]</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="co">#External functions from recipes package are being used</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html" class="external-link">recipe</a></span><span class="op">(</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_center.html" class="external-link">step_center</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">cont_vars</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_scale.html" class="external-link">step_scale</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="va">cont_vars</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span>   <span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html" class="external-link">prep</a></span><span class="op">(</span>training<span class="op">=</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">juice</span></span></span>
+<span class="r-in"><span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu">all_of</span><span class="op">(</span><span class="va">zv_vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">233</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">tune_penCSC</span><span class="op">(</span>time<span class="op">=</span><span class="st">'time'</span>,status<span class="op">=</span><span class="st">'status'</span>,vars.list<span class="op">=</span><span class="va">vl</span>,data<span class="op">=</span><span class="va">Melanoma</span>,horizons<span class="op">=</span><span class="fl">1825</span>,</span></span>
+<span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">tune_penCSC</span><span class="op">(</span>time<span class="op">=</span><span class="st">'time'</span>,status<span class="op">=</span><span class="st">'status'</span>,vars.list<span class="op">=</span><span class="va">vl</span>,data<span class="op">=</span><span class="va">Melanoma</span>,horizons<span class="op">=</span><span class="fl">1095</span>,</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>                   event<span class="op">=</span><span class="fl">1</span>,method<span class="op">=</span><span class="st">'cv'</span>,k<span class="op">=</span><span class="fl">5</span>,metrics<span class="op">=</span><span class="st">'AUC'</span>,alpha.grid<span class="op">=</span><span class="va">al</span>,standardize<span class="op">=</span><span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                   event<span class="op">=</span><span class="fl">1</span>,method<span class="op">=</span><span class="st">'cv'</span>,k<span class="op">=</span><span class="fl">3</span>,metrics<span class="op">=</span><span class="st">'AUC'</span>,alpha.grid<span class="op">=</span><span class="va">al</span>,standardize<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>                   preProc.fun<span class="op">=</span><span class="va">std.fun</span>,parallel<span class="op">=</span><span class="cn">TRUE</span>,preProc.pkgs<span class="op">=</span><span class="st">'recipes'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                   preProc.fun<span class="op">=</span><span class="va">zvr.fun</span>,parallel<span class="op">=</span><span class="cn">TRUE</span>,preProc.pkgs<span class="op">=</span><span class="st">'collinear'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 18.12464 secs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 12.45628 secs.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $`1825`</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $`1095`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Event: 1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 x 1 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                        1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age            0.3748226</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sexMale        0.7967235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> epicelpresent -1.1097122</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ici1           1.7729566</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ici2           1.8709727</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ici3           2.5489947</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                         1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age            0.02248578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sexMale        0.79689504</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> epicelpresent -1.10991986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ici1           1.77593118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ici2           1.87392279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ici3           2.55198560</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Event: 2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 x 1 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age             0.3122109</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ulcerpresent    .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> thick           .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.1 .        </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.2 .        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age             0.01881858</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ulcerpresent    .         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> thick           .         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.1 .         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.2 .         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
