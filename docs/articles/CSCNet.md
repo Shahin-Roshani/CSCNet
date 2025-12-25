@@ -238,7 +238,7 @@ of event: 1 based on time dependent (IPCW) AUC as the loss function
 ``` r
 #Writing a hypothetical pre-processing function
 
-#install.packages('collinear')
+library('collinear')
 
 zvr.fun <- function(data){
 
@@ -278,7 +278,7 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              preProc.pkgs = 'collinear')
 
-Process was done in 27.75834 secs.
+Process was done in 29.26528 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC

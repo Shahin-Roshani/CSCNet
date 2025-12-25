@@ -285,8 +285,6 @@ Shahin Roshani
 ``` r
 # \donttest{
 
-#install.packages('collinear')
-
 library(riskRegression)
 
 data(Melanoma)
@@ -298,6 +296,8 @@ vl <- list('1'=~age+sex+epicel+ici,
 al <- list('1'=0,'2'=c(.5,1))
 
 #External standardization function with data frame as its input and output
+
+library('collinear')
 
 zvr.fun <- function(data){
 
@@ -315,7 +315,7 @@ test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horiz
 
                    preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
 #> 
-#> Process was done in 23.69417 secs.
+#> Process was done in 26.51891 secs.
 
 test
 #> $`1095`

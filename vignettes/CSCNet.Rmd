@@ -108,7 +108,7 @@ Now let's see all that was mentioned in this section in an example. Let's say we
 ```{r message=T, warning=F}
 #Writing a hypothetical pre-processing function
 
-#install.packages('collinear')
+library('collinear')
 
 zvr.fun <- function(data){
 

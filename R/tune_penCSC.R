@@ -43,8 +43,6 @@
 #'
 #'@examples \donttest{
 #'
-#'#install.packages('collinear')
-#'
 #'library(riskRegression)
 #'
 #'data(Melanoma)
@@ -56,6 +54,8 @@
 #'al <- list('1'=0,'2'=c(.5,1))
 #'
 #'#External standardization function with data frame as its input and output
+#'
+#'library('collinear')
 #'
 #'zvr.fun <- function(data){
 #'
@@ -97,7 +97,7 @@
 #'
 #'Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. \url{https://magrittr.tidyverse.org}, \url{https://github.com/tidyverse/magrittr}.
 #'
-#'@import tidyverse survival riskRegression prodlim magrittr glmnet furrr recipes
+#'@import tidyverse survival riskRegression prodlim magrittr glmnet furrr collinear
 #'
 #'@importFrom caret createDataPartition createFolds createMultiFolds createResample
 #'

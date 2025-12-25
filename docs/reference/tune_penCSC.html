@@ -213,8 +213,6 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#install.packages('collinear')</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tagteam/riskRegression" class="external-link">riskRegression</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">Melanoma</span><span class="op">)</span></span></span>
@@ -227,9 +225,11 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">#External standardization function with data frame as its input and output</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://blasbenito.github.io/collinear/" class="external-link">'collinear'</a></span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">zvr.fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">{</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="va">zv_vars</span> <span class="op">&lt;-</span> <span class="fu">identify_zero_variance_variables</span><span class="op">(</span>df <span class="op">=</span> <span class="va">data</span>,responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'time'</span>,<span class="st">'status'</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="va">zv_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://blasbenito.github.io/collinear/reference/identify_zero_variance_variables.html" class="external-link">identify_zero_variance_variables</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">data</span>,responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'time'</span>,<span class="st">'status'</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu">all_of</span><span class="op">(</span><span class="va">zv_vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -243,7 +243,7 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>                   preProc.fun<span class="op">=</span><span class="va">zvr.fun</span>,parallel<span class="op">=</span><span class="cn">TRUE</span>,preProc.pkgs<span class="op">=</span><span class="st">'collinear'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 23.69417 secs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 26.51891 secs.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1095`</span>

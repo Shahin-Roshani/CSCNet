@@ -104,8 +104,6 @@ This will be done for each cause-specific model to create exclusive sequences of
 \examples{
 \donttest{
 
-#install.packages('collinear')
-
 library(riskRegression)
 
 data(Melanoma)
@@ -117,6 +115,8 @@ vl <- list('1'=~age+sex+epicel+ici,
 al <- list('1'=0,'2'=c(.5,1))
 
 #External standardization function with data frame as its input and output
+
+library('collinear')
 
 zvr.fun <- function(data){
 
