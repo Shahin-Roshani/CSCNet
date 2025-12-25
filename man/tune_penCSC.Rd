@@ -104,7 +104,7 @@ This will be done for each cause-specific model to create exclusive sequences of
 \examples{
 \donttest{
 
-library(survival)
+#install.packages('collinear')
 
 library(riskRegression)
 
@@ -118,33 +118,21 @@ al <- list('1'=0,'2'=c(.5,1))
 
 #External standardization function with data frame as its input and output
 
-library(recipes)
+zvr.fun <- function(data){
 
-std.fun <- function(data){
+ zv_vars <- identify_zero_variance_variables(df = data,responses = c('time','status'))
 
- cont_vars <- data \%>\% select(where(~is.numeric(.))) \%>\% names
-
- cont_vars <- cont_vars[-which(cont_vars \%in\% c('time','status'))]
-
- #External functions from recipes package are being used
-
- recipe(~.,data=data) \%>\%
-
-   step_center(all_of(cont_vars)) \%>\%
-
-   step_scale(all_of(cont_vars)) \%>\%
-
-   prep(training=data) \%>\% juice
+ return(data \%>\% select(-all_of(zv_vars)))
 
 }
 
 set.seed(233)
 
-test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1825,
+test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 
-                   event=1,method='cv',k=5,metrics='AUC',alpha.grid=al,standardize=FALSE,
+                   event=1,method='cv',k=3,metrics='AUC',alpha.grid=al,standardize=TRUE,
 
-                   preProc.fun=std.fun,parallel=TRUE,preProc.pkgs='recipes')
+                   preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
 
 test
 

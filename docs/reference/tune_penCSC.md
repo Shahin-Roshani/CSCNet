@@ -285,7 +285,7 @@ Shahin Roshani
 ``` r
 # \donttest{
 
-library(survival)
+#install.packages('collinear')
 
 library(riskRegression)
 
@@ -299,64 +299,44 @@ al <- list('1'=0,'2'=c(.5,1))
 
 #External standardization function with data frame as its input and output
 
-library(recipes)
-#> 
-#> Attaching package: 'recipes'
-#> The following object is masked from 'package:stringr':
-#> 
-#>     fixed
-#> The following object is masked from 'package:stats':
-#> 
-#>     step
+zvr.fun <- function(data){
 
-std.fun <- function(data){
+ zv_vars <- identify_zero_variance_variables(df = data,responses = c('time','status'))
 
- cont_vars <- data %>% select(where(~is.numeric(.))) %>% names
-
- cont_vars <- cont_vars[-which(cont_vars %in% c('time','status'))]
-
- #External functions from recipes package are being used
-
- recipe(~.,data=data) %>%
-
-   step_center(all_of(cont_vars)) %>%
-
-   step_scale(all_of(cont_vars)) %>%
-
-   prep(training=data) %>% juice
+ return(data %>% select(-all_of(zv_vars)))
 
 }
 
 set.seed(233)
 
-test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1825,
+test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 
-                   event=1,method='cv',k=5,metrics='AUC',alpha.grid=al,standardize=FALSE,
+                   event=1,method='cv',k=3,metrics='AUC',alpha.grid=al,standardize=TRUE,
 
-                   preProc.fun=std.fun,parallel=TRUE,preProc.pkgs='recipes')
+                   preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
 #> 
-#> Process was done in 43.24362 secs.
+#> Process was done in 23.69417 secs.
 
 test
-#> $`1825`
+#> $`1095`
 #> $`Event: 1`
 #> 6 x 1 sparse Matrix of class "dgCMatrix"
-#>                        1
-#> age            0.3748226
-#> sexMale        0.7967235
-#> epicelpresent -1.1097122
-#> ici1           1.7729566
-#> ici2           1.8709727
-#> ici3           2.5489947
+#>                         1
+#> age            0.01981234
+#> sexMale        0.68492059
+#> epicelpresent -0.93803783
+#> ici1           0.52850750
+#> ici2           0.66530411
+#> ici3           1.25929266
 #> 
 #> $`Event: 2`
 #> 5 x 1 sparse Matrix of class "dgCMatrix"
-#>                         1
-#> age             0.3122109
-#> ulcerpresent    .        
-#> thick           .        
-#> invasionlevel.1 .        
-#> invasionlevel.2 .        
+#>                           1
+#> age             0.038267848
+#> ulcerpresent    .          
+#> thick           0.007437189
+#> invasionlevel.1 .          
+#> invasionlevel.2 .          
 #> 
 #> 
 
