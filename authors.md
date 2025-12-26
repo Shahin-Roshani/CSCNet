@@ -7,6 +7,9 @@
 
 ## Citation
 
+Source:
+[`DESCRIPTION`](https://github.com/Shahin-Roshani/CSCNet/blob/master/DESCRIPTION)
+
 Roshani S (2025). *CSCNet: Fitting and Tuning Regularized Cause-Specific
 Cox Models with Elastic-Net Penalty*. R package version 0.1.3,
 <https://shahin-roshani.github.io/CSCNet/>.

@@ -234,7 +234,7 @@ of event: 1 based on time dependent (IPCW) AUC as the loss function
 (evaluation metric) through a 5-fold cross validation process:
 
 ``` r
-#Writing a hypothetical pre-processing function
+#A pre-processing function that removes (near) zero-variance predictors
 
 library('collinear')
 
@@ -276,7 +276,7 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              preProc.pkgs = 'collinear')
 
-Process was done in 16.29657 secs.
+Process was done in 17.69977 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
   alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
