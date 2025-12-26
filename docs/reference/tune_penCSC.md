@@ -33,7 +33,7 @@ tune_penCSC(
   parallel = FALSE,
   preProc.pkgs = NULL,
   preProc.globals = NULL,
-  core.nums = future::availableCores()/2
+  core.nums = parallelly::availableCores()/2
 )
 ```
 
@@ -206,7 +206,8 @@ tune_penCSC(
 - core.nums:
 
   Number of CPU cores to be used for parallel computation. Only
-  applicable if `parallel=T`. Default is `future::availableCores()/2`.
+  applicable if `parallel=T`. Default is
+  `parallelly::availableCores()/2`.
 
 ## Value
 
@@ -295,7 +296,7 @@ vl <- list('1'=~age+sex+epicel+ici,
 
 al <- list('1'=0,'2'=c(.5,1))
 
-#External standardization function with data frame as its input and output
+#External function that removes (near) zero-variance predictors
 
 library('collinear')
 
@@ -315,7 +316,7 @@ test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horiz
 
                    preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
 #> 
-#> Process was done in 26.51891 secs.
+#> Process was done in 17.76386 secs.
 
 test
 #> $`1095`

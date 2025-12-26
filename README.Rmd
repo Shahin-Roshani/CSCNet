@@ -44,3 +44,5 @@ devtools::install_github('Shahin-Roshani/CSCNet')
 [CRAN page](https://CRAN.R-project.org/package=CSCNet)
 
 [Deployed GitHub page](https://shahin-roshani.github.io/CSCNet/)
+
+[Bug reports](https://github.com/Shahin-Roshani/CSCNet/issues)

@@ -29,7 +29,7 @@
 #'@param parallel Logical indicating whether the tuning process should be performed in parallel or not. Default is \code{FALSE}.
 #'@param preProc.pkgs A character vector containing the names of packages that was used in creating user's \code{preProc.fun} while using parallel computation. Only applicable if \code{parallel=T} and \code{preProc.fun} is a user specified function using functions from other packages. See 'Examples' for details.
 #'@param preProc.globals A character vector containing names of objects included in \code{preProc.fun} to be considered as global objects while using parallel computation. The most frequent ones are the names of the user specified pre processing function or functions within this function. Only applicable if \code{parallel=T} and \code{preProc.fun} is a user specified function. See 'Examples' for details.
-#'@param core.nums Number of CPU cores to be used for parallel computation. Only applicable if \code{parallel=T}. Default is \code{future::availableCores()/2}.
+#'@param core.nums Number of CPU cores to be used for parallel computation. Only applicable if \code{parallel=T}. Default is \code{parallelly::availableCores()/2}.
 #'
 #'@return A list containing the detailed information of the hyper-parameter tuning and the validation process, best combination of hyper-parameters and the final fits based on the whole data using the best obtained hyper-parameters. Use \code{$} to explore all the involved information.
 #'
@@ -53,7 +53,7 @@
 #'
 #'al <- list('1'=0,'2'=c(.5,1))
 #'
-#'#External standardization function with data frame as its input and output
+#'#External function that removes (near) zero-variance predictors
 #'
 #'library('collinear')
 #'
@@ -101,7 +101,9 @@
 #'
 #'@importFrom caret createDataPartition createFolds createMultiFolds createResample
 #'
-#'@importFrom future plan availableCores
+#'@importFrom future plan
+#'
+#'@importFrom parallelly availableCores
 #'
 #'@importFrom stats predict
 #'
@@ -121,7 +123,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
                         parallel=FALSE,preProc.pkgs=NULL,preProc.globals=NULL,
 
-                        core.nums=future::availableCores()/2){
+                        core.nums=parallelly::availableCores()/2){
 
   if (!(method %in% c('loocv','lgocv','cv','repcv','boot'))) stop('`method` must be `loocv`, `lgocv`, `cv`, `repcv` or `boot`!',call.=F)
 
@@ -343,12 +345,6 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   modeling <- function(alpha_list,lambda_list,horizon){
 
-    force(alpha_list)
-
-    force(lambda_list)
-
-    force(horizon)
-
     purrr::pmap(.l=list(aa=training_list,bb=testing_list),
 
                 .f=purrr::possibly(.f=function(aa,bb){
@@ -398,7 +394,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
   if (!parallel){
 
-    calc_grid %>% purrr::map(function(x) modeling(x$alpha.list,x$lambda.list,x$horizon)) -> lossfun_vals
+    calc_grid %>% purrr::map(~modeling(.$alpha.list,.$lambda.list,.$horizon)) -> lossfun_vals
 
   } else{
 
@@ -416,9 +412,9 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
       (function(x) c(x,preProc.globals)) %>% unique()
 
-    future::plan(future::multisession(),workers=core.nums)
+    future::plan(future::multisession,workers=core.nums)
 
-    calc_grid %>% furrr::future_map(function(x) modeling(x$alpha.list,x$lambda.list,x$horizon),
+    calc_grid %>% furrr::future_map(~modeling(.$alpha.list,.$lambda.list,.$horizon),
 
                                     .options=furrr::furrr_options(packages=pkg_envs,globals=globals,seed=T),
 

@@ -30,7 +30,7 @@ tune_penCSC(
   parallel = FALSE,
   preProc.pkgs = NULL,
   preProc.globals = NULL,
-  core.nums = future::availableCores()/2
+  core.nums = parallelly::availableCores()/2
 )
 }
 \arguments{
@@ -84,7 +84,7 @@ tune_penCSC(
 
 \item{preProc.globals}{A character vector containing names of objects included in \code{preProc.fun} to be considered as global objects while using parallel computation. The most frequent ones are the names of the user specified pre processing function or functions within this function. Only applicable if \code{parallel=T} and \code{preProc.fun} is a user specified function. See 'Examples' for details.}
 
-\item{core.nums}{Number of CPU cores to be used for parallel computation. Only applicable if \code{parallel=T}. Default is \code{future::availableCores()/2}.}
+\item{core.nums}{Number of CPU cores to be used for parallel computation. Only applicable if \code{parallel=T}. Default is \code{parallelly::availableCores()/2}.}
 }
 \value{
 A list containing the detailed information of the hyper-parameter tuning and the validation process, best combination of hyper-parameters and the final fits based on the whole data using the best obtained hyper-parameters. Use \code{$} to explore all the involved information.
@@ -114,7 +114,7 @@ vl <- list('1'=~age+sex+epicel+ici,
 
 al <- list('1'=0,'2'=c(.5,1))
 
-#External standardization function with data frame as its input and output
+#External function that removes (near) zero-variance predictors
 
 library('collinear')
 

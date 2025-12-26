@@ -42,6 +42,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Shahin-Roshani/CSCNet/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -57,7 +58,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>CSCNet vignette</h1>
             
       
-
+      <small class="dont-index">Source: <a href="https://github.com/Shahin-Roshani/CSCNet/blob/HEAD/vignettes/CSCNet.Rmd" class="external-link"><code>vignettes/CSCNet.Rmd</code></a></small>
       <div class="d-none name"><code>CSCNet.Rmd</code></div>
     </div>
 
@@ -301,7 +302,7 @@ objects must be given through <code>preProc.pkgs</code> and
 Let’s say we want to tune our model for 5 year absolute risk prediction
 of event: 1 based on time dependent (IPCW) AUC as the loss function
 (evaluation metric) through a 5-fold cross validation process:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#Writing a hypothetical pre-processing function</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co">#A pre-processing function that removes (near) zero-variance predictors</span></span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">library</span>(<span class="st">'collinear'</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
@@ -343,7 +344,7 @@ of event: 1 based on time dependent (IPCW) AUC as the loss function
 <span id="cb6-40"><a href="#cb6-40" tabindex="-1"></a>                             </span>
 <span id="cb6-41"><a href="#cb6-41" tabindex="-1"></a>                             <span class="at">preProc.pkgs =</span> <span class="st">'collinear'</span>)</span>
 <span id="cb6-42"><a href="#cb6-42" tabindex="-1"></a></span>
-<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a>Process was done <span class="cf">in</span> <span class="fl">29.26528</span> secs.</span>
+<span id="cb6-43"><a href="#cb6-43" tabindex="-1"></a>Process was done <span class="cf">in</span> <span class="fl">19.41618</span> secs.</span>
 <span id="cb6-44"><a href="#cb6-44" tabindex="-1"></a></span>
 <span id="cb6-45"><a href="#cb6-45" tabindex="-1"></a>tune_melanoma<span class="sc">$</span>validation_result <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(mean.AUC)) <span class="sc">%&gt;%</span> head</span>
 <span id="cb6-46"><a href="#cb6-46" tabindex="-1"></a>  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC</span>
