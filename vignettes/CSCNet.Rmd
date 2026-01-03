@@ -93,7 +93,7 @@ Like before, specification of variables and hyper-parameters are done through na
 
 While the automatic sequence of $\alpha$ values for all causes is `seq(0,1,.5)`, the process of determining the $\lambda$ values automatically is by:
 
-1. Starting from $\lambda=0$, the algorithm fits LASSO models until finding a $\lambda$ value that creates a NULL model where all variables were shrunk to be exactly 0.
+1. The algorithm fits LASSO models until finding a $\lambda$ value that creates a NULL model where all variables were shrunk to be exactly 0. The path to reach maximum $\lambda$ is specified internally by `glmnet`.
 2. The obtained $\lambda$ value will be used as the maximum value of a sequence starting from 0. The length of this sequence is controlled by values in `nlambdas.list`.
 
 This will be done for each cause-specific model to create exclusive sequences of $\lambda$s for each of them.
@@ -118,9 +118,7 @@ zvr.fun <- function(data){
 
 }
 
-#Tuning a regularized cause-specific cox 
-
-set.seed(455) #for reproducibility
+#Tuning a regularized cause-specific Cox model
 
 tune_melanoma <- tune_penCSC(time = 'time',
                              

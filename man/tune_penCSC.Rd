@@ -22,7 +22,7 @@ tune_penCSC(
   alpha.grid = NULL,
   lambda.grid = NULL,
   nlambdas.list = NULL,
-  grow.by = 0.01,
+  grow.by = NULL,
   standardize = TRUE,
   keep = NULL,
   preProc.fun = function(x) x,
@@ -125,8 +125,6 @@ zvr.fun <- function(data){
  return(data \%>\% select(-all_of(zv_vars)))
 
 }
-
-set.seed(233)
 
 test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 

@@ -57,7 +57,7 @@
 <span>  alpha.grid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  lambda.grid <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  nlambdas.list <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  grow.by <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>  grow.by <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  standardize <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  keep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  preProc.fun <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span>,</span>
@@ -236,36 +236,34 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">233</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">tune_penCSC</span><span class="op">(</span>time<span class="op">=</span><span class="st">'time'</span>,status<span class="op">=</span><span class="st">'status'</span>,vars.list<span class="op">=</span><span class="va">vl</span>,data<span class="op">=</span><span class="va">Melanoma</span>,horizons<span class="op">=</span><span class="fl">1095</span>,</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>                   event<span class="op">=</span><span class="fl">1</span>,method<span class="op">=</span><span class="st">'cv'</span>,k<span class="op">=</span><span class="fl">3</span>,metrics<span class="op">=</span><span class="st">'AUC'</span>,alpha.grid<span class="op">=</span><span class="va">al</span>,standardize<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>                   preProc.fun<span class="op">=</span><span class="va">zvr.fun</span>,parallel<span class="op">=</span><span class="cn">TRUE</span>,preProc.pkgs<span class="op">=</span><span class="st">'collinear'</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 17.76386 secs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 17.07098 secs.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1095`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Event: 1`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 x 1 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                         1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age            0.01981234</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> sexMale        0.68492059</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> epicelpresent -0.93803783</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ici1           0.52850750</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ici2           0.66530411</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ici3           1.25929266</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age            0.02248578</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> sexMale        0.79689504</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> epicelpresent -1.10991986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ici1           1.77593118</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ici2           1.87392279</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ici3           2.55198560</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Event: 2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 x 1 sparse Matrix of class "dgCMatrix"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age             0.038267848</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ulcerpresent    .          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> thick           0.007437189</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.1 .          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.2 .          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age              0.05357151</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ulcerpresent     0.01476397</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> thick            0.06236775</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.1 -0.19839193</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.2 -0.52400890</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>

@@ -4,6 +4,10 @@ In `tune_penCSC`:
 
 * Fixed an issue where the function only worked when the survival outcome included censoring.
 
+* `grow.by` has been deprecated and is scheduled for removal in a future version. The paths to reach maximum lambdas are now specified by `glmnet`.
+
+* Function now correctly sets multisession plan for parallel computations.
+
 # CSCNet 0.1.2
 
 In `penCSC`:

@@ -65,8 +65,6 @@
 #'
 #'}
 #'
-#'set.seed(233)
-#'
 #'test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 #'
 #'                    event=1,method='cv',k=3,metrics='AUC',alpha.grid=al,standardize=TRUE,
@@ -117,13 +115,17 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
                         metrics='Brier',final.metric=NULL,alpha.grid=NULL,
 
-                        lambda.grid=NULL,nlambdas.list=NULL,grow.by=.01,standardize=TRUE,
+                        lambda.grid=NULL,nlambdas.list=NULL,grow.by=NULL,standardize=TRUE,
 
                         keep=NULL,preProc.fun=function(x) x,preProc.fun.test=NULL,
 
                         parallel=FALSE,preProc.pkgs=NULL,preProc.globals=NULL,
 
                         core.nums=parallelly::availableCores()/2){
+
+
+  if (!is.null(grow.by)) warning('As of version 0.1.3, grow.by has been deprecated and is scheduled for removal in a future version.',call.=FALSE)
+
 
   if (!(method %in% c('loocv','lgocv','cv','repcv','boot'))) stop('`method` must be `loocv`, `lgocv`, `cv`, `repcv` or `boot`!',call.=F)
 
@@ -154,20 +156,6 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
     stop('`preProc.fun.test` must be a function!',call.=F)
 
   }
-
-  #if (is.character(preProc.fun)){
-
-  #  if (length(preProc.fun)>1){
-
-  #    stop('Only one name of a unified pre-processing function must be given!',call.=F)
-
-  #  } else{
-
-  #    preProc.globals <- c(preProc.globals,preProc.fun)
-
-  #  }
-
-  #}
 
   if (purrr::is_empty(preProc.fun.test)) preProc.fun.test <- preProc.fun
 
@@ -250,29 +238,13 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
     lambda_seq <- function(X,y,nlambdas){
 
-      max_lambda <- 0
-
-      range_fit <- glmnet::glmnet(x=X,y=y,family='cox',alpha=1,standardize=T) %>%
-
-        (function(x) predict(x,s=max_lambda,type='coefficients'))
-
-      while (any(range_fit[,1]!=0)){
-
-        max_lambda <- max_lambda + grow.by
-
-        range_fit <- glmnet::glmnet(x=X,y=y,family='cox',alpha=1,standardize=T) %>%
-
-          (function(x) predict(x,s=max_lambda,type='coefficients'))
-
-      }
+      max_lambda <- glmnet::glmnet(x=X,y=y,family='cox',alpha=1,standardize=T,nlambda=100)$lambda %>% max
 
       return(seq(0,max_lambda,length.out=nlambdas))
 
     }
 
-    lambda.grid <- purrr::pmap(.l=list(ymats,Xmats,nlambdas.list),
-
-                               .f=~lambda_seq(..2,..1,..3) %>% unique)
+    lambda.grid <- purrr::pmap(.l=list(ymats,Xmats,nlambdas.list),.f=~lambda_seq(..2,..1,..3))
 
   }
 
@@ -497,4 +469,3 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
   return(tuning_results)
 
 }
-
