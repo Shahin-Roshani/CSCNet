@@ -314,7 +314,7 @@ test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horiz
 
                    preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
 #> 
-#> Process was done in 13.01075 secs.
+#> Process was done in 15.57168 secs.
 
 test
 #> $`1095`
