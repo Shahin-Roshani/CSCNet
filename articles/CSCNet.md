@@ -203,9 +203,10 @@ While the automatic sequence of $\alpha$ values for all causes is
 `seq(0,1,.5)`, the process of determining the $\lambda$ values
 automatically is by:
 
-1.  Starting from $\lambda = 0$, the algorithm fits LASSO models until
-    finding a $\lambda$ value that creates a NULL model where all
-    variables were shrunk to be exactly 0.
+1.  The algorithm fits LASSO models until finding a $\lambda$ value that
+    creates a NULL model where all variables were shrunk to be
+    exactly 0. The path to reach maximum $\lambda$ is specified
+    internally by `glmnet`.
 2.  The obtained $\lambda$ value will be used as the maximum value of a
     sequence starting from 0. The length of this sequence is controlled
     by values in `nlambdas.list`.
@@ -246,9 +247,7 @@ zvr.fun <- function(data){
 
 }
 
-#Tuning a regularized cause-specific cox 
-
-set.seed(455) #for reproducibility
+#Tuning a regularized cause-specific Cox model
 
 tune_melanoma <- tune_penCSC(time = 'time',
                              
@@ -276,41 +275,41 @@ tune_melanoma <- tune_penCSC(time = 'time',
                              
                              preProc.pkgs = 'collinear')
 
-Process was done in 17.32541 secs.
+Process was done in 17.18071 secs.
 
 tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
-  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
-1       0     1.0   0.1275   0.0525    1095 0.7588322
-2       0     0.5   0.1275   0.0700    1095 0.7587467
-3       0     1.0   0.1700   0.0350    1095 0.7585570
-4       0     0.5   0.1700   0.0700    1095 0.7585039
-5       0     1.0   0.1275   0.0350    1095 0.7583210
-6       0     1.0   0.1275   0.0700    1095 0.7581944
+  alpha_1 alpha_2 lambda_1   lambda_2 horizon  mean.AUC
+1       0     1.0 0.168907 0.06461658    1095 0.7030892
+2       0     1.0 0.168907 0.04846244    1095 0.7018868
+3       0     0.5 0.168907 0.06461658    1095 0.7000667
+4       0     1.0 0.168907 0.03230829    1095 0.6976718
+5       0     0.5 0.168907 0.03230829    1095 0.6958947
+6       0     0.5 0.168907 0.04846244    1095 0.6958416
 
 tune_melanoma$final_params
 $`1095`
-  alpha_1 alpha_2 lambda_1 lambda_2 horizon  mean.AUC
-1       0       1   0.1275   0.0525    1095 0.7588322
+  alpha_1 alpha_2 lambda_1   lambda_2 horizon  mean.AUC
+1       0       1 0.168907 0.06461658    1095 0.7030892
 
 tune_melanoma$final_fits
 $`1095`
 $`Event: 1`
 5 x 1 sparse Matrix of class "dgCMatrix"
                           1
-age             0.007288018
-sexMale         0.401145597
-invasionlevel.1 0.487237879
-invasionlevel.2 0.389279674
-thick           0.102998445
+age             0.006953529
+sexMale         0.367812044
+invasionlevel.1 0.437571275
+invasionlevel.2 0.361626485
+thick           0.097048991
 
 $`Event: 2`
 7 x 1 sparse Matrix of class "dgCMatrix"
-                       1
-age           0.01197631
-sexMale       .         
-epicelpresent .         
-ici1          .         
-ici2          .         
-ici3          .         
-thick         .         
+              1
+age           .
+sexMale       .
+epicelpresent .
+ici1          .
+ici2          .
+ici3          .
+thick         .
 ```

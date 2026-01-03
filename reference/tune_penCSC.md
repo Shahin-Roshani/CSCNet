@@ -25,7 +25,7 @@ tune_penCSC(
   alpha.grid = NULL,
   lambda.grid = NULL,
   nlambdas.list = NULL,
-  grow.by = 0.01,
+  grow.by = NULL,
   standardize = TRUE,
   keep = NULL,
   preProc.fun = function(x) x,
@@ -308,15 +308,13 @@ zvr.fun <- function(data){
 
 }
 
-set.seed(233)
-
 test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 
                    event=1,method='cv',k=3,metrics='AUC',alpha.grid=al,standardize=TRUE,
 
                    preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
 #> 
-#> Process was done in 12.90586 secs.
+#> Process was done in 13.01075 secs.
 
 test
 #> $`1095`
@@ -333,9 +331,9 @@ test
 #> $`Event: 2`
 #> 5 x 1 sparse Matrix of class "dgCMatrix"
 #>                          1
-#> age             0.01881858
+#> age             0.04016862
 #> ulcerpresent    .         
-#> thick           .         
+#> thick           0.01178253
 #> invasionlevel.1 .         
 #> invasionlevel.2 .         
 #> 
