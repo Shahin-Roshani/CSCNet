@@ -1,6 +1,18 @@
 # Changelog
 
+## CSCNet 0.1.4
+
+In `tune_penCSC`:
+
+- Introduced `tri.list` to specify training data indices for arbitrary
+  resampling.
+
+- Function now uses `max(1L,ceiling(parallelly::availableCores()/2))` as
+  the default number of cores for parallel computations.
+
 ## CSCNet 0.1.3
+
+CRAN release: 2026-01-08
 
 In `tune_penCSC`:
 

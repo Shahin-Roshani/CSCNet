@@ -11,6 +11,7 @@
 #'@param horizons A vector of time horizons which we want the absolute risk predictions to be evaluated at.
 #'@param event The value for event of interest which we want the absolute risk predictions to be evaluated for. This must be one of the values in the status variable of the data.
 #'@param rhs A right hand sided formula indicating the variables to be used in estimating the inverse probability of censoring weighting (IPCW) model. Default is \code{~1}.
+#'@param tri.list A list specifying training data indices for arbitrary resampling. Default is \code{NULL} but when specified, \code{method} and all arguments related to it will be ignored.
 #'@param method Resampling method to be used for hyper-parameter tuning. Values can be: \code{'cv'} for cross validation, \code{'repcv'} for repeated cross validation, \code{'lgocv'} for monte-carlo cross validation, \code{'loocv'} for leave one out cross validation and \code{'boot'} for bootstrap. Default is \code{'cv'}.
 #'@param k Number of folds. Only applicable for \code{method='cv'} and \code{method='repcv'}. Default is 10.
 #'@param times Repeat number of the resampling process. Only applicable for \code{method='repcv'}, \code{method='lgocv'} and \code{method='boot'}. Default is 25.
@@ -51,25 +52,15 @@
 #'
 #'           '2'=c('age','ulcer','thick','invasion'))
 #'
-#'al <- list('1'=0,'2'=c(.5,1))
+#'set.seed(1331)
 #'
-#'#External function that removes (near) zero-variance predictors
-#'
-#'library('collinear')
-#'
-#'zvr.fun <- function(data){
-#'
-#'  zv_vars <- identify_zero_variance_variables(df = data,responses = c('time','status'))
-#'
-#'  return(data %>% select(-all_of(zv_vars)))
-#'
-#'}
+#'tri.l <- caret::createFolds(as.factor(Melanoma$status),k=3,list=TRUE,returnTrain=TRUE)
 #'
 #'test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 #'
-#'                    event=1,method='cv',k=3,metrics='AUC',alpha.grid=al,standardize=TRUE,
+#'                    event=1,tri.list=tri.l,metrics='AUC',alpha.grid=list('1'=0,'2'=c(.5,1)),
 #'
-#'                    preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
+#'                    nlambdas.list=list('1'=3,'2'=3))
 #'
 #'test
 #'
@@ -87,7 +78,7 @@
 #'
 #'Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. \doi{10.32614/RJ-2021-048}.
 #'
-#'Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. \url{https://github.com/DavisVaughan/furrr}, \url{https://furrr.futureverse.org/}.
+#'Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. \url{https://github.com/futureverse/furrr}, \url{https://furrr.futureverse.org/}.
 #'
 #'Therneau T (2022). A Package for Survival Analysis in R. R package version 3.3-1, \url{https://CRAN.R-project.org/package=survival}.
 #'
@@ -95,7 +86,7 @@
 #'
 #'Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. \url{https://magrittr.tidyverse.org}, \url{https://github.com/tidyverse/magrittr}.
 #'
-#'@import tidyverse survival riskRegression prodlim magrittr glmnet furrr collinear
+#'@import tidyverse survival riskRegression prodlim magrittr glmnet furrr recipes
 #'
 #'@importFrom caret createDataPartition createFolds createMultiFolds createResample
 #'
@@ -103,7 +94,7 @@
 #'
 #'@importFrom parallelly availableCores
 #'
-#'@importFrom stats predict
+#'@importFrom stats predict rnorm
 #'
 #'@importFrom prodlim Hist
 #'
@@ -111,7 +102,7 @@
 
 tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
-                        method='cv',k=10,times=25,p=.7,strat.var=NULL,
+                        tri.list=NULL,method='cv',k=10,times=25,p=.7,strat.var=NULL,
 
                         metrics='Brier',final.metric=NULL,alpha.grid=NULL,
 
@@ -121,7 +112,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
                         parallel=FALSE,preProc.pkgs=NULL,preProc.globals=NULL,
 
-                        core.nums=parallelly::availableCores()/2){
+                        core.nums=max(1L,ceiling(parallelly::availableCores()/2))){
 
 
   if (!is.null(grow.by)) warning('As of version 0.1.3, grow.by has been deprecated and is scheduled for removal in a future version.',call.=FALSE)
@@ -308,7 +299,24 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
     }))
 
 
-  resamples <- resampler(method)
+  if (is.null(tri.list)){
+
+    resamples <- resampler(method)
+
+  } else{
+
+    if (purrr::is_empty(names(tri.list))){
+
+      names(tri.list) <- stringr::str_c('resample.',seq_len(length(tri.list)))
+
+    }
+
+    resamples <- list('train_index_list'=tri.list,
+
+                      'test_index_list'=tri.list %>% purrr::map(~which(!(seq_len(nrow(data)) %in% .))))
+
+  }
+
 
   training_list <- resamples$train_index_list %>% purrr::map(~data[.,] %>% preProc.fun)
 
@@ -380,7 +388,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
                  'strat.var','strat.vec','resampler','data','predictRisk.penCSC','keep',
 
-                 'modeling') %>%
+                 'modeling','tri.list','training_list','testing_list') %>%
 
       (function(x) c(x,preProc.globals)) %>% unique()
 
@@ -396,6 +404,7 @@ tune_penCSC <- function(time,status,vars.list,data,horizons,event,rhs=~1,
 
 
   stop <- Sys.time()
+
 
   message(stringr::str_c('\nProcess was done in ',format(stop-start),'.'))
 
