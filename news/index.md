@@ -2,6 +2,8 @@
 
 ## CSCNet 0.1.3
 
+CRAN release: 2026-01-08
+
 In `tune_penCSC`:
 
 - Fixed an issue where the function only worked when the survival
