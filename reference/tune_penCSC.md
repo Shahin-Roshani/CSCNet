@@ -15,6 +15,7 @@ tune_penCSC(
   horizons,
   event,
   rhs = ~1,
+  tri.list = NULL,
   method = "cv",
   k = 10,
   times = 25,
@@ -33,7 +34,7 @@ tune_penCSC(
   parallel = FALSE,
   preProc.pkgs = NULL,
   preProc.globals = NULL,
-  core.nums = parallelly::availableCores()/2
+  core.nums = max(1L, ceiling(parallelly::availableCores()/2))
 )
 ```
 
@@ -75,6 +76,12 @@ tune_penCSC(
   A right hand sided formula indicating the variables to be used in
   estimating the inverse probability of censoring weighting (IPCW)
   model. Default is `~1`.
+
+- tri.list:
+
+  A list specifying training data indices for arbitrary resampling.
+  Default is `NULL` but when specified, `method` and all arguments
+  related to it will be ignored.
 
 - method:
 
@@ -264,7 +271,7 @@ Processing in R using Futures.” The R Journal, 13(2), 208–227.
 [doi:10.32614/RJ-2021-048](https://doi.org/10.32614/RJ-2021-048) .
 
 Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel
-using Futures. <https://github.com/DavisVaughan/furrr>,
+using Futures. <https://github.com/futureverse/furrr>,
 <https://furrr.futureverse.org/>.
 
 Therneau T (2022). A Package for Survival Analysis in R. R package
@@ -294,27 +301,17 @@ vl <- list('1'=~age+sex+epicel+ici,
 
           '2'=c('age','ulcer','thick','invasion'))
 
-al <- list('1'=0,'2'=c(.5,1))
+set.seed(1331)
 
-#External function that removes (near) zero-variance predictors
-
-library('collinear')
-
-zvr.fun <- function(data){
-
- zv_vars <- identify_zero_variance_variables(df = data,responses = c('time','status'))
-
- return(data %>% select(-all_of(zv_vars)))
-
-}
+tri.l <- caret::createFolds(as.factor(Melanoma$status),k=3,list=TRUE,returnTrain=TRUE)
 
 test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
 
-                   event=1,method='cv',k=3,metrics='AUC',alpha.grid=al,standardize=TRUE,
+                   event=1,tri.list=tri.l,metrics='AUC',alpha.grid=list('1'=0,'2'=c(.5,1)),
 
-                   preProc.fun=zvr.fun,parallel=TRUE,preProc.pkgs='collinear')
+                   nlambdas.list=list('1'=3,'2'=3))
 #> 
-#> Process was done in 12.31845 secs.
+#> Process was done in 5.477075 secs.
 
 test
 #> $`1095`
@@ -331,9 +328,9 @@ test
 #> $`Event: 2`
 #> 5 x 1 sparse Matrix of class "dgCMatrix"
 #>                          1
-#> age             0.04016862
+#> age             0.03413261
 #> ulcerpresent    .         
-#> thick           0.01178253
+#> thick           .         
 #> invasionlevel.1 .         
 #> invasionlevel.2 .         
 #> 
