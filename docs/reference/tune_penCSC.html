@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">CSCNet</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,7 @@
 <span>  <span class="va">horizons</span>,</span>
 <span>  <span class="va">event</span>,</span>
 <span>  rhs <span class="op">=</span> <span class="op">~</span><span class="fl">1</span>,</span>
+<span>  tri.list <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  method <span class="op">=</span> <span class="st">"cv"</span>,</span>
 <span>  k <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  times <span class="op">=</span> <span class="fl">25</span>,</span>
@@ -65,7 +66,7 @@
 <span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  preProc.pkgs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  preProc.globals <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  core.nums <span class="op">=</span> <span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a></span><span class="op">(</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
+<span>  core.nums <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html" class="external-link">max</a></span><span class="op">(</span><span class="fl">1L</span>, <span class="fu"><a href="https://rdrr.io/r/base/Round.html" class="external-link">ceiling</a></span><span class="op">(</span><span class="fu">parallelly</span><span class="fu">::</span><span class="fu"><a href="https://parallelly.futureverse.org/reference/availableCores.html" class="external-link">availableCores</a></span><span class="op">(</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -99,6 +100,10 @@
 
 <dt id="arg-rhs">rhs<a class="anchor" aria-label="anchor" href="#arg-rhs"></a></dt>
 <dd><p>A right hand sided formula indicating the variables to be used in estimating the inverse probability of censoring weighting (IPCW) model. Default is <code>~1</code>.</p></dd>
+
+
+<dt id="arg-tri-list">tri.list<a class="anchor" aria-label="anchor" href="#arg-tri-list"></a></dt>
+<dd><p>A list specifying training data indices for arbitrary resampling. Default is <code>NULL</code> but when specified, <code>method</code> and all arguments related to it will be ignored.</p></dd>
 
 
 <dt id="arg-method">method<a class="anchor" aria-label="anchor" href="#arg-method"></a></dt>
@@ -200,7 +205,7 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 .</p>
 <p>Bengtsson H (2021). “A Unifying Framework for Parallel and Distributed Processing in R using Futures.” The R Journal, 13(2), 208–227. <a href="https://doi.org/10.32614/RJ-2021-048" class="external-link">doi:10.32614/RJ-2021-048</a>
 .</p>
-<p>Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. <a href="https://github.com/DavisVaughan/furrr" class="external-link">https://github.com/DavisVaughan/furrr</a>, <a href="https://furrr.futureverse.org/" class="external-link">https://furrr.futureverse.org/</a>.</p>
+<p>Vaughan D, Dancho M (2022). furrr: Apply Mapping Functions in Parallel using Futures. <a href="https://github.com/futureverse/furrr" class="external-link">https://github.com/futureverse/furrr</a>, <a href="https://furrr.futureverse.org/" class="external-link">https://furrr.futureverse.org/</a>.</p>
 <p>Therneau T (2022). A Package for Survival Analysis in R. R package version 3.3-1, <a href="https://CRAN.R-project.org/package=survival" class="external-link">https://CRAN.R-project.org/package=survival</a>.</p>
 <p>Wickham H, Averick M, Bryan J, Chang W, McGowan L, François R, et al. Welcome to the tidyverse. J Open Source Softw. 2019 Nov 21;4(43):1686.</p>
 <p>Bache S, Wickham H (2022). magrittr: A Forward-Pipe Operator for R. <a href="https://magrittr.tidyverse.org" class="external-link">https://magrittr.tidyverse.org</a>, <a href="https://github.com/tidyverse/magrittr" class="external-link">https://github.com/tidyverse/magrittr</a>.</p>
@@ -222,27 +227,17 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span>          <span class="st">'2'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'age'</span>,<span class="st">'ulcer'</span>,<span class="st">'thick'</span>,<span class="st">'invasion'</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">al</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'1'</span><span class="op">=</span><span class="fl">0</span>,<span class="st">'2'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.5</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1331</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co">#External function that removes (near) zero-variance predictors</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://blasbenito.github.io/collinear/" class="external-link">'collinear'</a></span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">zvr.fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">{</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="va">zv_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://blasbenito.github.io/collinear/reference/identify_zero_variance_variables.html" class="external-link">identify_zero_variance_variables</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">data</span>,responses <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">'time'</span>,<span class="st">'status'</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span> <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">data</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu">all_of</span><span class="op">(</span><span class="va">zv_vars</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="va">tri.l</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createFolds</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">Melanoma</span><span class="op">$</span><span class="va">status</span><span class="op">)</span>,k<span class="op">=</span><span class="fl">3</span>,list<span class="op">=</span><span class="cn">TRUE</span>,returnTrain<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span> <span class="op">&lt;-</span> <span class="fu">tune_penCSC</span><span class="op">(</span>time<span class="op">=</span><span class="st">'time'</span>,status<span class="op">=</span><span class="st">'status'</span>,vars.list<span class="op">=</span><span class="va">vl</span>,data<span class="op">=</span><span class="va">Melanoma</span>,horizons<span class="op">=</span><span class="fl">1095</span>,</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>                   event<span class="op">=</span><span class="fl">1</span>,method<span class="op">=</span><span class="st">'cv'</span>,k<span class="op">=</span><span class="fl">3</span>,metrics<span class="op">=</span><span class="st">'AUC'</span>,alpha.grid<span class="op">=</span><span class="va">al</span>,standardize<span class="op">=</span><span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>                   event<span class="op">=</span><span class="fl">1</span>,tri.list<span class="op">=</span><span class="va">tri.l</span>,metrics<span class="op">=</span><span class="st">'AUC'</span>,alpha.grid<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'1'</span><span class="op">=</span><span class="fl">0</span>,<span class="st">'2'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.5</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span>                   preProc.fun<span class="op">=</span><span class="va">zvr.fun</span>,parallel<span class="op">=</span><span class="cn">TRUE</span>,preProc.pkgs<span class="op">=</span><span class="st">'collinear'</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                   nlambdas.list<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'1'</span><span class="op">=</span><span class="fl">3</span>,<span class="st">'2'</span><span class="op">=</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 17.07098 secs.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Process was done in 6.303961 secs.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">test</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`1095`</span>
@@ -258,12 +253,12 @@ The process of determining the lambda values automatically is by:</p><ol><li><p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $`Event: 2`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 x 1 sparse Matrix of class "dgCMatrix"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                           1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> age              0.05357151</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> ulcerpresent     0.01476397</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> thick            0.06236775</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.1 -0.19839193</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.2 -0.52400890</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                          1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> age             0.03413261</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> ulcerpresent    .         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> thick           .         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.1 .         </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> invasionlevel.2 .         </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
