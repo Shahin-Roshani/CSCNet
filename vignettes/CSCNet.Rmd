@@ -23,27 +23,33 @@ CSCNet is package with flexible tools for fitting and evaluating cause-specific 
 
 ### Regularized cause-specific cox and absolute risk predictions
 
-In this package we will use ```Melanoma``` data from 'riskRegression' package (which will load up with 'CSCNet') so we start by loading the package and the ```Melanoma``` data.
+In this package we will use a simulated data using 'riskRegression' package (which will load up with 'CSCNet').
 ```{r message=F, warning=F}
 library(CSCNet)
+
 library(riskRegression)
-data(Melanoma)
-knitr::kable(head(Melanoma),digits=4)
-table(Melanoma$status)
+
+set.seed(123)
+
+d <- sampleData(n = 500,outcome = 'competing.risks')
+
+knitr::kable(head(d),digits=3)
+
+table(d$event)
 ```
-There are 2 events in the Melanoma data coded as 1 & 2. To introduce how setting up variables and hyper-parameters works in CSCNet, we will fit the a model with the following hyper-parameters to the ```Melanoma``` data:
+There are 2 events in the data coded as 1 & 2. To introduce how setting up variables and hyper-parameters works in CSCNet, we will fit the a model with the following hyper-parameters:
 $$(\alpha_{1},\alpha_{2},\lambda_{1},\lambda_{2})=(0,0.5,0.01,0.02)$$
-We set variables affecting the event: 1 as `age,sex,invasion,thick` and variables affecting event: 2 as `age,sex,epicel,ici,thick`.
+We set variables affecting the event: 1 as `X1, X3, X7, X9, X10` and variables affecting event: 2 as `X1, X2, X6, X10`.
 
 ####  Fitting regularized cause-specific cox models
 
 In CSCNet, setting variables and hyper-parameters are done through named lists. Variables and hyper-parameters related to each involved cause are stored in list positions with the name of that position being that cause. Of course these names must be the same as values in the status variable in the data.
 ```{r}
-vl <- list('1'=c('age','sex','invasion','thick'),
-           
-           '2'=~age+sex+epicel+ici+thick)
+vl <- list('1'=~X1+X3+X7+X9+X10,
 
-penfit <- penCSC(time = 'time',status = 'status',vars.list = vl,data = Melanoma,
+           '2'=c('X1','X2','X6','X10'))
+
+penfit <- penCSC(time = 'time',status = 'event',vars.list = vl,data = d,
                  
                  alpha.list = list('1'=0,'2'=.5),lambda.list = list('1'=.01,'2'=.02))
 
@@ -61,15 +67,15 @@ Now to obtain predictions, specially estimates of the absolute risks, `predict.p
 
 Values of linear predictors for event: 1 related to 1st three individuals of the data:
 ```{r}
-predict(penfit,Melanoma[1:3,],type='lp',event=1) %>% as.data.frame
+predict(penfit,d[1:3,],type='lp',event=1) %>% as.data.frame
 ```
 Or the risk values of the same individuals for all involved causes:
 ```{r}
-predict(penfit,Melanoma[1:3,],type='response') %>% as.data.frame
+predict(penfit,d[1:3,],type='response') %>% as.data.frame
 ```
-Now let's say we want estimates of absolute risks related to the event: 1 as our event of interest at 3 and 5 year time horizons:
+Now let's say we want estimates of absolute risks related to the event: 1 as our event of interest at median and 3rd quartile of the follow-up times:
 ```{r}
-predict(penfit,Melanoma[1:3,],type='absRisk',event=1,time=365*c(3,5)) %>% as.data.frame
+predict(penfit,d[1:3,],type='absRisk',event=1,time=summary(d$time)[c(3,5)]) %>% as.data.frame
 ```
 **Note:** There's also `predictRisk.penCSC` to obtain absolute risk predictions. This method was developed for compatibility with tools from 'riskRegression' package.
 
@@ -96,7 +102,7 @@ If the data requires pre-processing steps, it must be done within the resampling
 
 **Note:** `tune_penCSC` has the parallel processing option. If a user has specified a function for pre-processing steps with global objects or calls from other packages and wants to run the code in parallel, the names of those extra packages and global objects must be given through `preProc.pkgs` and `preProc.globals`.
 
-Now let's see all that was mentioned in this section in an example. Let's say we want to tune our model for 5 year absolute risk prediction of event: 1 based on time dependent (IPCW) AUC as the loss function (evaluation metric) through a 5-fold cross validation process:
+Now let's see all that was mentioned in this section in an example. Let's say we want to tune our model for absolute risk prediction of event: 1 at the median follow-up time based on time dependent (IPCW) AUC as the loss function (evaluation metric) through a 3-fold cross validation process:
 ```{r message=F, warning=F}
 #Function to standardize numerical predictors using functions from recipes package
 
@@ -104,7 +110,7 @@ library(recipes)
 
 pp.fun <- function(data){
 
-  recipe(time+status~.,data=data) %>% 
+  recipe(time+event~.,data=data) %>% 
     
     step_center(all_numeric_predictors()) %>% 
     
@@ -116,22 +122,22 @@ pp.fun <- function(data){
 
 }
 
-set.seed(1331)
+set.seed(123)
 
-tri.l <- caret::createFolds(as.factor(Melanoma$status),k=3,list=T,returnTrain=T)
+tri.l <- caret::createFolds(as.factor(d$event),k=3,list=T,returnTrain=T)
 
-tune_melanoma <- tune_penCSC(time = 'time',status = 'status',vars.list = vl,data = Melanoma,
-                             
-                             horizons = 1095,event = 1,tri.list = tri.l,metrics = 'AUC',
-                             
-                             alpha.grid = list('1'=0,'2'=c(.5,1)),preProc.fun = pp.fun,
-                             
-                             standardize = F,parallel = T,preProc.pkgs = 'recipes')
+tune_obj <- tune_penCSC(time = 'time',status = 'event',vars.list = vl,data = d,
+                        
+                        horizons = median(d$time),event = 1,tri.list = tri.l,metrics = 'AUC',
+                        
+                        alpha.grid = list('1'=0,'2'=c(.5,1)),preProc.fun = pp.fun,
+                        
+                        standardize = F,parallel = T,preProc.pkgs = 'recipes')
 
-tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
+tune_obj$validation_result %>% arrange(desc(mean.AUC)) %>% head
 
-tune_melanoma$final_params
+tune_obj$final_params
 
-tune_melanoma$final_fits
+tune_obj$final_fits
 
 ```

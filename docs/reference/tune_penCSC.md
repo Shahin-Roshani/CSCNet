@@ -295,44 +295,44 @@ Shahin Roshani
 
 library(riskRegression)
 
-data(Melanoma)
+set.seed(123)
 
-vl <- list('1'=~age+sex+epicel+ici,
+d <- sampleData(n = 500,outcome = 'competing.risks')
 
-          '2'=c('age','ulcer','thick','invasion'))
+vl <- list('1'=~X1+X3+X7+X9+X10,
 
-set.seed(1331)
+          '2'=c('X1','X2','X6','X10'))
 
-tri.l <- caret::createFolds(as.factor(Melanoma$status),k=3,list=TRUE,returnTrain=TRUE)
+set.seed(123)
 
-test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
+tri.l <- caret::createFolds(as.factor(d$event),k=3,list=TRUE,returnTrain=TRUE)
+
+test <- tune_penCSC(time='time',status='event',vars.list=vl,data=d,horizons=median(d$time),
 
                    event=1,tri.list=tri.l,metrics='AUC',alpha.grid=list('1'=0,'2'=c(.5,1)),
 
                    nlambdas.list=list('1'=3,'2'=3))
 #> 
-#> Process was done in 6.303961 secs.
+#> Process was done in 7.284423 secs.
 
 test
-#> $`1095`
+#> $`3.8464044708482`
 #> $`Event: 1`
-#> 6 x 1 sparse Matrix of class "dgCMatrix"
-#>                         1
-#> age            0.02248578
-#> sexMale        0.79689504
-#> epicelpresent -1.10991986
-#> ici1           1.77593118
-#> ici2           1.87392279
-#> ici3           2.55198560
+#> 5 x 1 sparse Matrix of class "dgCMatrix"
+#>               1
+#> X11  0.71629381
+#> X31  0.11739380
+#> X7  -0.03201977
+#> X9  -0.35642865
+#> X10 -0.05506272
 #> 
 #> $`Event: 2`
-#> 5 x 1 sparse Matrix of class "dgCMatrix"
-#>                          1
-#> age             0.03413261
-#> ulcerpresent    .         
-#> thick           .         
-#> invasionlevel.1 .         
-#> invasionlevel.2 .         
+#> 4 x 1 sparse Matrix of class "dgCMatrix"
+#>               1
+#> X11 -0.68292599
+#> X21  0.27645270
+#> X6   .         
+#> X10  0.09046695
 #> 
 #> 
 

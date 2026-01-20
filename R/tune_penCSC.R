@@ -46,17 +46,19 @@
 #'
 #'library(riskRegression)
 #'
-#'data(Melanoma)
+#'set.seed(123)
 #'
-#'vl <- list('1'=~age+sex+epicel+ici,
+#'d <- sampleData(n = 500,outcome = 'competing.risks')
 #'
-#'           '2'=c('age','ulcer','thick','invasion'))
+#'vl <- list('1'=~X1+X3+X7+X9+X10,
 #'
-#'set.seed(1331)
+#'           '2'=c('X1','X2','X6','X10'))
 #'
-#'tri.l <- caret::createFolds(as.factor(Melanoma$status),k=3,list=TRUE,returnTrain=TRUE)
+#'set.seed(123)
 #'
-#'test <- tune_penCSC(time='time',status='status',vars.list=vl,data=Melanoma,horizons=1095,
+#'tri.l <- caret::createFolds(as.factor(d$event),k=3,list=TRUE,returnTrain=TRUE)
+#'
+#'test <- tune_penCSC(time='time',status='event',vars.list=vl,data=d,horizons=median(d$time),
 #'
 #'                    event=1,tri.list=tri.l,metrics='AUC',alpha.grid=list('1'=0,'2'=c(.5,1)),
 #'
