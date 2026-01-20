@@ -105,7 +105,7 @@ The process of determining the lambda values automatically is by:
 This will be done for each cause-specific model to create exclusive sequences of lambdas for each of them.
 }
 \examples{
-\donttest{
+\dontrun{
 
 library(riskRegression)
 

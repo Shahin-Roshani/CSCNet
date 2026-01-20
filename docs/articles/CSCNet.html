@@ -406,70 +406,48 @@ objects must be given through <code>preProc.pkgs</code> and
 <p>Now let’s see all that was mentioned in this section in an example.
 Let’s say we want to tune our model for absolute risk prediction of
 event: 1 at the median follow-up time based on time dependent (IPCW) AUC
-as the loss function (evaluation metric) through a 3-fold cross
+as the loss function (evaluation metric) through a 5-fold cross
 validation process:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co">#Function to standardize numerical predictors using functions from recipes package</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">library</span>(recipes)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>pp.fun <span class="ot">&lt;-</span> <span class="cf">function</span>(data){</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>  <span class="fu">recipe</span>(time<span class="sc">+</span>event<span class="sc">~</span>.,<span class="at">data=</span>data) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    </span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="fu">step_center</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    </span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    <span class="fu">step_scale</span>(<span class="fu">all_numeric_predictors</span>()) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    </span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    <span class="fu">prep</span>(<span class="at">training=</span>data) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>    </span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a>    <span class="fu">bake</span>(<span class="at">new_data=</span><span class="cn">NULL</span>)</span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a></span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>}</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>tri.l <span class="ot">&lt;-</span> caret<span class="sc">::</span><span class="fu">createFolds</span>(<span class="fu">as.factor</span>(d<span class="sc">$</span>event),<span class="at">k=</span><span class="dv">3</span>,<span class="at">list=</span>T,<span class="at">returnTrain=</span>T)</span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a></span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a>tune_obj <span class="ot">&lt;-</span> <span class="fu">tune_penCSC</span>(<span class="at">time =</span> <span class="st">'time'</span>,<span class="at">status =</span> <span class="st">'event'</span>,<span class="at">vars.list =</span> vl,<span class="at">data =</span> d,</span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>                        </span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>                        <span class="at">horizons =</span> <span class="fu">median</span>(d<span class="sc">$</span>time),<span class="at">event =</span> <span class="dv">1</span>,<span class="at">tri.list =</span> tri.l,<span class="at">metrics =</span> <span class="st">'AUC'</span>,</span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a>                        </span>
-<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>                        <span class="at">alpha.grid =</span> <span class="fu">list</span>(<span class="st">'1'</span><span class="ot">=</span><span class="dv">0</span>,<span class="st">'2'</span><span class="ot">=</span><span class="fu">c</span>(.<span class="dv">5</span>,<span class="dv">1</span>)),<span class="at">preProc.fun =</span> pp.fun,</span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>                        </span>
-<span id="cb7-29"><a href="#cb7-29" tabindex="-1"></a>                        <span class="at">standardize =</span> F,<span class="at">parallel =</span> T,<span class="at">preProc.pkgs =</span> <span class="st">'recipes'</span>)</span>
-<span id="cb7-30"><a href="#cb7-30" tabindex="-1"></a></span>
-<span id="cb7-31"><a href="#cb7-31" tabindex="-1"></a>tune_obj<span class="sc">$</span>validation_result <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(mean.AUC)) <span class="sc">%&gt;%</span> head</span>
-<span id="cb7-32"><a href="#cb7-32" tabindex="-1"></a>  alpha_1 alpha_2   lambda_1   lambda_2  horizon  mean.AUC</span>
-<span id="cb7-33"><a href="#cb7-33" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>     <span class="fl">0.0</span> <span class="fl">0.05786979</span> <span class="fl">0.00000000</span> <span class="fl">3.846404</span> <span class="fl">0.7820030</span></span>
-<span id="cb7-34"><a href="#cb7-34" tabindex="-1"></a><span class="dv">2</span>       <span class="dv">0</span>     <span class="fl">0.0</span> <span class="fl">0.00000000</span> <span class="fl">0.00000000</span> <span class="fl">3.846404</span> <span class="fl">0.7814752</span></span>
-<span id="cb7-35"><a href="#cb7-35" tabindex="-1"></a><span class="dv">3</span>       <span class="dv">0</span>     <span class="fl">1.0</span> <span class="fl">0.00000000</span> <span class="fl">0.01079648</span> <span class="fl">3.846404</span> <span class="fl">0.7814602</span></span>
-<span id="cb7-36"><a href="#cb7-36" tabindex="-1"></a><span class="dv">4</span>       <span class="dv">0</span>     <span class="fl">0.5</span> <span class="fl">0.00000000</span> <span class="fl">0.01079648</span> <span class="fl">3.846404</span> <span class="fl">0.7814486</span></span>
-<span id="cb7-37"><a href="#cb7-37" tabindex="-1"></a><span class="dv">5</span>       <span class="dv">0</span>     <span class="fl">0.5</span> <span class="fl">0.00000000</span> <span class="fl">0.02159296</span> <span class="fl">3.846404</span> <span class="fl">0.7811265</span></span>
-<span id="cb7-38"><a href="#cb7-38" tabindex="-1"></a><span class="dv">6</span>       <span class="dv">0</span>     <span class="fl">0.5</span> <span class="fl">0.05786979</span> <span class="fl">0.01079648</span> <span class="fl">3.846404</span> <span class="fl">0.7810767</span></span>
-<span id="cb7-39"><a href="#cb7-39" tabindex="-1"></a></span>
-<span id="cb7-40"><a href="#cb7-40" tabindex="-1"></a>tune_obj<span class="sc">$</span>final_params</span>
-<span id="cb7-41"><a href="#cb7-41" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">3.8464044708482</span><span class="st">`</span></span>
-<span id="cb7-42"><a href="#cb7-42" tabindex="-1"></a>  alpha_1 alpha_2   lambda_1 lambda_2  horizon mean.AUC</span>
-<span id="cb7-43"><a href="#cb7-43" tabindex="-1"></a><span class="dv">1</span>       <span class="dv">0</span>       <span class="dv">0</span> <span class="fl">0.05786979</span>        <span class="dv">0</span> <span class="fl">3.846404</span> <span class="fl">0.782003</span></span>
-<span id="cb7-44"><a href="#cb7-44" tabindex="-1"></a></span>
-<span id="cb7-45"><a href="#cb7-45" tabindex="-1"></a>tune_obj<span class="sc">$</span>final_fits</span>
-<span id="cb7-46"><a href="#cb7-46" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">3.8464044708482</span><span class="st">`</span></span>
-<span id="cb7-47"><a href="#cb7-47" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 1</span><span class="st">`</span></span>
-<span id="cb7-48"><a href="#cb7-48" tabindex="-1"></a><span class="dv">5</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb7-49"><a href="#cb7-49" tabindex="-1"></a>              <span class="dv">1</span></span>
-<span id="cb7-50"><a href="#cb7-50" tabindex="-1"></a>X11  <span class="fl">0.47078387</span></span>
-<span id="cb7-51"><a href="#cb7-51" tabindex="-1"></a>X31  <span class="fl">0.12629608</span></span>
-<span id="cb7-52"><a href="#cb7-52" tabindex="-1"></a>X7  <span class="sc">-</span><span class="fl">0.20336512</span></span>
-<span id="cb7-53"><a href="#cb7-53" tabindex="-1"></a>X9  <span class="sc">-</span><span class="fl">0.47513538</span></span>
-<span id="cb7-54"><a href="#cb7-54" tabindex="-1"></a>X10 <span class="sc">-</span><span class="fl">0.07556805</span></span>
-<span id="cb7-55"><a href="#cb7-55" tabindex="-1"></a></span>
-<span id="cb7-56"><a href="#cb7-56" tabindex="-1"></a><span class="sc">$</span><span class="st">`</span><span class="at">Event: 2</span><span class="st">`</span></span>
-<span id="cb7-57"><a href="#cb7-57" tabindex="-1"></a><span class="dv">4</span> x <span class="dv">1</span> sparse Matrix of class <span class="st">"dgCMatrix"</span></span>
-<span id="cb7-58"><a href="#cb7-58" tabindex="-1"></a>              <span class="dv">1</span></span>
-<span id="cb7-59"><a href="#cb7-59" tabindex="-1"></a>X11 <span class="sc">-</span><span class="fl">1.20469724</span></span>
-<span id="cb7-60"><a href="#cb7-60" tabindex="-1"></a>X21  <span class="fl">0.36531910</span></span>
-<span id="cb7-61"><a href="#cb7-61" tabindex="-1"></a>X6  <span class="sc">-</span><span class="fl">0.01087632</span></span>
-<span id="cb7-62"><a href="#cb7-62" tabindex="-1"></a>X10  <span class="fl">0.12367019</span></span></code></pre></div>
+<p><strong>Note:</strong> The following code chunk is not executed
+during vignette building, as its output depends on random number
+generation that may vary across platforms. Users are encouraged to run
+the code locally and explore different random seeds.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#Function to standardize numerical predictors using functions from recipes package</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidymodels/recipes" class="external-link">recipes</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">pp.fun</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">{</span></span>
+<span></span>
+<span>  <span class="fu"><a href="https://recipes.tidymodels.org/reference/recipe.html" class="external-link">recipe</a></span><span class="op">(</span><span class="va">time</span><span class="op">+</span><span class="va">event</span><span class="op">~</span><span class="va">.</span>,data<span class="op">=</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    </span>
+<span>    <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_center.html" class="external-link">step_center</a></span><span class="op">(</span><span class="fu"><a href="https://recipes.tidymodels.org/reference/has_role.html" class="external-link">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    </span>
+<span>    <span class="fu"><a href="https://recipes.tidymodels.org/reference/step_scale.html" class="external-link">step_scale</a></span><span class="op">(</span><span class="fu"><a href="https://recipes.tidymodels.org/reference/has_role.html" class="external-link">all_numeric_predictors</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    </span>
+<span>    <span class="fu"><a href="https://recipes.tidymodels.org/reference/prep.html" class="external-link">prep</a></span><span class="op">(</span>training<span class="op">=</span><span class="va">data</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>    </span>
+<span>    <span class="fu"><a href="https://recipes.tidymodels.org/reference/bake.html" class="external-link">bake</a></span><span class="op">(</span>new_data<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tri.l</span> <span class="op">&lt;-</span> <span class="fu">caret</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/caret/man/createDataPartition.html" class="external-link">createFolds</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">event</span><span class="op">)</span>,k<span class="op">=</span><span class="fl">5</span>,list<span class="op">=</span><span class="cn">T</span>,returnTrain<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tune_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tune_penCSC.html">tune_penCSC</a></span><span class="op">(</span>time <span class="op">=</span> <span class="st">'time'</span>,status <span class="op">=</span> <span class="st">'event'</span>,vars.list <span class="op">=</span> <span class="va">vl</span>,data <span class="op">=</span> <span class="va">d</span>,</span>
+<span>                        </span>
+<span>                        horizons <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html" class="external-link">median</a></span><span class="op">(</span><span class="va">d</span><span class="op">$</span><span class="va">time</span><span class="op">)</span>,event <span class="op">=</span> <span class="fl">1</span>,tri.list <span class="op">=</span> <span class="va">tri.l</span>,metrics <span class="op">=</span> <span class="st">'AUC'</span>,</span>
+<span>                        </span>
+<span>                        alpha.grid <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">'1'</span><span class="op">=</span><span class="fl">0</span>,<span class="st">'2'</span><span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.5</span>,<span class="fl">1</span><span class="op">)</span><span class="op">)</span>,preProc.fun <span class="op">=</span> <span class="va">pp.fun</span>,</span>
+<span>                        </span>
+<span>                        standardize <span class="op">=</span> <span class="cn">F</span>,parallel <span class="op">=</span> <span class="cn">T</span>,preProc.pkgs <span class="op">=</span> <span class="st">'recipes'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tune_obj</span><span class="op">$</span><span class="va">validation_result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">mean.AUC</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="va">head</span></span>
+<span></span>
+<span><span class="va">tune_obj</span><span class="op">$</span><span class="va">final_params</span></span>
+<span></span>
+<span><span class="va">tune_obj</span><span class="op">$</span><span class="va">final_fits</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
