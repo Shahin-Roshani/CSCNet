@@ -8,39 +8,43 @@ competing causes as censored.
 
 ### Regularized cause-specific cox and absolute risk predictions
 
-In this package we will use `Melanoma` data from ‘riskRegression’
-package (which will load up with ‘CSCNet’) so we start by loading the
-package and the `Melanoma` data.
+In this package we will use a simulated data using ‘riskRegression’
+package (which will load up with ‘CSCNet’).
 
 ``` r
 library(CSCNet)
+
 library(riskRegression)
-data(Melanoma)
-knitr::kable(head(Melanoma),digits=4)
+
+set.seed(123)
+
+d <- sampleData(n = 500,outcome = 'competing.risks')
+
+knitr::kable(head(d),digits=3)
 ```
 
-| time | status | event                    | invasion | ici | epicel      | ulcer       | thick | sex    | age | logthick |
-|-----:|-------:|:-------------------------|:---------|:----|:------------|:------------|------:|:-------|----:|---------:|
-|   10 |      2 | death.other.causes       | level.1  | 2   | present     | present     |  6.76 | Male   |  76 |   1.9110 |
-|   30 |      2 | death.other.causes       | level.0  | 0   | not present | not present |  0.65 | Male   |  56 |  -0.4308 |
-|   35 |      0 | censored                 | level.1  | 2   | not present | not present |  1.34 | Male   |  41 |   0.2927 |
-|   99 |      2 | death.other.causes       | level.0  | 2   | not present | not present |  2.90 | Female |  71 |   1.0647 |
-|  185 |      1 | death.malignant.melanoma | level.2  | 2   | present     | present     | 12.08 | Male   |  52 |   2.4916 |
-|  204 |      1 | death.malignant.melanoma | level.2  | 2   | not present | present     |  4.84 | Male   |  28 |   1.5769 |
+|     X6 |     X7 |     X8 |     X9 |    X10 | X1  | X2  | X3  | X4  | X5  | eventtime1 | eventtime2 | censtime |   time | event |
+|-------:|-------:|-------:|-------:|-------:|:----|:----|:----|:----|:----|-----------:|-----------:|---------:|-------:|------:|
+| 38.651 | 62.599 | -1.117 | -1.253 | -0.702 | 0   | 1   | 0   | 1   | 0   |     17.595 |     10.196 |   11.164 | 10.196 |     2 |
+| 75.335 | 59.612 | -0.892 | -0.111 |  0.882 | 1   | 0   | 0   | 1   | 1   |      1.652 |     10.020 |    4.877 |  1.652 |     1 |
+| 70.317 | 64.125 |  0.872 | -1.413 | -0.133 | 0   | 0   | 0   | 0   | 0   |      2.006 |     11.171 |    9.456 |  2.006 |     1 |
+| 55.388 | 65.603 |  1.869 | -1.983 | -1.121 | 0   | 0   | 0   | 0   | 1   |      2.082 |     15.894 |    3.527 |  2.082 |     1 |
+| 59.704 | 59.389 | -0.124 |  0.784 |  0.461 | 0   | 0   | 0   | 1   | 1   |      8.961 |     10.033 |    2.477 |  2.477 |     0 |
+| 67.326 | 69.727 |  0.107 |  0.901 |  1.524 | 0   | 0   | 0   | 0   | 0   |     23.113 |     13.137 |   17.575 | 13.137 |     2 |
 
 ``` r
-table(Melanoma$status)
+table(d$event)
 
   0   1   2 
-134  57  14 
+140 225 135 
 ```
 
-There are 2 events in the Melanoma data coded as 1 & 2. To introduce how
-setting up variables and hyper-parameters works in CSCNet, we will fit
-the a model with the following hyper-parameters to the `Melanoma` data:
+There are 2 events in the data coded as 1 & 2. To introduce how setting
+up variables and hyper-parameters works in CSCNet, we will fit the a
+model with the following hyper-parameters:
 $$\left( \alpha_{1},\alpha_{2},\lambda_{1},\lambda_{2} \right) = (0,0.5,0.01,0.02)$$
-We set variables affecting the event: 1 as `age,sex,invasion,thick` and
-variables affecting event: 2 as `age,sex,epicel,ici,thick`.
+We set variables affecting the event: 1 as `X1, X3, X7, X9, X10` and
+variables affecting event: 2 as `X1, X2, X6, X10`.
 
 #### Fitting regularized cause-specific cox models
 
@@ -51,34 +55,31 @@ cause. Of course these names must be the same as values in the status
 variable in the data.
 
 ``` r
-vl <- list('1'=c('age','sex','invasion','thick'),
-           
-           '2'=~age+sex+epicel+ici+thick)
+vl <- list('1'=~X1+X3+X7+X9+X10,
 
-penfit <- penCSC(time = 'time',status = 'status',vars.list = vl,data = Melanoma,
+           '2'=c('X1','X2','X6','X10'))
+
+penfit <- penCSC(time = 'time',status = 'event',vars.list = vl,data = d,
                  
                  alpha.list = list('1'=0,'2'=.5),lambda.list = list('1'=.01,'2'=.02))
 
 penfit
 $`Event: 1`
 5 x 1 sparse Matrix of class "dgCMatrix"
-                          1
-age             0.008018578
-sexMale         0.547580959
-invasionlevel.1 0.756922406
-invasionlevel.2 0.591044240
-thick           0.118568171
+              1
+X11  0.97724748
+X31  0.17673877
+X7  -0.04914618
+X9  -0.52737860
+X10 -0.09007295
 
 $`Event: 2`
-7 x 1 sparse Matrix of class "dgCMatrix"
-                        1
-age            0.04839997
-sexMale        0.11419057
-epicelpresent  0.16891622
-ici1          -0.13501846
-ici2           .         
-ici3           .         
-thick          0.03242932
+4 x 1 sparse Matrix of class "dgCMatrix"
+              1
+X11 -0.71082304
+X21  0.28319963
+X6   .         
+X10  0.09318867
 ```
 
 `penfit` is a comprehensive list with all information related to the
@@ -107,38 +108,39 @@ Values of linear predictors for event: 1 related to 1st three
 individuals of the data:
 
 ``` r
-predict(penfit,Melanoma[1:3,],type='lp',event=1) %>% as.data.frame
+predict(penfit,d[1:3,],type='lp',event=1) %>% as.data.frame
   id event prediction
-1  1     1   2.715436
-2  2     1   1.073691
-3  3     1   1.792146
+1  1     1  -2.352336
+2  2     1  -1.973192
+3  3     1  -2.394408
 ```
 
 Or the risk values of the same individuals for all involved causes:
 
 ``` r
-predict(penfit,Melanoma[1:3,],type='response') %>% as.data.frame
+predict(penfit,d[1:3,],type='response') %>% as.data.frame
   id event prediction
-1  1     1  15.111199
-2  2     1   2.926159
-3  3     1   6.002322
-4  1     2  65.413371
-5  2     2  17.213052
-6  3     2   8.516833
+1  1     1 0.09514665
+2  2     1 0.13901236
+3  3     1 0.09122671
+4  1     2 1.24337231
+5  2     2 0.53333328
+6  3     2 0.98764831
 ```
 
 Now let’s say we want estimates of absolute risks related to the event:
-1 as our event of interest at 3 and 5 year time horizons:
+1 as our event of interest at median and 3rd quartile of the follow-up
+times:
 
 ``` r
-predict(penfit,Melanoma[1:3,],type='absRisk',event=1,time=365*c(3,5)) %>% as.data.frame
-  id event horizon absoluteRisk
-1  1     1    1095   0.37363641
-2  2     1    1095   0.09524797
-3  3     1    1095   0.18730858
-4  1     1    1825   0.52534831
-5  2     1    1825   0.15302632
-6  3     1    1825   0.29161813
+predict(penfit,d[1:3,],type='absRisk',event=1,time=summary(d$time)[c(3,5)]) %>% as.data.frame
+  id event  horizon absoluteRisk
+1  1     1 3.846404    0.4212294
+2  2     1 3.846404    0.5625537
+3  3     1 3.846404    0.4124798
+4  1     1 6.243125    0.5451776
+5  2     1 6.243125    0.7129566
+6  3     1 6.243125    0.5423173
 ```
 
 **Note:** There’s also `predictRisk.penCSC` to obtain absolute risk
@@ -204,9 +206,10 @@ names of those extra packages and global objects must be given through
 `preProc.pkgs` and `preProc.globals`.
 
 Now let’s see all that was mentioned in this section in an example.
-Let’s say we want to tune our model for 5 year absolute risk prediction
-of event: 1 based on time dependent (IPCW) AUC as the loss function
-(evaluation metric) through a 5-fold cross validation process:
+Let’s say we want to tune our model for absolute risk prediction of
+event: 1 at the median follow-up time based on time dependent (IPCW) AUC
+as the loss function (evaluation metric) through a 3-fold cross
+validation process:
 
 ``` r
 #Function to standardize numerical predictors using functions from recipes package
@@ -215,7 +218,7 @@ library(recipes)
 
 pp.fun <- function(data){
 
-  recipe(time+status~.,data=data) %>% 
+  recipe(time+event~.,data=data) %>% 
     
     step_center(all_numeric_predictors()) %>% 
     
@@ -227,51 +230,48 @@ pp.fun <- function(data){
 
 }
 
-set.seed(1331)
+set.seed(123)
 
-tri.l <- caret::createFolds(as.factor(Melanoma$status),k=3,list=T,returnTrain=T)
+tri.l <- caret::createFolds(as.factor(d$event),k=3,list=T,returnTrain=T)
 
-tune_melanoma <- tune_penCSC(time = 'time',status = 'status',vars.list = vl,data = Melanoma,
-                             
-                             horizons = 1095,event = 1,tri.list = tri.l,metrics = 'AUC',
-                             
-                             alpha.grid = list('1'=0,'2'=c(.5,1)),preProc.fun = pp.fun,
-                             
-                             standardize = F,parallel = T,preProc.pkgs = 'recipes')
+tune_obj <- tune_penCSC(time = 'time',status = 'event',vars.list = vl,data = d,
+                        
+                        horizons = median(d$time),event = 1,tri.list = tri.l,metrics = 'AUC',
+                        
+                        alpha.grid = list('1'=0,'2'=c(.5,1)),preProc.fun = pp.fun,
+                        
+                        standardize = F,parallel = T,preProc.pkgs = 'recipes')
 
-tune_melanoma$validation_result %>% arrange(desc(mean.AUC)) %>% head
-  alpha_1 alpha_2   lambda_1   lambda_2 horizon  mean.AUC
-1       0     0.5 0.12668029 0.06461658    1095 0.7417364
-2       0     1.0 0.12668029 0.04846244    1095 0.7411191
-3       0     1.0 0.12668029 0.03230829    1095 0.7407155
-4       0     0.5 0.12668029 0.03230829    1095 0.7400982
-5       0     0.5 0.12668029 0.04846244    1095 0.7397054
-6       0     1.0 0.08445352 0.03230829    1095 0.7396924
+tune_obj$validation_result %>% arrange(desc(mean.AUC)) %>% head
+  alpha_1 alpha_2   lambda_1   lambda_2  horizon  mean.AUC
+1       0     0.0 0.05786979 0.00000000 3.846404 0.7820030
+2       0     0.0 0.00000000 0.00000000 3.846404 0.7814752
+3       0     1.0 0.00000000 0.01079648 3.846404 0.7814602
+4       0     0.5 0.00000000 0.01079648 3.846404 0.7814486
+5       0     0.5 0.00000000 0.02159296 3.846404 0.7811265
+6       0     0.5 0.05786979 0.01079648 3.846404 0.7810767
 
-tune_melanoma$final_params
-$`1095`
-  alpha_1 alpha_2  lambda_1   lambda_2 horizon  mean.AUC
-1       0     0.5 0.1266803 0.06461658    1095 0.7417364
+tune_obj$final_params
+$`3.8464044708482`
+  alpha_1 alpha_2   lambda_1 lambda_2  horizon mean.AUC
+1       0       0 0.05786979        0 3.846404 0.782003
 
-tune_melanoma$final_fits
-$`1095`
+tune_obj$final_fits
+$`3.8464044708482`
 $`Event: 1`
 5 x 1 sparse Matrix of class "dgCMatrix"
-                        1
-age             0.1417696
-sexMale         0.1969270
-invasionlevel.1 0.2063510
-invasionlevel.2 0.0654537
-thick           0.3556714
+              1
+X11  0.47078387
+X31  0.12629608
+X7  -0.20336512
+X9  -0.47513538
+X10 -0.07556805
 
 $`Event: 2`
-7 x 1 sparse Matrix of class "dgCMatrix"
-                      1
-age           0.3523809
-sexMale       .        
-epicelpresent .        
-ici1          .        
-ici2          .        
-ici3          .        
-thick         .        
+4 x 1 sparse Matrix of class "dgCMatrix"
+              1
+X11 -1.20469724
+X21  0.36531910
+X6  -0.01087632
+X10  0.12367019
 ```
