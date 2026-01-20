@@ -313,7 +313,7 @@ test <- tune_penCSC(time='time',status='event',vars.list=vl,data=d,horizons=medi
 
                    nlambdas.list=list('1'=3,'2'=3))
 #> 
-#> Process was done in 7.615419 secs.
+#> Process was done in 7.670502 secs.
 
 test
 #> $`3.8464044708482`
