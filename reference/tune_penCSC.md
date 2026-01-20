@@ -291,7 +291,7 @@ Shahin Roshani
 ## Examples
 
 ``` r
-# \donttest{
+if (FALSE) { # \dontrun{
 
 library(riskRegression)
 
@@ -312,29 +312,8 @@ test <- tune_penCSC(time='time',status='event',vars.list=vl,data=d,horizons=medi
                    event=1,tri.list=tri.l,metrics='AUC',alpha.grid=list('1'=0,'2'=c(.5,1)),
 
                    nlambdas.list=list('1'=3,'2'=3))
-#> 
-#> Process was done in 7.670502 secs.
 
 test
-#> $`3.8464044708482`
-#> $`Event: 1`
-#> 5 x 1 sparse Matrix of class "dgCMatrix"
-#>               1
-#> X11  0.71629381
-#> X31  0.11739380
-#> X7  -0.03201977
-#> X9  -0.35642865
-#> X10 -0.05506272
-#> 
-#> $`Event: 2`
-#> 4 x 1 sparse Matrix of class "dgCMatrix"
-#>               1
-#> X11 -0.68292599
-#> X21  0.27645270
-#> X6   .         
-#> X10  0.09046695
-#> 
-#> 
 
-# }
+} # }
 ```

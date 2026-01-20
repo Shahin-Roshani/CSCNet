@@ -208,8 +208,13 @@ names of those extra packages and global objects must be given through
 Now let’s see all that was mentioned in this section in an example.
 Let’s say we want to tune our model for absolute risk prediction of
 event: 1 at the median follow-up time based on time dependent (IPCW) AUC
-as the loss function (evaluation metric) through a 3-fold cross
+as the loss function (evaluation metric) through a 5-fold cross
 validation process:
+
+**Note:** The following code chunk is not executed during vignette
+building, as its output depends on random number generation that may
+vary across platforms. Users are encouraged to run the code locally and
+explore different random seeds.
 
 ``` r
 #Function to standardize numerical predictors using functions from recipes package
@@ -232,7 +237,7 @@ pp.fun <- function(data){
 
 set.seed(123)
 
-tri.l <- caret::createFolds(as.factor(d$event),k=3,list=T,returnTrain=T)
+tri.l <- caret::createFolds(as.factor(d$event),k=5,list=T,returnTrain=T)
 
 tune_obj <- tune_penCSC(time = 'time',status = 'event',vars.list = vl,data = d,
                         
@@ -243,35 +248,8 @@ tune_obj <- tune_penCSC(time = 'time',status = 'event',vars.list = vl,data = d,
                         standardize = F,parallel = T,preProc.pkgs = 'recipes')
 
 tune_obj$validation_result %>% arrange(desc(mean.AUC)) %>% head
-  alpha_1 alpha_2   lambda_1   lambda_2  horizon  mean.AUC
-1       0     0.0 0.05786979 0.00000000 3.846404 0.7820030
-2       0     0.0 0.00000000 0.00000000 3.846404 0.7814752
-3       0     1.0 0.00000000 0.01079648 3.846404 0.7814602
-4       0     0.5 0.00000000 0.01079648 3.846404 0.7814486
-5       0     0.5 0.00000000 0.02159296 3.846404 0.7811265
-6       0     0.5 0.05786979 0.01079648 3.846404 0.7810767
 
 tune_obj$final_params
-$`3.8464044708482`
-  alpha_1 alpha_2   lambda_1 lambda_2  horizon mean.AUC
-1       0       0 0.05786979        0 3.846404 0.782003
 
 tune_obj$final_fits
-$`3.8464044708482`
-$`Event: 1`
-5 x 1 sparse Matrix of class "dgCMatrix"
-              1
-X11  0.47078387
-X31  0.12629608
-X7  -0.20336512
-X9  -0.47513538
-X10 -0.07556805
-
-$`Event: 2`
-4 x 1 sparse Matrix of class "dgCMatrix"
-              1
-X11 -1.20469724
-X21  0.36531910
-X6  -0.01087632
-X10  0.12367019
 ```
